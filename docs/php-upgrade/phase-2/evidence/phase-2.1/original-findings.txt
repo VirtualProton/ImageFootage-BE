@@ -1,0 +1,55 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+FFFFFFF                                                             7 / 7 (100%)
+
+Time: 840 ms, Memory: 48.00 MB
+
+There were 7 failures:
+
+1) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "amount" (1, 'INR', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+2) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "currency" (11800, 'USD', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+3) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "reference" (11800, 'INR', 'QTN-unrelated')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+4) Tests\KnownFailures\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice
+LEGACY-PAY-02: stale/pending response downgrades paid invoice state.
+Failed asserting that 0 is identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:35
+
+5) Tests\KnownFailures\SecurityInvariantTest::testMissingLoginTypeMustNotBypassJwtProtection
+LEGACY-AUTH-01: missing Login-Type reaches next without token validation.
+Failed asserting that 200 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:17
+
+6) Tests\KnownFailures\SecurityInvariantTest::testDisabledAdminMustNotRetainAdminSession
+LEGACY-AUTH-02: disabled-admin branch logs out the default guard instead of admins.
+Failed asserting that true is false.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:24
+
+7) Tests\KnownFailures\SecurityInvariantTest::testAuthenticatedMeResponseMustNotExposePasswordHash
+LEGACY-AUTH-03: User hidden fields are commented; /api/me serializes password hashes.
+Failed asserting that an array does not have the key 'password'.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:35
+
+FAILURES!
+Tests: 7, Assertions: 56, Failures: 7.

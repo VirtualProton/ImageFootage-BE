@@ -1,0 +1,918 @@
+{
+  "aws/aws-sdk-php-laravel": {
+    "source": "https://repo.packagist.org/p2/aws/aws-sdk-php-laravel.json",
+    "latest_stable": {
+      "version": "3.11.0",
+      "time": "2026-03-24T19:02:29+00:00",
+      "require": {
+        "php": ">=8.1",
+        "aws/aws-sdk-php": "^3.366.0",
+        "illuminate/support": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/aws/aws-sdk-php-laravel.git",
+        "type": "git",
+        "reference": "d55fe3329e5f4aad262a7757506913bb669644fd"
+      }
+    }
+  },
+  "barryvdh/laravel-dompdf": {
+    "source": "https://repo.packagist.org/p2/barryvdh/laravel-dompdf.json",
+    "latest_stable": {
+      "version": "v3.1.2",
+      "time": "2026-02-21T08:51:10+00:00",
+      "require": {
+        "php": "^8.1",
+        "dompdf/dompdf": "^3.0",
+        "illuminate/support": "^9|^10|^11|^12|^13.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/barryvdh/laravel-dompdf.git",
+        "type": "git",
+        "reference": "ee3b72b19ccdf57d0243116ecb2b90261344dedc"
+      }
+    }
+  },
+  "doctrine/dbal": {
+    "source": "https://repo.packagist.org/p2/doctrine/dbal.json",
+    "latest_stable": {
+      "version": "4.5.0",
+      "time": "2026-09-24T16:11:26+00:00",
+      "require": {
+        "php": "^8.2",
+        "doctrine/deprecations": "^1.1.5",
+        "psr/cache": "^1|^2|^3",
+        "psr/log": "^1|^2|^3"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/doctrine/dbal.git",
+        "type": "git",
+        "reference": "c435cd7ea33e17d2a89288caf994cf3d4549b879"
+      }
+    }
+  },
+  "elasticsearch/elasticsearch": {
+    "source": "https://repo.packagist.org/p2/elasticsearch/elasticsearch.json",
+    "latest_stable": {
+      "version": "v9.5.0",
+      "time": "2026-08-04T14:31:01+00:00",
+      "require": {
+        "php": "^8.1",
+        "elastic/transport": "^9.0",
+        "psr/http-client": "^1.0",
+        "psr/http-message": "^2.0",
+        "psr/log": "^2.0|^3.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/elastic/elasticsearch-php.git",
+        "type": "git",
+        "reference": "6fe5f99ea3a8b697f8c098399cc84d2339a9508d"
+      }
+    }
+  },
+  "fideloper/proxy": {
+    "source": "https://repo.packagist.org/p2/fideloper/proxy.json",
+    "latest_stable": {
+      "version": "4.4.2",
+      "time": "2022-02-09T13:33:34+00:00",
+      "require": {
+        "php": ">=5.4.0",
+        "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0|^9.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/fideloper/TrustedProxy.git",
+        "type": "git",
+        "reference": "a751f2bc86dd8e6cfef12dc0cbdada82f5a18750"
+      }
+    }
+  },
+  "google/apiclient": {
+    "source": "https://repo.packagist.org/p2/google/apiclient.json",
+    "latest_stable": {
+      "version": "v2.20.1",
+      "time": "2026-09-25T18:54:19+00:00",
+      "require": {
+        "php": "^8.1",
+        "google/auth": "^1.53",
+        "google/apiclient-services": "~0.350",
+        "firebase/php-jwt": "^6.0||^7.0",
+        "monolog/monolog": "^2.9||^3.0",
+        "guzzlehttp/guzzle": "^7.8.2||^8.0",
+        "guzzlehttp/psr7": "^2.6.3||^3.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/googleapis/google-api-php-client.git",
+        "type": "git",
+        "reference": "31b577e7012c4e68d5289d63aaf7e6d471ec1ff1"
+      }
+    }
+  },
+  "guzzlehttp/guzzle": {
+    "source": "https://repo.packagist.org/p2/guzzlehttp/guzzle.json",
+    "latest_stable": {
+      "version": "8.3.1",
+      "time": "2026-10-25T21:35:34+00:00",
+      "require": {
+        "php": "^7.4 || ^8.0",
+        "ext-json": "*",
+        "guzzlehttp/promises": "^3.1",
+        "guzzlehttp/psr7": "^3.2",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "symfony/polyfill-php80": "^1.25",
+        "symfony/polyfill-php82": "^1.27"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/guzzle/guzzle.git",
+        "type": "git",
+        "reference": "7d9b1f430bb65ac664e120af227bf9a795ad6333"
+      }
+    },
+    "recommended_candidate": {
+      "version": "7.16.1",
+      "time": "2026-10-25T21:35:21+00:00",
+      "require": {
+        "php": "^7.2.5 || ^8.0",
+        "ext-json": "*",
+        "guzzlehttp/promises": "^2.6",
+        "guzzlehttp/psr7": "^2.13.2",
+        "psr/http-client": "^1.0",
+        "symfony/deprecation-contracts": "^2.5 || ^3.0",
+        "symfony/polyfill-php80": "^1.25"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/guzzle/guzzle.git",
+        "type": "git",
+        "reference": "81755d989b3007ca7f88a069857553cd08e7dc2e"
+      }
+    }
+  },
+  "intervention/image": {
+    "source": "https://repo.packagist.org/p2/intervention/image.json",
+    "latest_stable": {
+      "version": "4.4.0",
+      "time": "2026-10-17T07:53:40+00:00",
+      "require": {
+        "php": "^8.3",
+        "ext-mbstring": "*",
+        "intervention/gif": "^5"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/Intervention/image.git",
+        "type": "git",
+        "reference": "ddf4d8438493b1e5b98c8f95986cdc127c2b752b"
+      }
+    }
+  },
+  "laravel/framework": {
+    "source": "https://repo.packagist.org/p2/laravel/framework.json",
+    "latest_stable": {
+      "version": "v13.39.0",
+      "time": "2026-10-27T14:04:39+00:00",
+      "require": {
+        "php": "^8.3",
+        "ext-ctype": "*",
+        "ext-filter": "*",
+        "ext-hash": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-session": "*",
+        "ext-tokenizer": "*",
+        "composer-runtime-api": "^2.2",
+        "brick/math": "^0.14.2 || ^0.15 || ^0.16 || ^0.17 || ^0.18 || ^0.19 || ^0.20 || ^1.0",
+        "doctrine/inflector": "^2.0.5",
+        "dragonmantank/cron-expression": "^3.4",
+        "egulias/email-validator": "^4.0",
+        "fruitcake/php-cors": "^1.3",
+        "guzzlehttp/guzzle": "^7.8.2 || ^8.0",
+        "guzzlehttp/promises": "^2.0.3 || ^3.0",
+        "guzzlehttp/psr7": "^2.9 || ^3.0",
+        "guzzlehttp/uri-template": "^1.0 || ^2.0",
+        "laravel/prompts": "^0.3.25",
+        "laravel/serializable-closure": "^2.0.10",
+        "league/commonmark": "^2.8.1",
+        "league/flysystem": "^3.25.1",
+        "league/flysystem-local": "^3.25.1",
+        "league/uri": "^7.5.1",
+        "monolog/monolog": "^3.10",
+        "nesbot/carbon": "^3.8.4",
+        "nunomaduro/termwind": "^2.0",
+        "psr/container": "^1.1.1 || ^2.0.1",
+        "psr/http-message": "^1.0 || ^2.0",
+        "psr/log": "^1.0 || ^2.0 || ^3.0",
+        "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
+        "ramsey/uuid": "^4.7",
+        "symfony/console": "^7.4.0 || ^8.0.0",
+        "symfony/error-handler": "^7.4.0 || ^8.0.0",
+        "symfony/finder": "^7.4.0 || ^8.0.0",
+        "symfony/http-foundation": "^7.4.0 || ^8.0.0",
+        "symfony/http-kernel": "^7.4.0 || ^8.0.0",
+        "symfony/mailer": "^7.4.0 || ^8.0.0",
+        "symfony/mime": "^7.4.0 || ^8.0.0",
+        "symfony/polyfill-php84": "^1.36",
+        "symfony/polyfill-php85": "^1.36",
+        "symfony/polyfill-php86": "^1.36",
+        "symfony/process": "^7.4.5 || ^8.0.5",
+        "symfony/routing": "^7.4.0 || ^8.0.0",
+        "symfony/uid": "^7.4.0 || ^8.0.0",
+        "symfony/var-dumper": "^7.4.0 || ^8.0.0",
+        "tijsverkoyen/css-to-inline-styles": "^2.2.5",
+        "vlucas/phpdotenv": "^5.6.1",
+        "voku/portable-ascii": "^2.0.2"
+      },
+      "conflict": {
+        "tightenco/collect": "<5.5.33"
+      },
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/laravel/framework.git",
+        "type": "git",
+        "reference": "d52c3b3129e4c8e213c97cdc68f94b0b7d27f181"
+      }
+    }
+  },
+  "laravel/tinker": {
+    "source": "https://repo.packagist.org/p2/laravel/tinker.json",
+    "latest_stable": {
+      "version": "v3.0.2",
+      "time": "2026-03-17T14:54:13+00:00",
+      "require": {
+        "php": "^8.1",
+        "illuminate/console": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+        "psy/psysh": "^0.12.0",
+        "symfony/var-dumper": "^5.4|^6.0|^7.0|^8.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/laravel/tinker.git",
+        "type": "git",
+        "reference": "4faba77764bd33411735936acdf30446d058c78b"
+      }
+    }
+  },
+  "laravelcollective/html": {
+    "source": "https://repo.packagist.org/p2/laravelcollective/html.json",
+    "latest_stable": {
+      "version": "v6.4.1",
+      "time": "2023-04-25T02:46:11+00:00",
+      "require": {
+        "php": ">=7.2.5",
+        "illuminate/http": "^6.0|^7.0|^8.0|^9.0|^10.0",
+        "illuminate/routing": "^6.0|^7.0|^8.0|^9.0|^10.0",
+        "illuminate/session": "^6.0|^7.0|^8.0|^9.0|^10.0",
+        "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0",
+        "illuminate/view": "^6.0|^7.0|^8.0|^9.0|^10.0"
+      },
+      "conflict": null,
+      "abandoned": "spatie/laravel-html",
+      "source": {
+        "url": "https://github.com/LaravelCollective/html.git",
+        "type": "git",
+        "reference": "64ddfdcaeeb8d332bd98bef442bef81e39c3910b"
+      }
+    }
+  },
+  "maatwebsite/excel": {
+    "source": "https://repo.packagist.org/p2/maatwebsite/excel.json",
+    "latest_stable": {
+      "version": "4.0.6",
+      "time": "2026-10-23T11:35:56+00:00",
+      "require": {
+        "php": "^8.3",
+        "composer/semver": "^3.4",
+        "illuminate/support": "^12.0 || ^13.0",
+        "phpoffice/phpspreadsheet": "^5.9",
+        "psr/simple-cache": "^1.0 || ^2.0 || ^3.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/SpartnerNL/Laravel-Excel.git",
+        "type": "git",
+        "reference": "90b012ef8680e0f0e20208ce7f05400a798b1c0b"
+      }
+    }
+  },
+  "mongodb/laravel-mongodb": {
+    "source": "https://repo.packagist.org/p2/mongodb/laravel-mongodb.json",
+    "latest_stable": {
+      "version": "5.12.0",
+      "time": "2026-10-26T14:53:54+00:00",
+      "require": {
+        "php": "^8.2",
+        "ext-mongodb": "^1.21|^2",
+        "composer-runtime-api": "^2.0.0",
+        "illuminate/cache": "^12|^13.0",
+        "illuminate/container": "^12|^13.0",
+        "illuminate/database": "^12.51|^13.0",
+        "illuminate/events": "^12|^13.0",
+        "illuminate/support": "^12|^13.0",
+        "mongodb/mongodb": "^1.21.2|^2.1.1",
+        "symfony/polyfill-php86": "^1.38"
+      },
+      "conflict": {
+        "illuminate/bus": "< 10.37.2"
+      },
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/mongodb/laravel-mongodb.git",
+        "type": "git",
+        "reference": "faea6c1c6e34098becd7dd24f19ebaabb824aca0"
+      }
+    }
+  },
+  "pbmedia/laravel-ffmpeg": {
+    "source": "https://repo.packagist.org/p2/pbmedia/laravel-ffmpeg.json",
+    "latest_stable": {
+      "version": "8.9.0",
+      "time": "2026-02-24T21:26:50+00:00",
+      "require": {
+        "php": "^8.2|^8.3|^8.4|^8.5",
+        "illuminate/contracts": "^11.0|^12.0|^13.0",
+        "php-ffmpeg/php-ffmpeg": "^1.2",
+        "ramsey/collection": "^2.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/protonemedia/laravel-ffmpeg.git",
+        "type": "git",
+        "reference": "2e85d33d0414e4b4d107e644cf5dbdb4dabac065"
+      }
+    }
+  },
+  "phpoffice/phpspreadsheet": {
+    "source": "https://repo.packagist.org/p2/phpoffice/phpspreadsheet.json",
+    "latest_stable": {
+      "version": "5.10.0",
+      "time": "2026-09-17T03:54:50+00:00",
+      "require": {
+        "php": "^8.2",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-fileinfo": "*",
+        "ext-filter": "*",
+        "ext-gd": "*",
+        "ext-iconv": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-simplexml": "*",
+        "ext-xml": "*",
+        "ext-xmlreader": "*",
+        "ext-xmlwriter": "*",
+        "ext-zip": "*",
+        "ext-zlib": "*",
+        "composer/pcre": "^1||^2||^3",
+        "maennchen/zipstream-php": "^2.1 || ^3.0",
+        "markbaker/complex": "^3.0",
+        "markbaker/matrix": "^3.0",
+        "psr/simple-cache": "^1.0 || ^2.0 || ^3.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
+        "type": "git",
+        "reference": "eb18727acf6b1f4cc67145a52ab04f9fd4c28d53"
+      }
+    }
+  },
+  "predis/predis": {
+    "source": "https://repo.packagist.org/p2/predis/predis.json",
+    "latest_stable": {
+      "version": "v3.7.0",
+      "time": "2026-10-08T16:46:04+00:00",
+      "require": {
+        "php": "^7.2 || ^8.0",
+        "psr/http-message": "^1.0|^2.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/predis/predis.git",
+        "type": "git",
+        "reference": "4d91f3b08a60c3bacc2afbd8dc41724559b7626a"
+      }
+    }
+  },
+  "rap2hpoutre/laravel-log-viewer": {
+    "source": "https://repo.packagist.org/p2/rap2hpoutre/laravel-log-viewer.json",
+    "latest_stable": {
+      "version": "v3.1.0",
+      "time": "2026-05-12T11:39:08+00:00",
+      "require": {
+        "php": "^8.2",
+        "illuminate/support": "^12.0|^13.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/rap2hpoutre/laravel-log-viewer.git",
+        "type": "git",
+        "reference": "a7a5d6301f1038c821820b352beb9766e52f238a"
+      }
+    }
+  },
+  "razorpay/razorpay": {
+    "source": "https://repo.packagist.org/p2/razorpay/razorpay.json",
+    "latest_stable": {
+      "version": "2.9.3",
+      "time": "2026-06-08T08:12:20+00:00",
+      "require": {
+        "php": ">=7.3",
+        "rmccue/requests": "^2.0",
+        "ext-json": "*"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/razorpay/razorpay-php.git",
+        "type": "git",
+        "reference": "b724515d548083b9fba52e61f47c0c24136ab181"
+      }
+    }
+  },
+  "riazxrazor/payumoney": {
+    "source": "https://repo.packagist.org/p2/riazxrazor/payumoney.json",
+    "latest_stable": {
+      "version": "1.0.4",
+      "time": "2020-01-17T09:21:09+00:00",
+      "require": {
+        "php": ">=5.6.0",
+        "illuminate/support": "^5.5|^6",
+        "symfony/http-foundation": "^4.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/riazXrazor/payumoey.git",
+        "type": "git",
+        "reference": "901199032caf9ca93db52180b8c419ce9608b34a"
+      }
+    }
+  },
+  "stevebauman/location": {
+    "source": "https://repo.packagist.org/p2/stevebauman/location.json",
+    "latest_stable": {
+      "version": "v7.7.0",
+      "time": "2026-10-05T18:59:21+00:00",
+      "require": {
+        "php": ">=8.1",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "geoip2/geoip2": "^2.0|^3.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/stevebauman/location.git",
+        "type": "git",
+        "reference": "3147f48fb4880d61accdbcc579e3831a510d75bb"
+      }
+    }
+  },
+  "tymon/jwt-auth": {
+    "source": "https://repo.packagist.org/p2/tymon/jwt-auth.json",
+    "latest_stable": {
+      "version": "2.3.1",
+      "time": "2026-10-24T15:03:54+00:00",
+      "require": {
+        "php": "^8.0",
+        "illuminate/auth": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/contracts": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/http": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "lcobucci/jwt": "^4.0|^5.0",
+        "nesbot/carbon": "^2.69|^3.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/tymondesigns/jwt-auth.git",
+        "type": "git",
+        "reference": "99e8f24cf96bfb6d847597c6a80713879a0a19c1"
+      }
+    }
+  },
+  "unisharp/laravel-ckeditor": {
+    "source": "https://repo.packagist.org/p2/unisharp/laravel-ckeditor.json",
+    "latest_stable": {
+      "version": "4.7.2",
+      "time": "2017-11-01T04:33:40+00:00",
+      "require": {
+        "illuminate/support": "~5.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/UniSharp/laravel-ckeditor.git",
+        "type": "git",
+        "reference": "5c75f3f9128ec8567955913074795deee5869c5c"
+      }
+    }
+  },
+  "beyondcode/laravel-dump-server": {
+    "source": "https://repo.packagist.org/p2/beyondcode/laravel-dump-server.json",
+    "latest_stable": {
+      "version": "2.1.0",
+      "time": "2025-02-26T08:27:59+00:00",
+      "require": {
+        "php": ">=7.2.5",
+        "illuminate/console": "5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+        "illuminate/http": "5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+        "illuminate/support": "5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+        "symfony/var-dumper": "^5.0|^6.0|^7.0"
+      },
+      "conflict": {
+        "spatie/laravel-ray": "*"
+      },
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/beyondcode/laravel-dump-server.git",
+        "type": "git",
+        "reference": "8e9af58a02a59d6a028167e2afc5b5b1e58eb822"
+      }
+    }
+  },
+  "filp/whoops": {
+    "source": "https://repo.packagist.org/p2/filp/whoops.json",
+    "latest_stable": {
+      "version": "2.18.7",
+      "time": "2026-10-18T13:17:38+00:00",
+      "require": {
+        "php": "^7.1 || ^8.0",
+        "psr/log": "^1.0.1 || ^2.0 || ^3.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/filp/whoops.git",
+        "type": "git",
+        "reference": "50670ba239926c50f2073e868f6672f775cd57ec"
+      }
+    }
+  },
+  "fzaninotto/faker": {
+    "source": "https://repo.packagist.org/p2/fzaninotto/faker.json",
+    "latest_stable": {
+      "version": "v1.9.2",
+      "time": "2020-12-11T09:56:16+00:00",
+      "require": {
+        "php": "^5.3.3 || ^7.0"
+      },
+      "conflict": null,
+      "abandoned": true,
+      "source": {
+        "url": "https://github.com/fzaninotto/Faker.git",
+        "type": "git",
+        "reference": "848d8125239d7dbf8ab25cb7f054f1a630e68c2e"
+      }
+    }
+  },
+  "kitloong/laravel-migrations-generator": {
+    "source": "https://repo.packagist.org/p2/kitloong/laravel-migrations-generator.json",
+    "latest_stable": {
+      "version": "v7.4.0",
+      "time": "2026-05-10T14:54:43+00:00",
+      "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "ext-pdo": "*"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/kitloong/laravel-migrations-generator.git",
+        "type": "git",
+        "reference": "706366afcef5be8a01a92c3a12bfa04c01a1eed2"
+      }
+    }
+  },
+  "mockery/mockery": {
+    "source": "https://repo.packagist.org/p2/mockery/mockery.json",
+    "latest_stable": {
+      "version": "1.6.15",
+      "time": "2026-08-19T19:37:52+00:00",
+      "require": {
+        "php": ">=7.3",
+        "hamcrest/hamcrest-php": "^2.0 || ^3.0"
+      },
+      "conflict": {
+        "phpunit/phpunit": "<8.0"
+      },
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/mockery/mockery.git",
+        "type": "git",
+        "reference": "967a801bd188989a5669bd280f252d51c0fdc9ee"
+      }
+    }
+  },
+  "nunomaduro/collision": {
+    "source": "https://repo.packagist.org/p2/nunomaduro/collision.json",
+    "latest_stable": {
+      "version": "v8.9.5",
+      "time": "2026-07-15T19:09:14+00:00",
+      "require": {
+        "php": "^8.2.0",
+        "filp/whoops": "^2.18.4",
+        "nunomaduro/termwind": "^2.4.0",
+        "symfony/console": "^7.4.14 || ^8.1.1"
+      },
+      "conflict": {
+        "laravel/framework": "<11.48.0 || >=14.0.0",
+        "phpunit/phpunit": "<11.5.50 || >=14.0.0"
+      },
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/nunomaduro/collision.git",
+        "type": "git",
+        "reference": "fb53eacd509a1d303858e2d20cfebf2d630254ec"
+      }
+    }
+  },
+  "phpunit/phpunit": {
+    "source": "https://repo.packagist.org/p2/phpunit/phpunit.json",
+    "latest_stable": {
+      "version": "13.4.5",
+      "time": "2026-10-27T04:16:22+00:00",
+      "require": {
+        "php": ">=8.4.1",
+        "ext-dom": "*",
+        "ext-filter": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-xmlwriter": "*",
+        "myclabs/deep-copy": "^1.14.0",
+        "phar-io/manifest": "^2.0.4",
+        "phar-io/version": "^3.2.1",
+        "phpunit/php-code-coverage": "^14.4.1",
+        "phpunit/php-file-iterator": "^7.0.2",
+        "phpunit/php-invoker": "^7.0.0",
+        "phpunit/php-text-template": "^6.0.1",
+        "phpunit/php-timer": "^9.0.0",
+        "sebastian/cli-parser": "^5.0.1",
+        "sebastian/comparator": "^8.4",
+        "sebastian/diff": "^9.0.1",
+        "sebastian/environment": "^9.3.3",
+        "sebastian/exporter": "^8.2.1",
+        "sebastian/file-filter": "^1.0",
+        "sebastian/git-state": "^1.1",
+        "sebastian/global-state": "^9.0.1",
+        "sebastian/object-enumerator": "^8.1.0",
+        "sebastian/recursion-context": "^8.0.1",
+        "sebastian/type": "^7.0.2",
+        "sebastian/version": "^7.0.1",
+        "staabm/side-effects-detector": "^1.0.5"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/sebastianbergmann/phpunit.git",
+        "type": "git",
+        "reference": "941457a4f147a60fe2074d40e1fce0d08ea8d930"
+      }
+    },
+    "recommended_candidate": {
+      "version": "12.5.42",
+      "time": "2026-10-27T04:15:03+00:00",
+      "require": {
+        "php": ">=8.3",
+        "ext-dom": "*",
+        "ext-filter": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-xmlwriter": "*",
+        "myclabs/deep-copy": "^1.14.0",
+        "phar-io/manifest": "^2.0.4",
+        "phar-io/version": "^3.2.1",
+        "phpunit/php-code-coverage": "^12.5.8",
+        "phpunit/php-file-iterator": "^6.0.2",
+        "phpunit/php-invoker": "^6.0.0",
+        "phpunit/php-text-template": "^5.0.1",
+        "phpunit/php-timer": "^8.0.0",
+        "sebastian/cli-parser": "^4.2.1",
+        "sebastian/comparator": "^7.1.8",
+        "sebastian/diff": "^7.0.1",
+        "sebastian/environment": "^8.1.2",
+        "sebastian/exporter": "^7.0.3",
+        "sebastian/global-state": "^8.0.3",
+        "sebastian/object-enumerator": "^7.0.0",
+        "sebastian/recursion-context": "^7.0.1",
+        "sebastian/type": "^6.0.4",
+        "sebastian/version": "^6.0.1",
+        "staabm/side-effects-detector": "^1.0.5"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/sebastianbergmann/phpunit.git",
+        "type": "git",
+        "reference": "1d6dbe748c079e5d2b03bca1be69d0f4cc52a578"
+      }
+    }
+  },
+  "fakerphp/faker": {
+    "source": "https://repo.packagist.org/p2/fakerphp/faker.json",
+    "latest_stable": {
+      "version": "v1.24.1",
+      "time": "2024-11-21T13:46:39+00:00",
+      "require": {
+        "php": "^7.4 || ^8.0",
+        "psr/container": "^1.0 || ^2.0",
+        "symfony/deprecation-contracts": "^2.2 || ^3.0"
+      },
+      "conflict": {
+        "fzaninotto/faker": "*"
+      },
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/FakerPHP/Faker.git",
+        "type": "git",
+        "reference": "e0ee18eb1e6dc3cda3ce9fd97e5a0689a88a64b5"
+      }
+    }
+  },
+  "intervention/image-laravel": {
+    "source": "https://repo.packagist.org/p2/intervention/image-laravel.json",
+    "latest_stable": {
+      "version": "4.1.1",
+      "time": "2026-07-22T15:00:50+00:00",
+      "require": {
+        "php": "^8.3",
+        "illuminate/support": "^8|^9|^10|^11|^12|^13",
+        "illuminate/http": "^8|^9|^10|^11|^12|^13",
+        "illuminate/routing": "^8|^9|^10|^11|^12|^13",
+        "intervention/image": "^4.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/Intervention/image-laravel.git",
+        "type": "git",
+        "reference": "8a8bd2c7bb4a9aa2b046ff066fd1cd44b1de0da2"
+      }
+    }
+  },
+  "spatie/laravel-html": {
+    "source": "https://repo.packagist.org/p2/spatie/laravel-html.json",
+    "latest_stable": {
+      "version": "3.13.0",
+      "time": "2026-02-22T09:05:56+00:00",
+      "require": {
+        "php": "^8.2",
+        "illuminate/http": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/spatie/laravel-html.git",
+        "type": "git",
+        "reference": "0579bf41959b4c4068206ec9bf1fcd1b59d8fa25"
+      }
+    }
+  },
+  "dompdf/dompdf": {
+    "source": "https://repo.packagist.org/p2/dompdf/dompdf.json",
+    "latest_stable": {
+      "version": "v3.1.6",
+      "time": "2026-07-20T12:29:38+00:00",
+      "require": {
+        "php": "^7.1 || ^8.0",
+        "ext-dom": "*",
+        "ext-mbstring": "*",
+        "masterminds/html5": "^2.0",
+        "dompdf/php-font-lib": "^1.0.0",
+        "dompdf/php-svg-lib": "^1.0.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/dompdf/dompdf.git",
+        "type": "git",
+        "reference": "6d4b4eb8500f7a786da8868ba463a71b725a4005"
+      }
+    }
+  },
+  "aws/aws-sdk-php": {
+    "source": "https://repo.packagist.org/p2/aws/aws-sdk-php.json",
+    "latest_stable": {
+      "version": "3.402.3",
+      "time": "2026-10-28T18:06:54+00:00",
+      "require": {
+        "php": ">=8.2",
+        "guzzlehttp/guzzle": "^7.8.2 || ^8.0",
+        "guzzlehttp/psr7": "^2.6.3 || ^3.0",
+        "guzzlehttp/promises": "^2.0.3 || ^3.0",
+        "mtdowling/jmespath.php": "^2.9.1",
+        "ext-pcre": "*",
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "aws/aws-crt-php": "^1.2.3",
+        "psr/http-message": "^1.0 || ^2.0",
+        "symfony/filesystem": "^v5.4.45 || ^v6.4.3 || ^v7.1.0 || ^v8.0.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/aws/aws-sdk-php.git",
+        "type": "git",
+        "reference": "2546b13cd027c2f47578210817add6fb77b0667e"
+      }
+    }
+  },
+  "league/flysystem": {
+    "source": "https://repo.packagist.org/p2/league/flysystem.json",
+    "latest_stable": {
+      "version": "3.36.0",
+      "time": "2026-09-02T08:00:27+00:00",
+      "require": {
+        "php": "^8.0.2",
+        "league/flysystem-local": "^3.0.0",
+        "league/mime-type-detection": "^1.0.0"
+      },
+      "conflict": {
+        "async-aws/core": "<1.19.0",
+        "async-aws/s3": "<1.14.0",
+        "symfony/http-client": "<5.2",
+        "guzzlehttp/ringphp": "<1.1.1",
+        "guzzlehttp/guzzle": "<7.0",
+        "aws/aws-sdk-php": "3.209.31 || 3.210.0",
+        "phpseclib/phpseclib": "3.0.15"
+      },
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/thephpleague/flysystem.git",
+        "type": "git",
+        "reference": "f7fb152932f30072d573510cbd4dd657d6475b25"
+      }
+    }
+  },
+  "swiftmailer/swiftmailer": {
+    "source": "https://repo.packagist.org/p2/swiftmailer/swiftmailer.json",
+    "latest_stable": {
+      "version": "v6.3.0",
+      "time": "2021-10-18T15:26:12+00:00",
+      "require": {
+        "php": ">=7.0.0",
+        "egulias/email-validator": "^2.0|^3.1",
+        "symfony/polyfill-iconv": "^1.0",
+        "symfony/polyfill-mbstring": "^1.0",
+        "symfony/polyfill-intl-idn": "^1.10"
+      },
+      "conflict": null,
+      "abandoned": "symfony/mailer",
+      "source": {
+        "url": "https://github.com/swiftmailer/swiftmailer.git",
+        "type": "git",
+        "reference": "8a5d5072dca8f48460fce2f4131fcc495eec654c"
+      }
+    }
+  },
+  "lcobucci/jwt": {
+    "source": "https://repo.packagist.org/p2/lcobucci/jwt.json",
+    "latest_stable": {
+      "version": "5.6.1",
+      "time": "2026-10-10T09:42:14+00:00",
+      "require": {
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "ext-openssl": "*",
+        "ext-sodium": "*",
+        "psr/clock": "^1.0"
+      },
+      "conflict": null,
+      "abandoned": null,
+      "source": {
+        "url": "https://github.com/lcobucci/jwt.git",
+        "type": "git",
+        "reference": "482760068e5a55a9045feddb3e2fc3f878cbd577"
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "audit_date": "2026-10-29",
+  "baseline_commit": "a461926a4",
+  "protected_hashes_match": true,
+  "files": {
+    "composer.json": {
+      "before": "304e848e00f0b46db9f551fcb6a8690b8aed8d6fc45640b1847c0ec19420b222",
+      "after": "304e848e00f0b46db9f551fcb6a8690b8aed8d6fc45640b1847c0ec19420b222"
+    },
+    "composer.lock": {
+      "before": "aea8577e2c9f067d48c8d0509826503aa1e69e3c4555ecfe7090fe673619901e",
+      "after": "aea8577e2c9f067d48c8d0509826503aa1e69e3c4555ecfe7090fe673619901e"
+    },
+    "package.json": {
+      "before": "ec81feeebe586f0f817d0435608e3c9f60968b7c9a80f209c9226caa7275e677",
+      "after": "ec81feeebe586f0f817d0435608e3c9f60968b7c9a80f209c9226caa7275e677"
+    },
+    "package-lock.json": {
+      "before": "ece89104b775fd92d4083e49152ec0b5407094fd9c82fe18a6ed9a9188f1ad24",
+      "after": "ece89104b775fd92d4083e49152ec0b5407094fd9c82fe18a6ed9a9188f1ad24"
+    },
+    "Dockerfile": {
+      "before": "fd6c9830092e3910a3d82a39c69c40d95284c9600aa15a50086279eac1dcc000",
+      "after": "fd6c9830092e3910a3d82a39c69c40d95284c9600aa15a50086279eac1dcc000"
+    },
+    "app/Models/Common.php": {
+      "before": "9feb080788e2bad434ec76063d06fef4507137fbf09173059a662463a722bd18",
+      "after": "9feb080788e2bad434ec76063d06fef4507137fbf09173059a662463a722bd18"
+    },
+    "email_task/Send Custom Quotation/Custom/Quotation-CP.html": {
+      "before": "39e1d9bed338f4314fc5c53629341ff12f699dabbed12f7aad525b0fb92c0e9e",
+      "after": "39e1d9bed338f4314fc5c53629341ff12f699dabbed12f7aad525b0fb92c0e9e"
+    }
+  },
+  "tracked_modified_files": [],
+  "all_new_paths_scoped": true,
+  "new_file_count": 24,
+  "requested_document_count": 10,
+  "direct_composer_count": 29,
+  "direct_npm_count": 12,
+  "matrix_missing_packages": [],
+  "invalid_json": [],
+  "missing_relative_links": []
+}

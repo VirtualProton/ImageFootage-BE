@@ -1,0 +1,221 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+...............................................................  63 / 186 ( 33%)
+............................................................... 126 / 186 ( 67%)
+.....................SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSFFFFFFF    186 / 186 (100%)
+
+Time: 4.28 seconds, Memory: 98.00 MB
+
+There were 7 failures:
+
+1) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "amount" (1, 'INR', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+2) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "currency" (11800, 'USD', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+3) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "reference" (11800, 'INR', 'QTN-unrelated')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+4) Tests\KnownFailures\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice
+LEGACY-PAY-02: stale/pending response downgrades paid invoice state.
+Failed asserting that 0 is identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:35
+
+5) Tests\KnownFailures\SecurityInvariantTest::testMissingLoginTypeMustNotBypassJwtProtection
+LEGACY-AUTH-01: missing Login-Type reaches next without token validation.
+Failed asserting that 200 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:17
+
+6) Tests\KnownFailures\SecurityInvariantTest::testDisabledAdminMustNotRetainAdminSession
+LEGACY-AUTH-02: disabled-admin branch logs out the default guard instead of admins.
+Failed asserting that true is false.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:24
+
+7) Tests\KnownFailures\SecurityInvariantTest::testAuthenticatedMeResponseMustNotExposePasswordHash
+LEGACY-AUTH-03: User hidden fields are commented; /api/me serializes password hashes.
+Failed asserting that an array does not have the key 'password'.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:35
+
+--
+
+There were 32 skipped tests:
+
+1) Tests\Integration\MongoRegressionTest::testDocumentCreateRetrieveAndObjectIdMapping
+BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MongoTestCase.php:15
+
+2) Tests\Integration\MongoRegressionTest::testDocumentUpdateIsPersisted
+BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MongoTestCase.php:15
+
+3) Tests\Integration\MongoRegressionTest::testNestedFilterAndSortUseActualMongoDb
+BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MongoTestCase.php:15
+
+4) Tests\Integration\MongoRegressionTest::testTimestampSerializationPreservesCalendarValue
+BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MongoTestCase.php:15
+
+5) Tests\Integration\MongoRegressionTest::testMissingDocumentReturnsNull
+BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MongoTestCase.php:15
+
+6) Tests\Integration\MongoRegressionTest::testRawAggregationOverSyntheticProducts
+BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MongoTestCase.php:15
+
+7) Tests\Integration\MySqlRegressionTest::testModelCreationUpdateAndReadBack
+BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MySqlTestCase.php:15
+
+8) Tests\Integration\MySqlRegressionTest::testInvoiceItemRelationshipUsesInvoiceId
+BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MySqlTestCase.php:15
+
+9) Tests\Integration\MySqlRegressionTest::testMySqlStoresExactTwoDecimalMoney
+BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MySqlTestCase.php:15
+
+10) Tests\Integration\MySqlRegressionTest::testFilteringSortingAndPaginationUseActualMySql
+BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MySqlTestCase.php:15
+
+11) Tests\Integration\MySqlRegressionTest::testRollbackRestoresRowsAfterSyntheticFailure
+BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MySqlTestCase.php:15
+
+12) Tests\Integration\MySqlRegressionTest::testLegacyItemForeignKeyMetadataIsExplicit
+BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MySqlTestCase.php:15
+
+13) Tests\Integration\MySqlRegressionTest::testMissingInvoiceIsNull
+BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MySqlTestCase.php:15
+
+14) Tests\Integration\MySqlRegressionTest::testInvoiceStatusUpdatePreservesMoneyAndNumber
+BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Support\MySqlTestCase.php:15
+
+15) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "cross-store orchestrated write/partial failure" ('Product SQL/Mongo business fi...sumed.')
+BLOCKED: Product SQL/Mongo business fixture and independently isolated databases; no shared atomic transaction can be assumed.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+16) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "quotation create/edit/replace end-to-end" ('empty schema-matched MySQL, c...first.')
+BLOCKED: empty schema-matched MySQL, customer/creator/item relations and approved synthetic quotation lifecycle expectations. Gateway/renderer boundaries must be faked first.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+17) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "invoice numbering/customer selection/ownership" ('schema-matched SQL records an...mocks.')
+BLOCKED: schema-matched SQL records and business acceptance of numbering/ownership rules. No cross-user protection claim from guard mocks.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+18) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "concurrent callback exactly-once effects" ('two isolated DB connections/p...backs.')
+BLOCKED: two isolated DB connections/processes and persistence fixtures to count invoices, payments, notifications and fulfillment under concurrent callbacks.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+19) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "PayU callback end-to-end" ('vendor-approved synthetic has...orted.')
+BLOCKED: vendor-approved synthetic hash/order/merchant fixtures and isolated SQL state. Wrapper configuration is not assumed safe or supported.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+20) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "Atom callback end-to-end" ('active-provider confirmation ...lment.')
+BLOCKED: active-provider confirmation and isolated order/package fixtures; signature primitive tests do not prove fulfillment.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+21) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "Razorpay order/plan fulfillment end-to-end" ('order/package SQL fixtures an...ponse.')
+BLOCKED: order/package SQL fixtures and intended amount/reference/retry rules for legacy razor_response and razor_plan_response.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+22) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "Chromium and Browserless visual acceptance" ('a separately sandboxed networ...unner.')
+BLOCKED: a separately sandboxed network-denied renderer and approved synthetic screenshots/fonts; process execution intentionally disabled in this runner.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+23) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "custom quotation/full invoice email attachments" ('full synthetic SQL relationsh... used.')
+BLOCKED: full synthetic SQL relationships and accepted rendered CP/invoice/email reference outputs; no customer PDFs used.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+24) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "image upload/watermark end-to-end" ('approved synthetic upload/con...cient.')
+BLOCKED: approved synthetic upload/controller fixtures and watermark/orientation expectations; library resize checks alone are insufficient.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+25) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "FFmpeg video integration" ('an isolated process sandbox a... here.')
+BLOCKED: an isolated process sandbox and reviewed tiny synthetic video/thumbnail expectations; host FFmpeg exists but process execution is disabled here.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+26) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "download authorization/history/limits" ('isolated package/license/hist...ccess.')
+BLOCKED: isolated package/license/history data and business rules for cross-user and exhausted-plan access.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+27) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "S3 adapter integration" ('isolated S3 emulator/bucket c...itted.')
+BLOCKED: isolated S3 emulator/bucket credentials with deny-production policy; no cloud storage calls are permitted.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+28) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "MySQL/Mongo product filter combinations" ('schema-matched synthetic prod...oller.')
+BLOCKED: schema-matched synthetic product/category/filter fixtures for SearchController and FiltersController.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+29) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "Elasticsearch integration/index mappings" ('dedicated fixture cluster/ind...layer.')
+BLOCKED: dedicated fixture cluster/index with compatible version and synthetic mappings; controller mocks are a separate layer.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+30) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "package carry-forward calculation/duplicates" ('isolated UserPackage/download...mmand.')
+BLOCKED: isolated UserPackage/download fixtures and approved balance/year-boundary policy; do not invoke live scheduled command.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+31) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "queue worker retry/failure persistence" ('isolated queue backend and wo...ivery.')
+BLOCKED: isolated queue backend and worker process sandbox; dispatch/mail mock tests do not prove worker retries or exactly-once delivery.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+32) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "currency conversion and invalid quantity rules" ('business-approved conversion/...rrect.')
+BLOCKED: business-approved conversion/rate source and quantity semantics; no assumption that legacy item price already includes quantity is correct.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+FAILURES!
+Tests: 186, Assertions: 560, Failures: 7, Skipped: 32.

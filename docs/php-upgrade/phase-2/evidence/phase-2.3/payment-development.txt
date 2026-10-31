@@ -1,0 +1,52 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+...............................................................  63 / 175 ( 36%)
+............................................................... 126 / 175 ( 72%)
+...................................FF.....FF.....               175 / 175 (100%)
+
+Time: 4.75 seconds, Memory: 94.00 MB
+
+There were 4 failures:
+
+1) Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "amount" ('amount', 1)
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+
+2) Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "currency" ('currency', 'USD')
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+
+3) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "amount" (1, 'INR', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+4) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "currency" (11800, 'USD', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+FAILURES!
+Tests: 175, Assertions: 770, Failures: 4.

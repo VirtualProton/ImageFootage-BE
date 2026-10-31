@@ -1,0 +1,10 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+..............                                                    14 / 14 (100%)
+
+Time: 855 ms, Memory: 46.00 MB
+
+OK (14 tests, 115 assertions)

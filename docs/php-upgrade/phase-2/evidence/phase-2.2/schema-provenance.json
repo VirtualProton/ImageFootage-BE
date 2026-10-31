@@ -1,0 +1,32 @@
+{
+    "migrations": [
+        "2023_08_08_052444_create_promo_codes_table.php",
+        "2023_08_08_051827_create_imagefootage_performa_invoices_table.php",
+        "2023_08_08_051827_create_imagefootage_performa_invoice_items_table.php",
+        "2023_08_08_051827_create_imagefootage_admins_table.php",
+        "2023_08_08_051827_create_imagefootage_users_table.php",
+        "2023_08_08_051827_create_imagefootage_api_table.php",
+        "2023_08_08_051827_create_imagefootage_products_table.php",
+        "2023_08_08_051827_create_countries_table.php",
+        "2023_08_08_051827_create_states_table.php",
+        "2023_08_08_051827_create_cities_table.php",
+        "2023_08_08_051827_create_email_templates_table.php",
+        "2023_08_08_051827_create_imagefootage_user_package_table.php",
+        "2023_08_08_051827_create_jobs_table.php",
+        "2024_03_22_104400_create_failed_jobs_table.php",
+        "2024_04_17_000001_add_currency_to_imagefootage_performa_invoices_table.php",
+        "2024_01_24_081406_add_column_extra_details_in_performa_invoice_items.php",
+        "2024_03_11_121651_create_column_vendor_code_in_users_table.php",
+        "2026_04_28_100000_add_discount_amount_to_imagefootage_performa_invoices_table.php",
+        "2026_04_29_170000_add_package_extended_expiry_data_to_imagefootage_user_package_table.php"
+    ],
+    "fixture_only_product_columns": [
+        "adult_content",
+        "slug",
+        "is_premium",
+        "search_terms",
+        "expired_date"
+    ],
+    "mysql_version": "8.0.44",
+    "mongo_version": "6.0.26"
+}

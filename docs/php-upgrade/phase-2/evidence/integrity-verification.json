@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-29",
+  "protected_file_count": 436,
+  "protected_files_changed": [],
+  "application_environment_manifests_locks_dockerfile_templates_unchanged": true,
+  "tracked_files_changed": [
+    "phpunit.xml",
+    "tests/CreatesApplication.php",
+    "tests/Feature/ExampleTest.php",
+    "tests/TestCase.php"
+  ],
+  "tracked_changes_test_only": true,
+  "test_php_files_linted": 33,
+  "lint_errors": [],
+  "phpunit_xml_valid": true,
+  "phase2_document_count": 14,
+  "json_errors": [],
+  "phase3_started": false,
+  "live_services_used": false,
+  "missing_relative_document_links": [],
+  "markdown_trailing_whitespace": []
+}

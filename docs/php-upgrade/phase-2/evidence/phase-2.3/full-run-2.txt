@@ -1,0 +1,174 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+...............................................................  63 / 251 ( 25%)
+............................................................... 126 / 251 ( 50%)
+............................................................... 189 / 251 ( 75%)
+.........FF..............SSSSSSSSSSSSSSSS.......FF.....FF.....  251 / 251 (100%)
+
+Time: 37.97 seconds, Memory: 166.00 MB
+
+There were 6 failures:
+
+1) Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'paid' => false
+-    'converted' => false
+-    'mail_count' => 1
++    'paid' => true
++    'converted' => true
++    'mail_count' => 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+
+2) Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'paid' => false
+-    'converted' => false
+-    'mail_count' => 1
++    'paid' => true
++    'converted' => true
++    'mail_count' => 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+
+3) Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "amount" ('amount', 1)
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+
+4) Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "currency" ('currency', 'USD')
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+
+5) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "amount" (1, 'INR', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+6) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "currency" (11800, 'USD', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+--
+
+There were 16 skipped tests:
+
+1) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "quotation create/edit/replace end-to-end" ('SQL-backed CP creation/edit r...nding.')
+BLOCKED: SQL-backed CP creation/edit retrieval/replacement now execute; full HTTP save/edit authorization matrix and owner-approved quantity/tax/branding outputs remain pending.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+2) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "invoice numbering/customer selection/ownership" ('schema-matched SQL records an...mocks.')
+BLOCKED: schema-matched SQL records and business acceptance of numbering/ownership rules. No cross-user protection claim from guard mocks.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+3) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "concurrent callback exactly-once effects" ('Three overlapping real SQL/Co...olicy.')
+BLOCKED: Three overlapping real SQL/Common callback scenarios now pass via tests/run-concurrent.php; crash recovery, durable payment-ledger deduplication and external notification delivery still require accepted retry/compensation policy.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+4) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "PayU callback end-to-end" ('vendor-approved synthetic has...orted.')
+BLOCKED: vendor-approved synthetic hash/order/merchant fixtures and isolated SQL state. Wrapper configuration is not assumed safe or supported.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+5) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "Atom callback end-to-end" ('active-provider confirmation ...lment.')
+BLOCKED: active-provider confirmation and isolated order/package fixtures; signature primitive tests do not prove fulfillment.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+6) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "Razorpay order/plan fulfillment end-to-end" ('order/package SQL fixtures an...ponse.')
+BLOCKED: order/package SQL fixtures and intended amount/reference/retry rules for legacy razor_response and razor_plan_response.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+7) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "Chromium and Browserless visual acceptance" ('a separately sandboxed networ...unner.')
+BLOCKED: a separately sandboxed network-denied renderer and approved synthetic screenshots/fonts; process execution intentionally disabled in this runner.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+8) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "custom quotation/full invoice email attachments" ('SQL-backed CP/invoice PDFs, r...nding.')
+BLOCKED: SQL-backed CP/invoice PDFs, recipients/subjects/attachments now execute through private Swift sink; approved visual references and complete inline HTML/CC/BCC/renderer-failure matrix remain pending.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+9) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "image upload/watermark end-to-end" ('approved synthetic upload/con...cient.')
+BLOCKED: approved synthetic upload/controller fixtures and watermark/orientation expectations; library resize checks alone are insufficient.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+10) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "FFmpeg video integration" ('an isolated process sandbox a... here.')
+BLOCKED: an isolated process sandbox and reviewed tiny synthetic video/thumbnail expectations; host FFmpeg exists but process execution is disabled here.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+11) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "download authorization/history/limits" ('isolated package/license/hist...ccess.')
+BLOCKED: isolated package/license/history data and business rules for cross-user and exhausted-plan access.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+12) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "S3 adapter integration" ('isolated S3 emulator/bucket c...itted.')
+BLOCKED: isolated S3 emulator/bucket credentials with deny-production policy; no cloud storage calls are permitted.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+13) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "Elasticsearch integration/index mappings" ('dedicated fixture cluster/ind...layer.')
+BLOCKED: dedicated fixture cluster/index with compatible version and synthetic mappings; controller mocks are a separate layer.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+14) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "package carry-forward calculation/duplicates" ('actual synthetic MySQL remain...nding.')
+BLOCKED: actual synthetic MySQL remainder/sequential duplicate command now executes; owner-approved year/month/timezone rules and concurrent credit behavior still pending.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+15) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "queue worker retry/failure persistence" ('real DB queue reservation/rel...nding.')
+BLOCKED: real DB queue reservation/release/retry/fixture execution/failed-job storage now execute; production job retry orchestration, worker-process sandbox and concurrent notification idempotency still pending.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+16) Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set "currency conversion and invalid quantity rules" ('business-approved conversion/...rrect.')
+BLOCKED: business-approved conversion/rate source and quantity semantics; no assumption that legacy item price already includes quantity is correct.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php:12
+
+FAILURES!
+Tests: 251, Assertions: 1419, Failures: 6, Skipped: 16.

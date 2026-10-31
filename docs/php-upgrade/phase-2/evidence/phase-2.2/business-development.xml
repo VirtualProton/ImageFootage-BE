@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="15" assertions="252" errors="0" failures="4" skipped="0" time="32.768667">
+    <testsuite name="Integration" tests="15" assertions="252" errors="0" failures="4" skipped="0" time="32.768667">
+      <testsuite name="Tests\Integration\PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" tests="7" assertions="112" errors="0" failures="4" skipped="0" time="18.924883">
+        <testcase name="testActualPaidConversionAndSequentialReplayDoNotDuplicateMailOrArtifacts" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="38" assertions="23" time="3.857666"/>
+        <testcase name="testInvalidSignatureLeavesRealInvoiceAndNotificationsUnchanged" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="58" assertions="16" time="1.686557"/>
+        <testcase name="testRealExpiredQuotationPaidCallbackDoesNotConvertOrNotifyAgain" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="69" assertions="17" time="1.661319"/>
+        <testsuite name="Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity" tests="3" assertions="42" errors="0" failures="3" skipped="0" time="9.972414">
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="3.262111">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'paid' =&gt; false
+-    'converted' =&gt; false
+-    'mail_count' =&gt; 1
++    'paid' =&gt; true
++    'converted' =&gt; true
++    'mail_count' =&gt; 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+</failure>
+          </testcase>
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="3.262372">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'paid' =&gt; false
+-    'converted' =&gt; false
+-    'mail_count' =&gt; 1
++    'paid' =&gt; true
++    'converted' =&gt; true
++    'mail_count' =&gt; 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+</failure>
+          </testcase>
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="3.447931">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2 ('reference_id', 'QTN-unrelated')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'paid' =&gt; false
+-    'converted' =&gt; false
+-    'mail_count' =&gt; 1
++    'paid' =&gt; true
++    'converted' =&gt; true
++    'mail_count' =&gt; 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+</failure>
+          </testcase>
+        </testsuite>
+        <testcase name="testRealPersistencePreservesPaidStateAgainstPendingResponse" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="97" assertions="14" time="1.746927">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistencePreservesPaidStateAgainstPendingResponse
+LEGACY-PAY-02: real SQL paid-state downgrade; provider backward-state reachability still conditional.
+Failed asserting that 0 is identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:103
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Integration\QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" tests="8" assertions="140" errors="0" failures="0" skipped="0" time="13.843784">
+        <testcase name="testActualCustomQuotationPersistsCustomerCreatorMoneyPdfAndMail" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="29" assertions="27" time="1.802035"/>
+        <testcase name="testMissingCustomerDoesNotWriteQuotationOrCallProvider" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="51" assertions="15" time="0.068099"/>
+        <testcase name="testConversionUsesExistingInvoiceIdentityAndRealAttachmentPipeline" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="61" assertions="19" time="3.302921"/>
+        <testcase name="testEditingReadsPersistedSyntheticItemsAndReplacementCancelsOldLink" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="76" assertions="19" time="3.418910"/>
+        <testcase name="testRealExpiryCancelsOnlyDueQuotationAndRepeatedRunHasNoSecondEffect" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="93" assertions="15" time="1.731423"/>
+        <testcase name="testActualDiscountRecalculatesAndPersistsTwoDecimalSyntheticGstExample" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="108" assertions="16" time="1.753663"/>
+        <testcase name="testStorageBoundaryFailureIsReportedAfterRealQuotationAndMailPersist" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="118" assertions="15" time="1.698724"/>
+        <testcase name="testMissingInvoiceReturnsExplicit422WithoutNotification" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="130" assertions="14" time="0.068009"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

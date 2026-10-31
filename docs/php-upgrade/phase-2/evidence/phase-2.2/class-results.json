@@ -1,0 +1,89 @@
+{
+  "AtomSignatureTest": {
+    "PASS": 2
+  },
+  "ExampleTest": {
+    "PASS": 3
+  },
+  "InvoiceDatesRegressionTest": {
+    "PASS": 10
+  },
+  "IsolationTest": {
+    "PASS": 9
+  },
+  "PaymentLinkRegressionTest": {
+    "PASS": 13
+  },
+  "PermissionRegressionTest": {
+    "PASS": 19
+  },
+  "PricingRegressionTest": {
+    "PASS": 23
+  },
+  "AuthRegressionTest": {
+    "PASS": 9
+  },
+  "CriticalDefectControlsTest": {
+    "PASS": 7
+  },
+  "JwtRegressionTest": {
+    "PASS": 9
+  },
+  "PaymentRegressionTest": {
+    "PASS": 16
+  },
+  "PdfEmailRegressionTest": {
+    "PASS": 6
+  },
+  "QueueSchedulerRegressionTest": {
+    "PASS": 5
+  },
+  "QuotationRegressionTest": {
+    "PASS": 13
+  },
+  "SearchMediaRegressionTest": {
+    "PASS": 10
+  },
+  "AuthenticationPersistenceIntegrationTest": {
+    "PASS": 1,
+    "FAIL": 1
+  },
+  "CarryForwardIntegrationTest": {
+    "PASS": 1
+  },
+  "CrossStoreBusinessIntegrationTest": {
+    "PASS": 4,
+    "FAIL": 1
+  },
+  "MongoRegressionTest": {
+    "PASS": 6
+  },
+  "MySqlRegressionTest": {
+    "PASS": 9
+  },
+  "PaymentPersistenceIntegrationTest": {
+    "PASS": 3,
+    "FAIL": 4
+  },
+  "QuotationBusinessIntegrationTest": {
+    "PASS": 8
+  },
+  "SqlConcurrencyQueueIntegrationTest": {
+    "PASS": 4
+  },
+  "UnavailableFlowsTest": {
+    "BLOCKED": 16
+  },
+  "CriticalDefectVerificationTest": {
+    "FAIL": 7
+  },
+  "PaymentDefectVerificationTest": {
+    "FAIL": 7
+  },
+  "PaymentInvariantTest": {
+    "FAIL": 4
+  },
+  "SecurityInvariantTest": {
+    "FAIL": 3
+  }
+}

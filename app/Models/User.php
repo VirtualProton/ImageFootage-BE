@@ -15,6 +15,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
     protected $table = 'imagefootage_users';
     protected $guard = 'users';
+    protected $hidden = ['password', 'remember_token', 'gmail_idtoken', 'fb_token', 'otp', 'email_verify_token'];
     /**
      * The attributes that are mass assignable.
      *

@@ -1,0 +1,15 @@
+# SQL, MongoDB and cross-store coverage
+
+Latest status (Phase 2.2): **all fourteen original real-engine tests executed and PASS**, using dedicated local MySQL 8.0.44 and MongoDB 6.0.26, unchanged PHP/packages/extension. Additional real business/transaction/uniqueness/locking/Product filter/failure/retry tests execute; cross-store retry identity invariant fails as LEGACY-DATA-01. See [current report/evidence](16_REAL_DATABASE_INTEGRATION_REPORT.md). Remaining text below is the historical pre-provisioning Phase 2 baseline; it is superseded where it says these fourteen tests were not executed.
+
+Executable tests: `tests/Integration/MySqlRegressionTest.php` (8 cases) and `MongoRegressionTest.php` (6 cases). Both are **BLOCKED** in this environment because dedicated fixtures were not supplied/enabled. They are real-engine tests, not SQLite or query-double substitutes. Their first real execution may expose schema/driver discrepancies and is still required before acceptance.
+
+MySQL scenarios use the existing PromoCode, Invoice and InvoiceItem models: create/update/read, invoice item relationship, DECIMAL round-trip, active filtering/name sorting/pagination, nested transaction rollback, legacy FK metadata, missing record and status update preserving number/amount. The baseline migration does not declare item foreign keys; the metadata characterization checks that assumption without disabling constraints. Actual schema drift or an additional FK must be investigated rather than adjusted silently.
+
+Mongo scenarios use ImageFilterValue and the actual `image_filter_values` collection: create/read, ObjectId/id round-trip, nested attributes update, nested filtering, descending sort, timestamp/JSON serialization, missing document and raw aggregation. Only recorded test ObjectIds are removed. No database or collection is dropped. `_id` mapping/API compatibility was inspected against the installed legacy integration; successful runtime execution remains unverified.
+
+Setup and fail-closed rules are in [02_TEST_ENVIRONMENT.md](02_TEST_ENVIRONMENT.md). SQL tables must initially be empty/InnoDB and free from events/triggers; Mongo collection must initially be empty. No migrations or schema changes run from tests. Connection failures produce explicit BLOCKED skips; invalid identity/configuration aborts, and post-setup behavior/schema mismatches fail normally.
+
+`ReadFixtureConnection`, `ObservedConnection` and `CallbackStore` are used elsewhere only for isolated contract/delegation assertions. Their PASS results do not satisfy SQL precision, query result correctness, transactions or locking requirements.
+
+Cross-store product write/error/partial-failure integration is an explicit blocked coverage gate. SQL rollback cannot be assumed to undo MongoDB writes; the application spans independent stores and external media. A synthetic Product fixture with independently verified SQL/Mongo states and injected failures is required. No claim of cross-store atomicity, consistency or rollback is made from mocks.

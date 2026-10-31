@@ -1,0 +1,110 @@
+[
+  {
+    "gate": "cross-store orchestrated write/partial failure",
+    "status": "RESOLVED",
+    "tests": "CrossStoreBusinessIntegrationTest",
+    "evidence_and_remaining": "Actual Product importer, both engines, SQL failure, Mongo BSON failure, partial state, retry and duplicate processing. Retry integrity invariant fails and remains red."
+  },
+  {
+    "gate": "quotation create/edit/replace end-to-end",
+    "status": "PARTIAL",
+    "tests": "QuotationBusinessIntegrationTest",
+    "evidence_and_remaining": "Actual Common create/edit retrieval/replacement/expiry/conversion; full HTTP authorization and approved visual/tax/quantity acceptance still blocked."
+  },
+  {
+    "gate": "invoice numbering/customer selection/ownership",
+    "status": "PARTIAL",
+    "tests": "QuotationBusinessIntegrationTest; SqlConcurrencyQueueIntegrationTest",
+    "evidence_and_remaining": "Customer/creator joins, generated seven-digit identity, conversion retains identity; invoice-name uniqueness absent. Cross-user policy/authorization and approved number policy pending."
+  },
+  {
+    "gate": "concurrent callback exactly-once effects",
+    "status": "BLOCKED",
+    "tests": "SqlConcurrencyQueueIntegrationTest; PaymentPersistenceIntegrationTest",
+    "evidence_and_remaining": "Engine two-connection lock and sequential real fulfillment/replay execute; application concurrent callback exactly-once proof still requires coordinated two-process worker harness."
+  },
+  {
+    "gate": "PayU callback end-to-end",
+    "status": "BLOCKED",
+    "tests": "existing gate",
+    "evidence_and_remaining": "Approved synthetic merchant/hash/order fixture and full order schema not supplied; no live service fallback."
+  },
+  {
+    "gate": "Atom callback end-to-end",
+    "status": "BLOCKED",
+    "tests": "AtomSignatureTest",
+    "evidence_and_remaining": "Primitive signatures execute; active deployment/provider path and full order/package fixtures remain unverified."
+  },
+  {
+    "gate": "Razorpay order/plan fulfillment end-to-end",
+    "status": "BLOCKED",
+    "tests": "PaymentPersistenceIntegrationTest",
+    "evidence_and_remaining": "Payment-link quotation/invoice lifecycle executes; separate legacy razor_response/razor_plan_response order/plan fixtures remain absent."
+  },
+  {
+    "gate": "Chromium and Browserless visual acceptance",
+    "status": "BLOCKED",
+    "tests": "existing gate",
+    "evidence_and_remaining": "Processes remain disabled; real Dompdf runs. Approved screenshots/font/renderer sandbox unavailable."
+  },
+  {
+    "gate": "custom quotation/full invoice email attachments",
+    "status": "PARTIAL",
+    "tests": "QuotationBusinessIntegrationTest",
+    "evidence_and_remaining": "Actual CP template -> Dompdf -> Swift attachment/recipient/subject and cloud boundary sink; approved branded visuals/CC/BCC/full HTML rendering expectations remain pending."
+  },
+  {
+    "gate": "image upload/watermark end-to-end",
+    "status": "BLOCKED",
+    "tests": "SearchMediaRegressionTest",
+    "evidence_and_remaining": "Existing GD primitive checks retained; controller upload/orientation/watermark fixtures/acceptance incomplete."
+  },
+  {
+    "gate": "FFmpeg video integration",
+    "status": "BLOCKED",
+    "tests": "existing gate",
+    "evidence_and_remaining": "Host binary exists; no approved process/network sandbox or actual video-path fixture. Restrictions retained."
+  },
+  {
+    "gate": "download authorization/history/limits",
+    "status": "BLOCKED",
+    "tests": "existing gate",
+    "evidence_and_remaining": "Entitlement/history/download controller fixtures and cross-user policy incomplete."
+  },
+  {
+    "gate": "S3 adapter integration",
+    "status": "BLOCKED",
+    "tests": "UploadSink",
+    "evidence_and_remaining": "Strict SDK construction/upload sink is boundary-only. No S3 emulator/bucket is running; no cloud integration success claimed."
+  },
+  {
+    "gate": "MySQL/Mongo product filter combinations",
+    "status": "RESOLVED",
+    "tests": "CrossStoreBusinessIntegrationTest::testActualProductSearchCombinesMongoFilterSqlCategoryAndPagination",
+    "evidence_and_remaining": "Actual Product Mongo filter -> SQL keyword/category + pagination and empty filter response verified. Full separate SearchController/FiltersController matrices still additional scope."
+  },
+  {
+    "gate": "Elasticsearch integration/index mappings",
+    "status": "BLOCKED",
+    "tests": "SearchMediaRegressionTest",
+    "evidence_and_remaining": "Mocked client contracts retained; no local cluster/mappings provisioned."
+  },
+  {
+    "gate": "package carry-forward calculation/duplicates",
+    "status": "PARTIAL",
+    "tests": "CarryForwardIntegrationTest",
+    "evidence_and_remaining": "Actual command and SQL remainder 10-3=7, repeat sequential run and expiry are characterized; annual/month/timezone policy and concurrency acceptance remain open."
+  },
+  {
+    "gate": "queue worker retry/failure persistence",
+    "status": "PARTIAL",
+    "tests": "SqlConcurrencyQueueIntegrationTest",
+    "evidence_and_remaining": "Actual DB queue reserve/release/retry/fixture handle/ack and failed-job records; full application worker retry orchestration/concurrent mail effects remain blocked."
+  },
+  {
+    "gate": "currency conversion and invalid quantity rules",
+    "status": "PENDING ACCEPTANCE",
+    "tests": "PricingRegressionTest",
+    "evidence_and_remaining": "No business-approved currency rate/quantity/rounding decisions supplied; no guessed policy."
+  }
+]

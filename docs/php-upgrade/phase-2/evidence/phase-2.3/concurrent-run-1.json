@@ -1,0 +1,48 @@
+{
+    "scenarios": [
+        {
+            "scenario": "duplicate-paid",
+            "status": "PASS",
+            "simultaneous_sql_lock_waits": 2,
+            "invoice_count": 1,
+            "item_count": 1,
+            "callback_notifications": 1,
+            "callback_artifacts": 1,
+            "final_state": {
+                "status": "1",
+                "payment_status": "Transction Success",
+                "proforma_type": "2"
+            }
+        },
+        {
+            "scenario": "completed-paid-pending",
+            "status": "PASS",
+            "simultaneous_sql_lock_waits": 2,
+            "invoice_count": 1,
+            "item_count": 1,
+            "callback_notifications": 0,
+            "callback_artifacts": 0,
+            "final_state": {
+                "status": "1",
+                "payment_status": "Transction Success",
+                "proforma_type": "2"
+            }
+        },
+        {
+            "scenario": "completed-failed-paid",
+            "status": "PASS",
+            "simultaneous_sql_lock_waits": 2,
+            "invoice_count": 1,
+            "item_count": 1,
+            "callback_notifications": 0,
+            "callback_artifacts": 0,
+            "final_state": {
+                "status": "1",
+                "payment_status": "Transction Success",
+                "proforma_type": "2"
+            }
+        }
+    ],
+    "all_passed": true,
+    "scope": "Actual concurrent PHP callbacks, MySQL row locks, Common conversion, Dompdf and synthetic Swift\/cloud\/provider sinks; no crash-recovery exactly-once claim."
+}

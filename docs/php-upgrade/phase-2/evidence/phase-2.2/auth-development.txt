@@ -1,0 +1,19 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+.F                                                                  2 / 2 (100%)
+
+Time: 624 ms, Memory: 44.00 MB
+
+There was 1 failure:
+
+1) Tests\Integration\AuthenticationPersistenceIntegrationTest::testDisabledAdminCannotRetainRealSqlAuthenticatedSession
+LEGACY-AUTH-02: inactive-admin guard retention confirmed with real SQL.
+Failed asserting that true is false.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php:33
+
+FAILURES!
+Tests: 2, Assertions: 30, Failures: 1.

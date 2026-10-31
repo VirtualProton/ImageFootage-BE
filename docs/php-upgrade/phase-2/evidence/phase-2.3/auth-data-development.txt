@@ -1,0 +1,141 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+...............................................................  63 / 175 ( 36%)
+............................................................... 126 / 175 ( 72%)
+...................................FFFFFFFFFFF...               175 / 175 (100%)
+
+Time: 4.89 seconds, Memory: 94.00 MB
+
+There were 11 failures:
+
+1) Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "amount" ('amount', 1)
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+
+2) Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "currency" ('currency', 'USD')
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+
+3) Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "reference" ('reference_id', 'QTN-unrelated')
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+
+4) Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0 ('created')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'status' => 1
+-    'payment_status' => 'Transction Success'
++    'status' => 0
++    'payment_status' => 'Pending'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48
+
+5) Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1 ('pending')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'status' => 1
+-    'payment_status' => 'Transction Success'
++    'status' => 0
++    'payment_status' => 'Pending'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48
+
+6) Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2 ('expired')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'status' => 1
+-    'payment_status' => 'Transction Success'
++    'status' => 3
++    'payment_status' => 'Failed'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48
+
+7) Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3 ('cancelled')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'status' => 1
+-    'payment_status' => 'Transction Success'
++    'status' => 3
++    'payment_status' => 'Failed'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48
+
+8) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "amount" (1, 'INR', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+9) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "currency" (11800, 'USD', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+10) Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "reference" (11800, 'INR', 'QTN-unrelated')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+
+11) Tests\KnownFailures\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice
+LEGACY-PAY-02: stale/pending response downgrades paid invoice state.
+Failed asserting that 0 is identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:35
+
+FAILURES!
+Tests: 175, Assertions: 748, Failures: 11.

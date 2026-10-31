@@ -1,0 +1,54 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+...................E........FF..                                  32 / 32 (100%)
+
+Time: 19.2 seconds, Memory: 122.00 MB
+
+There was 1 error:
+
+1) Tests\Integration\AuthenticationPersistenceIntegrationTest::testPreviouslyIssuedSessionIsDeniedAfterRealSqlDeactivationAndApiGuardSurvives
+BadMethodCallException: Method Illuminate\Auth\SessionGuard::forgetUser does not exist.
+
+C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Support\Traits\Macroable.php:104
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php:46
+
+--
+
+There were 2 failures:
+
+1) Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'paid' => false
+-    'converted' => false
+-    'mail_count' => 1
++    'paid' => true
++    'converted' => true
++    'mail_count' => 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+
+2) Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'paid' => false
+-    'converted' => false
+-    'mail_count' => 1
++    'paid' => true
++    'converted' => true
++    'mail_count' => 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+
+ERRORS!
+Tests: 32, Assertions: 309, Errors: 1, Failures: 2.

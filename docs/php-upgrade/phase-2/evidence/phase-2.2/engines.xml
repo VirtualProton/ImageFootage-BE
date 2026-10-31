@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="14" assertions="115" errors="0" failures="0" skipped="0" time="0.707169">
+    <testsuite name="Integration" tests="14" assertions="115" errors="0" failures="0" skipped="0" time="0.707169">
+      <testsuite name="Tests\Integration\MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" tests="6" assertions="21" errors="0" failures="0" skipped="0" time="0.346468">
+        <testcase name="testDocumentCreateRetrieveAndObjectIdMapping" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="9" assertions="4" time="0.233980"/>
+        <testcase name="testDocumentUpdateIsPersisted" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="17" assertions="3" time="0.026538"/>
+        <testcase name="testNestedFilterAndSortUseActualMongoDb" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="25" assertions="4" time="0.022720"/>
+        <testcase name="testTimestampSerializationPreservesCalendarValue" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="33" assertions="4" time="0.022648"/>
+        <testcase name="testMissingDocumentReturnsNull" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="41" assertions="3" time="0.020032"/>
+        <testcase name="testRawAggregationOverSyntheticProducts" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="46" assertions="3" time="0.020550"/>
+      </testsuite>
+      <testsuite name="Tests\Integration\MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" tests="8" assertions="94" errors="0" failures="0" skipped="0" time="0.360701">
+        <testcase name="testModelCreationUpdateAndReadBack" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="11" assertions="12" time="0.054777"/>
+        <testcase name="testInvoiceItemRelationshipUsesInvoiceId" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="20" assertions="11" time="0.029255"/>
+        <testcase name="testMySqlStoresExactTwoDecimalMoney" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="29" assertions="12" time="0.042886"/>
+        <testcase name="testFilteringSortingAndPaginationUseActualMySql" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="37" assertions="12" time="0.047054"/>
+        <testcase name="testRollbackRestoresRowsAfterSyntheticFailure" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="48" assertions="12" time="0.027875"/>
+        <testcase name="testLegacyItemForeignKeyMetadataIsExplicit" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="62" assertions="11" time="0.046400"/>
+        <testcase name="testMissingInvoiceIsNull" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="69" assertions="11" time="0.038843"/>
+        <testcase name="testInvoiceStatusUpdatePreservesMoneyAndNumber" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="74" assertions="13" time="0.073611"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

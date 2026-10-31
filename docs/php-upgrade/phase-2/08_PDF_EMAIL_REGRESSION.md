@@ -1,0 +1,15 @@
+# PDF and email regression coverage
+
+Phase 2.2 now executes unchanged complete CP quotation/invoice HTML through actual Common + Dompdf using synthetic SQL customer/creator/items and logos. Real Swift messages capture subject/recipient/PDF attachment bytes in a private array sink before file cleanup. Approved visuals/Chromium/Browserless/full inline-HTML/CC/BCC matrix remain pending; no SMTP or cloud delivery occurs. See [current report](16_REAL_DATABASE_INTEGRATION_REPORT.md). Earlier statements below about missing full lifecycle fixtures are historical where superseded.
+
+Tests: `tests/Feature/PdfEmailRegressionTest.php`; synthetic input `tests/Fixtures/invoice.html`. No existing template or renderer implementation was changed.
+
+The actual `Common::savePdfFromHtml` pipeline is exercised with synthetic HTML and private temporary output. Local browser process execution is disabled; if a browser is detected its process attempt fails safely and the existing fallback uses the installed Dompdf. Assertions check the PDF header, nonempty output, decompressed text containing customer/118.00, explicit two-page structure, dummy payment link and an embedded generated PNG. Bytes, timestamps, renderer IDs and compressed-stream layout are not used as golden-file equality. A test-scoped wrapper instance permits inspecting the same rendered document.
+
+This establishes the Dompdf fallback with built-in Helvetica, simple table/page break and synthetic image/link. It does **not** establish real Chromium/Browserless rendering, production font metrics, branded logo/layout fidelity, missing-asset behavior in full business templates, actual Common tax-row construction, full quotation/invoice email attachments or approved screenshots. Those acceptance/integration scenarios remain BLOCKED/PENDING ACCEPTANCE. No real PDF/browser endpoint or existing customer PDF is used as a fixture.
+
+The CP HTML test checks existing labels, fixed company identity and dynamic placeholders without rewriting the file. It is a template contract check, not a fabricated test of the full save_proforma lifecycle.
+
+Email jobs execute with Laravel 5.8 MailFake: SendEmail/SendPlanEmail synthetic recipients, subjects, view names/data and independence of recipient/details across two messages. Synthetic transport failure is propagated from the job for a worker to observe; actual backend retry/delivery behavior remains BLOCKED. Fakes never dispatch messages to a transport. The current mailable builders do not themselves attach the business PDFs; attachments are constructed elsewhere in the blocked invoice lifecycle, so no attachment coverage is claimed from checking the builder.
+
+CC/BCC behavior, full Blade HTML rendering with all business relationships, attachment contents/paths and failure cleanup require approved synthetic lifecycle fixtures. Keep these explicit gaps separate from the successful synthetic PDF and mail-job tests. See [fixtures](03_TEST_FIXTURES.md), [traceability](11_TEST_TRACEABILITY_MATRIX.md) and [known defects](13_KNOWN_LEGACY_DEFECTS.md).

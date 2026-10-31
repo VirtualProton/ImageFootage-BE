@@ -1,0 +1,444 @@
+business_path,test_file,scenario,layer,expected,status,detail
+Existing Phase 2.1 route/model mapping retained,tests/Unit/AtomSignatureTest.php,Tests\Unit\AtomSignatureTest::testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/AtomSignatureTest.php,Tests\Unit\AtomSignatureTest::testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/ExampleTest.php,Tests\Unit\ExampleTest::testBasicTest,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/InvoiceDatesRegressionTest.php,Tests\Unit\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #6,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #7,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/IsolationTest.php,Tests\Unit\IsolationTest::testApplicationUsesOnlyPrivateTestStorageAndDiscardTransports,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testNonPositiveLinkAmountsNeverCallGateway with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testNonPositiveLinkAmountsNeverCallGateway with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testNonPositiveLinkAmountsNeverCallGateway with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PaymentLinkRegressionTest.php,Tests\Unit\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping with data set #6,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping with data set #7,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testRequestActionClassification with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testRequestActionClassification with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testRequestActionClassification with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testRequestActionClassification with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testRequestActionClassification with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testRequestActionClassification with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testRequestActionClassification with data set #6,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testRequestActionClassification with data set #7,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testGuestHasNoPermissions,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testSuperAdminPassesProtectedMiddleware,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PermissionRegressionTest.php,Tests\Unit\PermissionRegressionTest::testSubadminCanViewButCannotEditFromIndependentCachedPermissionFixture,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,"Tests\Unit\PricingRegressionTest::testObservedSubtotalSelection with data set ""items take precedence""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,"Tests\Unit\PricingRegressionTest::testObservedSubtotalSelection with data set ""subscription""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,"Tests\Unit\PricingRegressionTest::testObservedSubtotalSelection with data set ""total minus tax""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,"Tests\Unit\PricingRegressionTest::testObservedSubtotalSelection with data set ""zero default""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,"Tests\Unit\PricingRegressionTest::testObservedSubtotalSelection with data set ""clamp inferred negative""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,"Tests\Unit\PricingRegressionTest::testObservedSubtotalSelection with data set ""observed quantity ignored""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds with data set #6,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds with data set #7,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #6,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #7,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Unit/PricingRegressionTest.php,Tests\Unit\PricingRegressionTest::testAbsentPromoHasNoDiscount,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testAdminValidationRejectsMissingFieldsBeforeDatabaseAccess,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testAdminValidationRejectsMalformedEmailAndShortPassword,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testSuccessfulAdminLoginCreatesOnlyTheAdminSession,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testWrongAdminPasswordDoesNotAuthenticate,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testAdminLogoutClearsAdminAuthentication,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testGuestCannotOpenAdminDashboard,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testObservedApiValidationUsesHttp200AndFieldErrors,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testApiIncorrectPasswordPreservesErrorContract,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/AuthRegressionTest.php,Tests\Feature\AuthRegressionTest::testApiSuccessfulLoginPreservesFieldsAndMisspellings,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/CriticalDefectControlsTest.php,Tests\Feature\CriticalDefectControlsTest::testNormalHeaderStillRejectsNoTokenOnTheSameProtectedRoute,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/CriticalDefectControlsTest.php,Tests\Feature\CriticalDefectControlsTest::testIndependentControllerAuthStillProtectsMeWithoutLoginType,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/CriticalDefectControlsTest.php,Tests\Feature\CriticalDefectControlsTest::testCallbackFixtureHonorsInvoicePredicatesAndSelectedColumns,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/CriticalDefectControlsTest.php,Tests\Feature\CriticalDefectControlsTest::testMatchingFinancialIdentityReachesInvoiceCreationBoundary,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/CriticalDefectControlsTest.php,Tests\Feature\CriticalDefectControlsTest::testInvalidSignatureCannotFetchOrFulfillUnconvertedQuotation,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/CriticalDefectControlsTest.php,Tests\Feature\CriticalDefectControlsTest::testValidSignatureWithUnknownLocalReferenceCannotWriteAnInvoice,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/CriticalDefectControlsTest.php,Tests\Feature\CriticalDefectControlsTest::testApiMeWithValidTokenPreservesNonSecretIdentityFields,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/ExampleTest.php,Tests\Feature\ExampleTest::testExistingAdminLoginPageIsPublic,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/ExampleTest.php,Tests\Feature\ExampleTest::testRootIsAbsentWithTheIsolatedNonRootLogRoute,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testRealJwtSignatureAndRequiredClaimsRoundTrip,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testInvalidSignatureIsRejectedByActualJwtDecoder,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testExpirationIsEnforcedByActualJwtDecoder,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testNormalHeaderMissingTokenHasLegacy401Shape,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testNormalHeaderMalformedTokenIsRejected,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testExpiredTokenHasExistingMiddlewareErrorShape,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testRefreshProducesNewTokenAndBlacklistsOldOne,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testApiLogoutRevokesSuppliedToken,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/JwtRegressionTest.php,Tests\Feature\JwtRegressionTest::testApiRefreshPreservesNestedResponseContract,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #6,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testLatePaidQuotationRemainsCancelledAndDoesNotConvert,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testSequentialReplaysDoNotRequestAnotherConversionWhenPersistenceReportsAlreadyConverted,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testUnconvertedPaidQuotationDelegatesToExistingInvoiceCreator,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testGatewayFailureDoesNotWritePaymentState,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PaymentRegressionTest.php,Tests\Feature\PaymentRegressionTest::testRetryAfterGatewayFailureCanProcessSyntheticPaidResponse,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PdfEmailRegressionTest.php,Tests\Feature\PdfEmailRegressionTest::testCommonPdfFallbackProducesContentAndMultiplePagesFromSyntheticHtml,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PdfEmailRegressionTest.php,Tests\Feature\PdfEmailRegressionTest::testBrowserlessEndpointIsAbsentAndProcessExecutionIsDisabled,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PdfEmailRegressionTest.php,Tests\Feature\PdfEmailRegressionTest::testCustomQuotationTemplateContractIsPreserved,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PdfEmailRegressionTest.php,Tests\Feature\PdfEmailRegressionTest::testOrderEmailJobUsesSyntheticRecipientSubjectAndViewData,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PdfEmailRegressionTest.php,Tests\Feature\PdfEmailRegressionTest::testPlanEmailJobDoesNotLeakRecipientOrDetailsBetweenMessages,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/PdfEmailRegressionTest.php,Tests\Feature\PdfEmailRegressionTest::testEmailJobPropagatesSyntheticTransportFailureForWorkerRetry,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QueueSchedulerRegressionTest.php,Tests\Feature\QueueSchedulerRegressionTest::testEmailAndMediaJobsDispatchWithoutRunningHandles,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QueueSchedulerRegressionTest.php,Tests\Feature\QueueSchedulerRegressionTest::testSchedulerRegistersOnlyExistingActiveBusinessCadences,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QueueSchedulerRegressionTest.php,Tests\Feature\QueueSchedulerRegressionTest::testQuotationExpiryDelegatesGatewayCancellationAndCompilesScopedUpdate,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QueueSchedulerRegressionTest.php,Tests\Feature\QueueSchedulerRegressionTest::testNoEligibleQuotationCausesNoWrite,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QueueSchedulerRegressionTest.php,Tests\Feature\QueueSchedulerRegressionTest::testEmptyOrAlreadyProcessedExpiryQueryIsRepeatableAtBoundary,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #4,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #5,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testMissingCustomerAddressListsRequiredFields,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testValidCustomerAddressCanComeFromRequest,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testCommonStatusTransitionSqlAndGatewayCancellation with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testCommonStatusTransitionSqlAndGatewayCancellation with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testCommonStatusTransitionSqlAndGatewayCancellation with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testMissingStatusUpdateReturnsExistingFailureContract,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/QuotationRegressionTest.php,Tests\Feature\QuotationRegressionTest::testAdminCancellationDelegatesGatewayCancellationAfterSuccessfulUpdate,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testElasticSearchControllerContractAndQuery with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testElasticSearchControllerContractAndQuery with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testSearchIndexFailureHasExistingErrorContract,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testKeywordVariantsHaveObservedOrder,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testLocalStorageFixtureRoundTripAndMissingFile,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Feature/SearchMediaRegressionTest.php,Tests\Feature\SearchMediaRegressionTest::testInterventionGdResizesSyntheticImageAndRejectsInvalidInput,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,PASS,
+POST /admin/authenticate and /api/login -> real guard/Eloquent provider,tests/Integration/AuthenticationPersistenceIntegrationTest.php,Tests\Integration\AuthenticationPersistenceIntegrationTest::testActualSqlAdminAndApiAuthenticationUseSeparateGuards,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+POST /admin/authenticate and /api/login -> real guard/Eloquent provider,tests/Integration/AuthenticationPersistenceIntegrationTest.php,Tests\Integration\AuthenticationPersistenceIntegrationTest::testDisabledAdminCannotRetainRealSqlAuthenticatedSession,real database integration,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\Integration\AuthenticationPersistenceIntegrationTest::testDisabledAdminCannotRetainRealSqlAuthenticatedSession
+LEGACY-AUTH-02: inactive-admin guard retention confirmed with real SQL.
+Failed asserting that true is false.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php:33"
+package:to-credit-balance -> CreateEntryForCarryForwardBalance -> UserPackage,tests/Integration/CarryForwardIntegrationTest.php,Tests\Integration\CarryForwardIntegrationTest::testActualBalanceCommandCreditsSyntheticRemainderOnceOnSequentialRuns,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue,tests/Integration/CrossStoreBusinessIntegrationTest.php,Tests\Integration\CrossStoreBusinessIntegrationTest::testActualProductImportCoordinatesSqlMongoAndRepeatedImportDoesNotDuplicate,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue,tests/Integration/CrossStoreBusinessIntegrationTest.php,Tests\Integration\CrossStoreBusinessIntegrationTest::testActualSqlFailureBeforeMongoWriteLeavesNoDocument,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue,tests/Integration/CrossStoreBusinessIntegrationTest.php,Tests\Integration\CrossStoreBusinessIntegrationTest::testMongoFailureLeavesSqlWriteAndRetryCreatesOnlyPartialDocument,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue,tests/Integration/CrossStoreBusinessIntegrationTest.php,Tests\Integration\CrossStoreBusinessIntegrationTest::testActualProductSearchCombinesMongoFilterSqlCategoryAndPagination,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue,tests/Integration/CrossStoreBusinessIntegrationTest.php,Tests\Integration\CrossStoreBusinessIntegrationTest::testRetryMustRestoreCompleteCrossStoreProductIdentity,real database integration,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\Integration\CrossStoreBusinessIntegrationTest::testRetryMustRestoreCompleteCrossStoreProductIdentity
+LEGACY-DATA-01: retry repairs attributes but omits SQL/Mongo identity after partial write.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'product_id' => 'PH220077'
+-    'product_main_type' => 'Image'
++    'product_id' => null
++    'product_main_type' => null
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php:111"
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MongoRegressionTest.php,Tests\Integration\MongoRegressionTest::testDocumentCreateRetrieveAndObjectIdMapping,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MongoRegressionTest.php,Tests\Integration\MongoRegressionTest::testDocumentUpdateIsPersisted,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MongoRegressionTest.php,Tests\Integration\MongoRegressionTest::testNestedFilterAndSortUseActualMongoDb,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MongoRegressionTest.php,Tests\Integration\MongoRegressionTest::testTimestampSerializationPreservesCalendarValue,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MongoRegressionTest.php,Tests\Integration\MongoRegressionTest::testMissingDocumentReturnsNull,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MongoRegressionTest.php,Tests\Integration\MongoRegressionTest::testRawAggregationOverSyntheticProducts,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testModelCreationUpdateAndReadBack,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testInvoiceItemRelationshipUsesInvoiceId,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testMySqlStoresExactTwoDecimalMoney,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testFilteringSortingAndPaginationUseActualMySql,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testRollbackRestoresRowsAfterSyntheticFailure,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testLegacyItemForeignKeyMetadataIsExplicit,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testMissingInvoiceIsNull,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testInvoiceStatusUpdatePreservesMoneyAndNumber,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/MySqlRegressionTest.php,Tests\Integration\MySqlRegressionTest::testActualPrimaryKeyUniquenessRejectsDuplicateInvoiceRow,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail,tests/Integration/PaymentPersistenceIntegrationTest.php,Tests\Integration\PaymentPersistenceIntegrationTest::testActualPaidConversionAndSequentialReplayDoNotDuplicateMailOrArtifacts,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail,tests/Integration/PaymentPersistenceIntegrationTest.php,Tests\Integration\PaymentPersistenceIntegrationTest::testInvalidSignatureLeavesRealInvoiceAndNotificationsUnchanged,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail,tests/Integration/PaymentPersistenceIntegrationTest.php,Tests\Integration\PaymentPersistenceIntegrationTest::testRealExpiredQuotationPaidCallbackDoesNotConvertOrNotifyAgain,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail,tests/Integration/PaymentPersistenceIntegrationTest.php,Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0,real database integration,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'paid' => false
+-    'converted' => false
+-    'mail_count' => 1
++    'paid' => true
++    'converted' => true
++    'mail_count' => 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92"
+GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail,tests/Integration/PaymentPersistenceIntegrationTest.php,Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1,real database integration,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'paid' => false
+-    'converted' => false
+-    'mail_count' => 1
++    'paid' => true
++    'converted' => true
++    'mail_count' => 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92"
+GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail,tests/Integration/PaymentPersistenceIntegrationTest.php,Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2,real database integration,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2 ('reference_id', 'QTN-unrelated')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'paid' => false
+-    'converted' => false
+-    'mail_count' => 1
++    'paid' => true
++    'converted' => true
++    'mail_count' => 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92"
+GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail,tests/Integration/PaymentPersistenceIntegrationTest.php,Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistencePreservesPaidStateAgainstPendingResponse,real database integration,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistencePreservesPaidStateAgainstPendingResponse
+LEGACY-PAY-02: real SQL paid-state downgrade; provider backward-state reachability still conditional.
+Failed asserting that 0 is identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:103"
+Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive,tests/Integration/QuotationBusinessIntegrationTest.php,Tests\Integration\QuotationBusinessIntegrationTest::testActualCustomQuotationPersistsCustomerCreatorMoneyPdfAndMail,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive,tests/Integration/QuotationBusinessIntegrationTest.php,Tests\Integration\QuotationBusinessIntegrationTest::testMissingCustomerDoesNotWriteQuotationOrCallProvider,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive,tests/Integration/QuotationBusinessIntegrationTest.php,Tests\Integration\QuotationBusinessIntegrationTest::testConversionUsesExistingInvoiceIdentityAndRealAttachmentPipeline,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive,tests/Integration/QuotationBusinessIntegrationTest.php,Tests\Integration\QuotationBusinessIntegrationTest::testEditingReadsPersistedSyntheticItemsAndReplacementCancelsOldLink,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive,tests/Integration/QuotationBusinessIntegrationTest.php,Tests\Integration\QuotationBusinessIntegrationTest::testRealExpiryCancelsOnlyDueQuotationAndRepeatedRunHasNoSecondEffect,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive,tests/Integration/QuotationBusinessIntegrationTest.php,Tests\Integration\QuotationBusinessIntegrationTest::testActualDiscountRecalculatesAndPersistsTwoDecimalSyntheticGstExample,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive,tests/Integration/QuotationBusinessIntegrationTest.php,Tests\Integration\QuotationBusinessIntegrationTest::testStorageBoundaryFailureIsReportedAfterRealQuotationAndMailPersist,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive,tests/Integration/QuotationBusinessIntegrationTest.php,Tests\Integration\QuotationBusinessIntegrationTest::testMissingInvoiceReturnsExplicit422WithoutNotification,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+two PDO connections/row locks; DatabaseQueue; DatabaseFailedJobProvider,tests/Integration/SqlConcurrencyQueueIntegrationTest.php,Tests\Integration\SqlConcurrencyQueueIntegrationTest::testSecondRealConnectionCannotUpdateLockedInvoiceBeforeRollback,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+two PDO connections/row locks; DatabaseQueue; DatabaseFailedJobProvider,tests/Integration/SqlConcurrencyQueueIntegrationTest.php,Tests\Integration\SqlConcurrencyQueueIntegrationTest::testLegacyInvoiceNumberHasNoUniqueConstraintInVerifiedFixture,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+two PDO connections/row locks; DatabaseQueue; DatabaseFailedJobProvider,tests/Integration/SqlConcurrencyQueueIntegrationTest.php,Tests\Integration\SqlConcurrencyQueueIntegrationTest::testActualDatabaseQueueReservationReleaseRetryAndAcknowledgement,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+two PDO connections/row locks; DatabaseQueue; DatabaseFailedJobProvider,tests/Integration/SqlConcurrencyQueueIntegrationTest.php,Tests\Integration\SqlConcurrencyQueueIntegrationTest::testFailedJobProviderPersistsSyntheticFailureWithoutWorker,real database integration,See named test assertions and data provider; failure is not approved behavior,PASS,
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""quotation create/edit/replace end-to-end""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: SQL-backed CP creation/edit retrieval/replacement now execute; full HTTP save/edit authorization matrix and owner-approved quantity/tax/branding outputs remain pending.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""invoice numbering/customer selection/ownership""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: schema-matched SQL records and business acceptance of numbering/ownership rules. No cross-user protection claim from guard mocks.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""concurrent callback exactly-once effects""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,"BLOCKED: two isolated DB connections/processes and persistence fixtures to count invoices, payments, notifications and fulfillment under concurrent callbacks."
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""PayU callback end-to-end""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: vendor-approved synthetic hash/order/merchant fixtures and isolated SQL state. Wrapper configuration is not assumed safe or supported.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""Atom callback end-to-end""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: active-provider confirmation and isolated order/package fixtures; signature primitive tests do not prove fulfillment.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""Razorpay order/plan fulfillment end-to-end""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: order/package SQL fixtures and intended amount/reference/retry rules for legacy razor_response and razor_plan_response.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""Chromium and Browserless visual acceptance""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: a separately sandboxed network-denied renderer and approved synthetic screenshots/fonts; process execution intentionally disabled in this runner.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""custom quotation/full invoice email attachments""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,"BLOCKED: SQL-backed CP/invoice PDFs, recipients/subjects/attachments now execute through private Swift sink; approved visual references and complete inline HTML/CC/BCC/renderer-failure matrix remain pending."
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""image upload/watermark end-to-end""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: approved synthetic upload/controller fixtures and watermark/orientation expectations; library resize checks alone are insufficient.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""FFmpeg video integration""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: an isolated process sandbox and reviewed tiny synthetic video/thumbnail expectations; host FFmpeg exists but process execution is disabled here.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""download authorization/history/limits""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: isolated package/license/history data and business rules for cross-user and exhausted-plan access.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""S3 adapter integration""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: isolated S3 emulator/bucket credentials with deny-production policy; no cloud storage calls are permitted.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""Elasticsearch integration/index mappings""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: dedicated fixture cluster/index with compatible version and synthetic mappings; controller mocks are a separate layer.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""package carry-forward calculation/duplicates""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: actual synthetic MySQL remainder/sequential duplicate command now executes; owner-approved year/month/timezone rules and concurrent credit behavior still pending.
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""queue worker retry/failure persistence""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,"BLOCKED: real DB queue reservation/release/retry/fixture execution/failed-job storage now execute; production job retry orchestration, worker-process sandbox and concurrent notification idempotency still pending."
+Existing Phase 2.1 route/model mapping retained,tests/Integration/UnavailableFlowsTest.php,"Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set ""currency conversion and invalid quantity rules""",coverage gate,See named test assertions and data provider; failure is not approved behavior,BLOCKED,BLOCKED: business-approved conversion/rate source and quantity semantics; no assumption that legacy item price already includes quantity is correct.
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/CriticalDefectVerificationTest.php,"Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set ""missing""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set ""missing"" (array())
+LEGACY-AUTH-01: real protected route reaches URL validation without authentication.
+Failed asserting that 400 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:22"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/CriticalDefectVerificationTest.php,"Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set ""unknown""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set ""unknown"" (array('unknown'))
+LEGACY-AUTH-01: real protected route reaches URL validation without authentication.
+Failed asserting that 400 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:22"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/CriticalDefectVerificationTest.php,"Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set ""case variant""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set ""case variant"" (array('NORMAL'))
+LEGACY-AUTH-01: real protected route reaches URL validation without authentication.
+Failed asserting that 400 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:22"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/CriticalDefectVerificationTest.php,Tests\KnownFailures\CriticalDefectVerificationTest::testValidSignedTokenForMissingIdentityMustNotReachProtectedController,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\CriticalDefectVerificationTest::testValidSignedTokenForMissingIdentityMustNotReachProtectedController
+LEGACY-AUTH-01: cryptographically valid token is insufficient when its local identity does not exist.
+Failed asserting that 400 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:37"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/CriticalDefectVerificationTest.php,Tests\KnownFailures\CriticalDefectVerificationTest::testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\CriticalDefectVerificationTest::testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled
+LEGACY-AUTH-02: existing disabled account session passes Admin middleware.
+Failed asserting that 200 is identical to 302.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:50"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/CriticalDefectVerificationTest.php,Tests\KnownFailures\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #0 ('user')
+LEGACY-AUTH-03: nested Eloquent serialization includes password field.
+Failed asserting that an array does not have the key 'password'.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:65"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/CriticalDefectVerificationTest.php,Tests\KnownFailures\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #1 ('admin')
+LEGACY-AUTH-03: nested Eloquent serialization includes password field.
+Failed asserting that an array does not have the key 'password'.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:65"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentDefectVerificationTest.php,"Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set ""amount""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set ""amount"" ('amount', 1)
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentDefectVerificationTest.php,"Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set ""currency""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set ""currency"" ('currency', 'USD')
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentDefectVerificationTest.php,"Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set ""reference""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set ""reference"" ('reference_id', 'QTN-unrelated')
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &0 ()
++Array &0 (
++    0 => 'invoice payment state written'
++    1 => 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentDefectVerificationTest.php,Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0 ('created')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'status' => 1
+-    'payment_status' => 'Transction Success'
++    'status' => 0
++    'payment_status' => 'Pending'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentDefectVerificationTest.php,Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1 ('pending')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'status' => 1
+-    'payment_status' => 'Transction Success'
++    'status' => 0
++    'payment_status' => 'Pending'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentDefectVerificationTest.php,Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2 ('expired')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'status' => 1
+-    'payment_status' => 'Transction Success'
++    'status' => 3
++    'payment_status' => 'Failed'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentDefectVerificationTest.php,Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3 ('cancelled')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'status' => 1
+-    'payment_status' => 'Transction Success'
++    'status' => 3
++    'payment_status' => 'Failed'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentInvariantTest.php,"Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set ""amount""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set ""amount"" (1, 'INR', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentInvariantTest.php,"Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set ""currency""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set ""currency"" (11800, 'USD', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentInvariantTest.php,"Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set ""reference""",existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set ""reference"" (11800, 'INR', 'QTN-unrelated')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/PaymentInvariantTest.php,Tests\KnownFailures\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice
+LEGACY-PAY-02: stale/pending response downgrades paid invoice state.
+Failed asserting that 0 is identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:35"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/SecurityInvariantTest.php,Tests\KnownFailures\SecurityInvariantTest::testMissingLoginTypeMustNotBypassJwtProtection,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\SecurityInvariantTest::testMissingLoginTypeMustNotBypassJwtProtection
+LEGACY-AUTH-01: missing Login-Type reaches next without token validation.
+Failed asserting that 200 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:17"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/SecurityInvariantTest.php,Tests\KnownFailures\SecurityInvariantTest::testDisabledAdminMustNotRetainAdminSession,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\SecurityInvariantTest::testDisabledAdminMustNotRetainAdminSession
+LEGACY-AUTH-02: disabled-admin branch logs out the default guard instead of admins.
+Failed asserting that true is false.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:24"
+Existing Phase 2.1 route/model mapping retained,tests/KnownFailures/SecurityInvariantTest.php,Tests\KnownFailures\SecurityInvariantTest::testAuthenticatedMeResponseMustNotExposePasswordHash,existing contract/invariant,See named test assertions and data provider; failure is not approved behavior,FAIL,"Tests\KnownFailures\SecurityInvariantTest::testAuthenticatedMeResponseMustNotExposePasswordHash
+LEGACY-AUTH-03: User hidden fields are commented; /api/me serializes password hashes.
+Failed asserting that an array does not have the key 'password'.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:35"

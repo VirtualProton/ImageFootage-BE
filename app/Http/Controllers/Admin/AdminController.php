@@ -33,7 +33,7 @@ class AdminController extends Controller
             // Authentication passed...
            $user = Auth::guard('admins')->user();
            if($user->admin_status=="I"){
-            Auth::logout();
+            Auth::guard('admins')->logout();
             return \Redirect::back()->withWarning( 'You are Not authorised to login access.Please contact with admin !!' );
            }else{
            return redirect()->intended('admin/dashboard');

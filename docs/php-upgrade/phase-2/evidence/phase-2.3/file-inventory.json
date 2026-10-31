@@ -1,0 +1,35 @@
+{
+  "modified_since_phase23_start": [
+    "app/Http/Controllers/PaymentController.php",
+    "app/Http/Controllers/Admin/AdminController.php",
+    "app/Http/Middleware/Admin.php",
+    "app/Http/Middleware/JwtMiddleware.php",
+    "app/Models/Admin.php",
+    "app/Models/Product.php",
+    "app/Models/User.php",
+    "tests/Feature/PaymentRegressionTest.php",
+    "tests/Integration/AuthenticationPersistenceIntegrationTest.php",
+    "tests/Integration/CrossStoreBusinessIntegrationTest.php",
+    "tests/Integration/UnavailableFlowsTest.php",
+    "tests/KnownFailures/PaymentInvariantTest.php",
+    "tests/Support/BusinessFixtures.php",
+    "tests/Support/CallbackStore.php",
+    "progress.md"
+  ],
+  "new_test_files": [
+    "tests/run-concurrent.php",
+    "tests/Feature/RemediationRegressionTest.php",
+    "tests/Fixtures/ConcurrentCallbackWorkerTest.php"
+  ],
+  "documentation_modified_or_added": [
+    "docs/php-upgrade/phase-2/11_TEST_TRACEABILITY_MATRIX.md",
+    "docs/php-upgrade/phase-2/12_TEST_EXECUTION_REPORT.md",
+    "docs/php-upgrade/phase-2/13_KNOWN_LEGACY_DEFECTS.md",
+    "docs/php-upgrade/phase-2/14_PHASE_2_REPORT.md",
+    "docs/php-upgrade/phase-2/15_CRITICAL_DEFECT_VERIFICATION.md",
+    "docs/php-upgrade/phase-2/16_REAL_DATABASE_INTEGRATION_REPORT.md",
+    "docs/php-upgrade/phase-2/17_CRITICAL_REMEDIATION_REPORT.md"
+  ],
+  "evidence_directory": "docs/php-upgrade/phase-2/evidence/phase-2.3",
+  "note": "Earlier uncommitted phase work is retained; this inventory is relative to Phase 2.3 starting hashes, not git HEAD."
+}

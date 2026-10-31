@@ -1,0 +1,287 @@
+[
+  {
+    "file": "app/Http/Middleware/JwtMiddleware.php",
+    "matches": [
+      {
+        "line": 23,
+        "text": "public function handle($request, Closure $next)"
+      },
+      {
+        "line": 26,
+        "text": "if ($request->header('Login-Type') == 'normal') {"
+      },
+      {
+        "line": 30,
+        "text": "if ($request->header('Login-Type') == 'google') {"
+      },
+      {
+        "line": 35,
+        "text": "return $next($request);"
+      },
+      {
+        "line": 61,
+        "text": "if ($request->header('Login-Type') == 'facebook') {"
+      },
+      {
+        "line": 114,
+        "text": "return $next($request);"
+      }
+    ]
+  },
+  {
+    "file": "app/Http/Middleware/Admin.php",
+    "matches": [
+      {
+        "line": 20,
+        "text": "public function handle($request, Closure $next)"
+      },
+      {
+        "line": 22,
+        "text": "if(Auth::guard('admins')->check()){"
+      }
+    ]
+  },
+  {
+    "file": "app/Http/Controllers/Admin/AdminController.php",
+    "matches": [
+      {
+        "line": 24,
+        "text": "public function authenticate(Request $request)"
+      },
+      {
+        "line": 35,
+        "text": "if($user->admin_status==\"I\"){"
+      },
+      {
+        "line": 36,
+        "text": "Auth::logout();"
+      },
+      {
+        "line": 47,
+        "text": "public function logout(){"
+      }
+    ]
+  },
+  {
+    "file": "app/Http/Controllers/AuthController.php",
+    "matches": [
+      {
+        "line": 54,
+        "text": "$this->middleware('auth:api', ['except' => ['login', 'signup', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'socialLoginv2', 'getCountriesList', 'getStatesList', 'getCitiesList', 'getAdminSettings']]);"
+      },
+      {
+        "line": 307,
+        "text": "public function me()"
+      },
+      {
+        "line": 309,
+        "text": "return response()->json(auth()->user());"
+      }
+    ]
+  },
+  {
+    "file": "app/Models/User.php",
+    "matches": [
+      {
+        "line": 13,
+        "text": "class User extends Authenticatable implements JWTSubject"
+      },
+      {
+        "line": 26,
+        "text": "//    protected $hidden = ["
+      },
+      {
+        "line": 74,
+        "text": "// protected $hidden = ["
+      },
+      {
+        "line": 243,
+        "text": "public function getJWTIdentifier()"
+      },
+      {
+        "line": 253,
+        "text": "public function getJWTCustomClaims()"
+      }
+    ]
+  },
+  {
+    "file": "app/Models/Admin.php",
+    "matches": [
+      {
+        "line": 10,
+        "text": "class Admin  extends Authenticatable"
+      }
+    ]
+  },
+  {
+    "file": "app/Http/Controllers/PaymentController.php",
+    "matches": [
+      {
+        "line": 699,
+        "text": "$order  = $api->utility->verifyPaymentSignature($attributes);"
+      },
+      {
+        "line": 963,
+        "text": "$order  = $api->utility->verifyPaymentSignature($attributes);"
+      },
+      {
+        "line": 1175,
+        "text": "private function finalizePaidQuotationOrInvoice(string $invoiceName, string $paymentMode, array $paymentResponse = []): void"
+      },
+      {
+        "line": 1201,
+        "text": "$alreadyConvertedToInvoice = (string) ($invoiceRow->proforma_type ?? '') === '2' || !empty($invoiceRow->invoice_url);"
+      },
+      {
+        "line": 1202,
+        "text": "if ($alreadyConvertedToInvoice) {"
+      },
+      {
+        "line": 1615,
+        "text": "public function razorpayInvoiceResponse(Request $request)"
+      },
+      {
+        "line": 1639,
+        "text": "$api->utility->verifyPaymentSignature($attributes);"
+      },
+      {
+        "line": 1644,
+        "text": "$paymentLink = $api->paymentLink->fetch($paymentLinkId);"
+      },
+      {
+        "line": 1658,
+        "text": "if ($paymentLinkStatus === 'paid') {"
+      },
+      {
+        "line": 1687,
+        "text": "} else if (in_array($paymentLinkStatus, ['created', 'partially_paid', 'pending'], true)) {"
+      },
+      {
+        "line": 1697,
+        "text": "} else if (in_array($paymentLinkStatus, ['expired', 'cancelled'], true)) {"
+      }
+    ]
+  },
+  {
+    "file": "app/Models/Common.php",
+    "matches": [
+      {
+        "line": 254,
+        "text": "private function persistRazorpayPaymentLinkMetadata($invoiceId, $paymentLink, $referenceId = null, $requestedExpireBy = null)"
+      },
+      {
+        "line": 325,
+        "text": "private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR', $expireAt = null, $sendReminder = false)"
+      },
+      {
+        "line": 1759,
+        "text": "public function change_invoice_status($quotation_id, $status)"
+      }
+    ]
+  },
+  {
+    "file": "routes/api.php",
+    "matches": [
+      {
+        "line": 117,
+        "text": "Route::post('refresh', 'AuthController@refresh')->middleware('jwt.verify');"
+      },
+      {
+        "line": 118,
+        "text": "Route::post('me', 'AuthController@me');"
+      },
+      {
+        "line": 164,
+        "text": "Route::get('/razorpayInvoiceResponse', 'PaymentController@razorpayInvoiceResponse');"
+      },
+      {
+        "line": 190,
+        "text": "'middleware' => ['api', 'CORS','jwt.verify'],"
+      },
+      {
+        "line": 215,
+        "text": "Route::post('download-proxy', 'MediaController@downloadProxy');"
+      },
+      {
+        "line": 220,
+        "text": "// Route::get('/razorpayInvoiceResponse', 'PaymentController@razorpayInvoiceResponse');"
+      }
+    ]
+  },
+  {
+    "file": "routes/web.php",
+    "matches": [
+      {
+        "line": 459,
+        "text": "Route::post('/authenticate', 'AdminController@authenticate');"
+      },
+      {
+        "line": 469,
+        "text": "Route::group(['middleware' => ['admin', 'check.permission']], function () {"
+      }
+    ]
+  },
+  {
+    "file": "config/auth.php",
+    "matches": [
+      {
+        "line": 17,
+        "text": "'guard' => 'api',"
+      },
+      {
+        "line": 43,
+        "text": "'admins' => ["
+      },
+      {
+        "line": 48,
+        "text": "'api' => ["
+      },
+      {
+        "line": 75,
+        "text": "'model' => App\\Models\\User::class,"
+      },
+      {
+        "line": 77,
+        "text": "'admins' => ["
+      }
+    ]
+  },
+  {
+    "file": "vendor/razorpay/razorpay/src/Utility.php",
+    "matches": [
+      {
+        "line": 9,
+        "text": "public function verifyPaymentSignature($attributes)"
+      },
+      {
+        "line": 31,
+        "text": "$paymentLinkRefId  = $attributes['razorpay_payment_link_reference_id'];"
+      },
+      {
+        "line": 57,
+        "text": "// Use lang's built-in hash_equals if exists to mitigate timing attacks"
+      },
+      {
+        "line": 58,
+        "text": "if (function_exists('hash_equals'))"
+      },
+      {
+        "line": 60,
+        "text": "$verified = hash_equals($expectedSignature, $actualSignature);"
+      }
+    ]
+  },
+  {
+    "file": "vendor/laravel/framework/src/Illuminate/Auth/SessionGuard.php",
+    "matches": [
+      {
+        "line": 113,
+        "text": "public function user()"
+      },
+      {
+        "line": 481,
+        "text": "public function logout()"
+      }
+    ]
+  }
+]

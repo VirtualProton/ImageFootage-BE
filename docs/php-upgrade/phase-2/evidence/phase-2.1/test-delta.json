@@ -1,0 +1,212 @@
+[
+  {
+    "finding": "CONTROL",
+    "route": "controlled auth/callback route or fixture",
+    "execution_path": "CriticalDefectControlsTest",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testNormalHeaderStillRejectsNoTokenOnTheSameProtectedRoute",
+    "expected": "independent positive/negative boundary control; see named assertions",
+    "status": "PASS",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "CONTROL",
+    "route": "controlled auth/callback route or fixture",
+    "execution_path": "CriticalDefectControlsTest",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testIndependentControllerAuthStillProtectsMeWithoutLoginType",
+    "expected": "independent positive/negative boundary control; see named assertions",
+    "status": "PASS",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "CONTROL",
+    "route": "controlled auth/callback route or fixture",
+    "execution_path": "CriticalDefectControlsTest",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testCallbackFixtureHonorsInvoicePredicatesAndSelectedColumns",
+    "expected": "independent positive/negative boundary control; see named assertions",
+    "status": "PASS",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "CONTROL",
+    "route": "controlled auth/callback route or fixture",
+    "execution_path": "CriticalDefectControlsTest",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testMatchingFinancialIdentityReachesInvoiceCreationBoundary",
+    "expected": "independent positive/negative boundary control; see named assertions",
+    "status": "PASS",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "CONTROL",
+    "route": "controlled auth/callback route or fixture",
+    "execution_path": "CriticalDefectControlsTest",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testInvalidSignatureCannotFetchOrFulfillUnconvertedQuotation",
+    "expected": "independent positive/negative boundary control; see named assertions",
+    "status": "PASS",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "CONTROL",
+    "route": "controlled auth/callback route or fixture",
+    "execution_path": "CriticalDefectControlsTest",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testValidSignatureWithUnknownLocalReferenceCannotWriteAnInvoice",
+    "expected": "independent positive/negative boundary control; see named assertions",
+    "status": "PASS",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "CONTROL",
+    "route": "controlled auth/callback route or fixture",
+    "execution_path": "CriticalDefectControlsTest",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testApiMeWithValidTokenPreservesNonSecretIdentityFields",
+    "expected": "independent positive/negative boundary control; see named assertions",
+    "status": "PASS",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-AUTH-01",
+    "route": "POST /api/download-proxy",
+    "execution_path": "JwtMiddleware -> real MediaController",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"missing\"",
+    "expected": "401 before protected handler for absent authentication/local identity",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-AUTH-01",
+    "route": "POST /api/download-proxy",
+    "execution_path": "JwtMiddleware -> real MediaController",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"unknown\"",
+    "expected": "401 before protected handler for absent authentication/local identity",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-AUTH-01",
+    "route": "POST /api/download-proxy",
+    "execution_path": "JwtMiddleware -> real MediaController",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"case variant\"",
+    "expected": "401 before protected handler for absent authentication/local identity",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-AUTH-01",
+    "route": "POST /api/download-proxy",
+    "execution_path": "JwtMiddleware -> real MediaController",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testValidSignedTokenForMissingIdentityMustNotReachProtectedController",
+    "expected": "401 before protected handler for absent authentication/local identity",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-AUTH-02",
+    "route": "/admin/* existing session middleware boundary",
+    "execution_path": "real SessionGuard/Eloquent provider -> Admin middleware",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled",
+    "expected": "deny disabled admin (existing HTML redirect contract)",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-AUTH-03",
+    "route": "nested JSON serialization primitive; no public Admin route claimed",
+    "execution_path": "Invoice -> User/Admin model serialization",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #0",
+    "expected": "no password or remember_token fields",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-AUTH-03",
+    "route": "nested JSON serialization primitive; no public Admin route claimed",
+    "execution_path": "Invoice -> User/Admin model serialization",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #1",
+    "expected": "no password or remember_token fields",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-PAY-01",
+    "route": "GET /api/razorpayInvoiceResponse",
+    "execution_path": "SDK HMAC -> synthetic fetch/rows -> real callback -> creator spy",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\"",
+    "expected": "no payment writes or invoice-creator delegation on mismatch",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-PAY-01",
+    "route": "GET /api/razorpayInvoiceResponse",
+    "execution_path": "SDK HMAC -> synthetic fetch/rows -> real callback -> creator spy",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\"",
+    "expected": "no payment writes or invoice-creator delegation on mismatch",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-PAY-01",
+    "route": "GET /api/razorpayInvoiceResponse",
+    "execution_path": "SDK HMAC -> synthetic fetch/rows -> real callback -> creator spy",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"reference\"",
+    "expected": "no payment writes or invoice-creator delegation on mismatch",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-PAY-02",
+    "route": "GET /api/razorpayInvoiceResponse",
+    "execution_path": "consistent callback/fetched status -> completed local payment",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0",
+    "expected": "preserve status 1 and Transction Success",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-PAY-02",
+    "route": "GET /api/razorpayInvoiceResponse",
+    "execution_path": "consistent callback/fetched status -> completed local payment",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1",
+    "expected": "preserve status 1 and Transction Success",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-PAY-02",
+    "route": "GET /api/razorpayInvoiceResponse",
+    "execution_path": "consistent callback/fetched status -> completed local payment",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2",
+    "expected": "preserve status 1 and Transction Success",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  },
+  {
+    "finding": "LEGACY-PAY-02",
+    "route": "GET /api/razorpayInvoiceResponse",
+    "execution_path": "consistent callback/fetched status -> completed local payment",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3",
+    "expected": "preserve status 1 and Transction Success",
+    "status": "FAIL",
+    "evidence_limit": "synthetic boundaries; no production, real engine or exploit claim"
+  }
+]

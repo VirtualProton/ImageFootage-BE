@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="233" assertions="1301" errors="0" failures="27" skipped="16" time="38.924194">
+    <testsuite name="Unit" tests="77" assertions="124" errors="0" failures="0" skipped="0" time="1.893731">
+      <testsuite name="Tests\Unit\AtomSignatureTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\AtomSignatureTest.php" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.219549">
+        <testsuite name="Tests\Unit\AtomSignatureTest::testAtomUsesSyntheticSha512SignatureAndRejectsTampering" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.219549">
+          <testcase name="testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #0" class="Tests\Unit\AtomSignatureTest" classname="Tests.Unit.AtomSignatureTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\AtomSignatureTest.php" line="10" assertions="1" time="0.197595"/>
+          <testcase name="testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #1" class="Tests\Unit\AtomSignatureTest" classname="Tests.Unit.AtomSignatureTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\AtomSignatureTest.php" line="10" assertions="1" time="0.021954"/>
+        </testsuite>
+      </testsuite>
+      <testsuite name="Tests\Unit\ExampleTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.018831">
+        <testcase name="testBasicTest" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\ExampleTest.php" line="15" assertions="1" time="0.018831"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" tests="10" assertions="10" errors="0" failures="0" skipped="0" time="0.195627">
+        <testsuite name="Tests\Unit\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay" tests="6" assertions="6" errors="0" failures="0" skipped="0" time="0.116426">
+          <testcase name="testObservedQuotationDateDisplay with data set #0" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="11" assertions="1" time="0.019310"/>
+          <testcase name="testObservedQuotationDateDisplay with data set #1" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="11" assertions="1" time="0.018536"/>
+          <testcase name="testObservedQuotationDateDisplay with data set #2" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="11" assertions="1" time="0.018595"/>
+          <testcase name="testObservedQuotationDateDisplay with data set #3" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="11" assertions="1" time="0.017880"/>
+          <testcase name="testObservedQuotationDateDisplay with data set #4" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="11" assertions="1" time="0.018831"/>
+          <testcase name="testObservedQuotationDateDisplay with data set #5" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="11" assertions="1" time="0.023274"/>
+        </testsuite>
+        <testsuite name="Tests\Unit\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst" tests="4" assertions="4" errors="0" failures="0" skipped="0" time="0.079201">
+          <testcase name="testObservedPackageExpiryUsesExtendedValueFirst with data set #0" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="29" assertions="1" time="0.019979"/>
+          <testcase name="testObservedPackageExpiryUsesExtendedValueFirst with data set #1" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="29" assertions="1" time="0.018567"/>
+          <testcase name="testObservedPackageExpiryUsesExtendedValueFirst with data set #2" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="29" assertions="1" time="0.022172"/>
+          <testcase name="testObservedPackageExpiryUsesExtendedValueFirst with data set #3" class="Tests\Unit\InvoiceDatesRegressionTest" classname="Tests.Unit.InvoiceDatesRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\InvoiceDatesRegressionTest.php" line="29" assertions="1" time="0.018483"/>
+        </testsuite>
+      </testsuite>
+      <testsuite name="Tests\Unit\IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" tests="9" assertions="17" errors="0" failures="0" skipped="0" time="0.178349">
+        <testsuite name="Tests\Unit\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration" tests="8" assertions="8" errors="0" failures="0" skipped="0" time="0.158553">
+          <testcase name="testDatabaseGuardRefusesUnsafeConfiguration with data set #0" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="10" assertions="1" time="0.019334"/>
+          <testcase name="testDatabaseGuardRefusesUnsafeConfiguration with data set #1" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="10" assertions="1" time="0.018701"/>
+          <testcase name="testDatabaseGuardRefusesUnsafeConfiguration with data set #2" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="10" assertions="1" time="0.019162"/>
+          <testcase name="testDatabaseGuardRefusesUnsafeConfiguration with data set #3" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="10" assertions="1" time="0.017928"/>
+          <testcase name="testDatabaseGuardRefusesUnsafeConfiguration with data set #4" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="10" assertions="1" time="0.019437"/>
+          <testcase name="testDatabaseGuardRefusesUnsafeConfiguration with data set #5" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="10" assertions="1" time="0.026100"/>
+          <testcase name="testDatabaseGuardRefusesUnsafeConfiguration with data set #6" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="10" assertions="1" time="0.017506"/>
+          <testcase name="testDatabaseGuardRefusesUnsafeConfiguration with data set #7" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="10" assertions="1" time="0.020385"/>
+        </testsuite>
+        <testcase name="testApplicationUsesOnlyPrivateTestStorageAndDiscardTransports" class="Tests\Unit\IsolationTest" classname="Tests.Unit.IsolationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\IsolationTest.php" line="26" assertions="9" time="0.019796"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" tests="13" assertions="40" errors="0" failures="0" skipped="0" time="0.321381">
+        <testsuite name="Tests\Unit\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload" tests="4" assertions="28" errors="0" failures="0" skipped="0" time="0.109925">
+          <testcase name="testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #0" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="12" assertions="7" time="0.034641"/>
+          <testcase name="testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #1" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="12" assertions="7" time="0.023557"/>
+          <testcase name="testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #2" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="12" assertions="7" time="0.028134"/>
+          <testcase name="testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #3" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="12" assertions="7" time="0.023593"/>
+        </testsuite>
+        <testsuite name="Tests\Unit\PaymentLinkRegressionTest::testNonPositiveLinkAmountsNeverCallGateway" tests="3" assertions="6" errors="0" failures="0" skipped="0" time="0.079983">
+          <testcase name="testNonPositiveLinkAmountsNeverCallGateway with data set #0" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="41" assertions="2" time="0.024545"/>
+          <testcase name="testNonPositiveLinkAmountsNeverCallGateway with data set #1" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="41" assertions="2" time="0.036293"/>
+          <testcase name="testNonPositiveLinkAmountsNeverCallGateway with data set #2" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="41" assertions="2" time="0.019145"/>
+        </testsuite>
+        <testsuite name="Tests\Unit\PaymentLinkRegressionTest::testLinkExpiryBoundaries" tests="6" assertions="6" errors="0" failures="0" skipped="0" time="0.131473">
+          <testcase name="testLinkExpiryBoundaries with data set #0" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="50" assertions="1" time="0.020927"/>
+          <testcase name="testLinkExpiryBoundaries with data set #1" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="50" assertions="1" time="0.025632"/>
+          <testcase name="testLinkExpiryBoundaries with data set #2" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="50" assertions="1" time="0.021377"/>
+          <testcase name="testLinkExpiryBoundaries with data set #3" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="50" assertions="1" time="0.020321"/>
+          <testcase name="testLinkExpiryBoundaries with data set #4" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="50" assertions="1" time="0.021882"/>
+          <testcase name="testLinkExpiryBoundaries with data set #5" class="Tests\Unit\PaymentLinkRegressionTest" classname="Tests.Unit.PaymentLinkRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PaymentLinkRegressionTest.php" line="50" assertions="1" time="0.021334"/>
+        </testsuite>
+      </testsuite>
+      <testsuite name="Tests\Unit\PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" tests="19" assertions="23" errors="0" failures="0" skipped="0" time="0.473495">
+        <testsuite name="Tests\Unit\PermissionRegressionTest::testUrlToModuleMapping" tests="8" assertions="8" errors="0" failures="0" skipped="0" time="0.167554">
+          <testcase name="testUrlToModuleMapping with data set #0" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="15" assertions="1" time="0.026768"/>
+          <testcase name="testUrlToModuleMapping with data set #1" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="15" assertions="1" time="0.018940"/>
+          <testcase name="testUrlToModuleMapping with data set #2" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="15" assertions="1" time="0.025017"/>
+          <testcase name="testUrlToModuleMapping with data set #3" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="15" assertions="1" time="0.018810"/>
+          <testcase name="testUrlToModuleMapping with data set #4" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="15" assertions="1" time="0.019903"/>
+          <testcase name="testUrlToModuleMapping with data set #5" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="15" assertions="1" time="0.018076"/>
+          <testcase name="testUrlToModuleMapping with data set #6" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="15" assertions="1" time="0.018913"/>
+          <testcase name="testUrlToModuleMapping with data set #7" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="15" assertions="1" time="0.021127"/>
+        </testsuite>
+        <testsuite name="Tests\Unit\PermissionRegressionTest::testRequestActionClassification" tests="8" assertions="8" errors="0" failures="0" skipped="0" time="0.229282">
+          <testcase name="testRequestActionClassification with data set #0" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="28" assertions="1" time="0.027760"/>
+          <testcase name="testRequestActionClassification with data set #1" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="28" assertions="1" time="0.027118"/>
+          <testcase name="testRequestActionClassification with data set #2" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="28" assertions="1" time="0.022755"/>
+          <testcase name="testRequestActionClassification with data set #3" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="28" assertions="1" time="0.026094"/>
+          <testcase name="testRequestActionClassification with data set #4" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="28" assertions="1" time="0.040271"/>
+          <testcase name="testRequestActionClassification with data set #5" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="28" assertions="1" time="0.029716"/>
+          <testcase name="testRequestActionClassification with data set #6" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="28" assertions="1" time="0.029655"/>
+          <testcase name="testRequestActionClassification with data set #7" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="28" assertions="1" time="0.025913"/>
+        </testsuite>
+        <testcase name="testGuestHasNoPermissions" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="41" assertions="1" time="0.024243"/>
+        <testcase name="testSuperAdminPassesProtectedMiddleware" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="46" assertions="1" time="0.027100"/>
+        <testcase name="testSubadminCanViewButCannotEditFromIndependentCachedPermissionFixture" class="Tests\Unit\PermissionRegressionTest" classname="Tests.Unit.PermissionRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PermissionRegressionTest.php" line="55" assertions="5" time="0.025316"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" tests="23" assertions="31" errors="0" failures="0" skipped="0" time="0.486500">
+        <testsuite name="Tests\Unit\PricingRegressionTest::testObservedSubtotalSelection" tests="6" assertions="6" errors="0" failures="0" skipped="0" time="0.150504">
+          <testcase name="testObservedSubtotalSelection with data set &quot;items take precedence&quot;" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="11" assertions="1" time="0.028596"/>
+          <testcase name="testObservedSubtotalSelection with data set &quot;subscription&quot;" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="11" assertions="1" time="0.030281"/>
+          <testcase name="testObservedSubtotalSelection with data set &quot;total minus tax&quot;" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="11" assertions="1" time="0.027224"/>
+          <testcase name="testObservedSubtotalSelection with data set &quot;zero default&quot;" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="11" assertions="1" time="0.026494"/>
+          <testcase name="testObservedSubtotalSelection with data set &quot;clamp inferred negative&quot;" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="11" assertions="1" time="0.020032"/>
+          <testcase name="testObservedSubtotalSelection with data set &quot;observed quantity ignored&quot;" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="11" assertions="1" time="0.017877"/>
+        </testsuite>
+        <testsuite name="Tests\Unit\PricingRegressionTest::testDiscountClampsAndRounds" tests="8" assertions="8" errors="0" failures="0" skipped="0" time="0.163019">
+          <testcase name="testDiscountClampsAndRounds with data set #0" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="30" assertions="1" time="0.019404"/>
+          <testcase name="testDiscountClampsAndRounds with data set #1" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="30" assertions="1" time="0.018413"/>
+          <testcase name="testDiscountClampsAndRounds with data set #2" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="30" assertions="1" time="0.020758"/>
+          <testcase name="testDiscountClampsAndRounds with data set #3" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="30" assertions="1" time="0.018624"/>
+          <testcase name="testDiscountClampsAndRounds with data set #4" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="30" assertions="1" time="0.018875"/>
+          <testcase name="testDiscountClampsAndRounds with data set #5" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="30" assertions="1" time="0.017573"/>
+          <testcase name="testDiscountClampsAndRounds with data set #6" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="30" assertions="1" time="0.018986"/>
+          <testcase name="testDiscountClampsAndRounds with data set #7" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="30" assertions="1" time="0.030386"/>
+        </testsuite>
+        <testsuite name="Tests\Unit\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples" tests="8" assertions="16" errors="0" failures="0" skipped="0" time="0.153078">
+          <testcase name="testRecalculationAgainstExplicitSyntheticGstExamples with data set #0" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="48" assertions="2" time="0.020007"/>
+          <testcase name="testRecalculationAgainstExplicitSyntheticGstExamples with data set #1" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="48" assertions="2" time="0.019171"/>
+          <testcase name="testRecalculationAgainstExplicitSyntheticGstExamples with data set #2" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="48" assertions="2" time="0.018169"/>
+          <testcase name="testRecalculationAgainstExplicitSyntheticGstExamples with data set #3" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="48" assertions="2" time="0.018583"/>
+          <testcase name="testRecalculationAgainstExplicitSyntheticGstExamples with data set #4" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="48" assertions="2" time="0.020043"/>
+          <testcase name="testRecalculationAgainstExplicitSyntheticGstExamples with data set #5" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="48" assertions="2" time="0.019815"/>
+          <testcase name="testRecalculationAgainstExplicitSyntheticGstExamples with data set #6" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="48" assertions="2" time="0.019226"/>
+          <testcase name="testRecalculationAgainstExplicitSyntheticGstExamples with data set #7" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="48" assertions="2" time="0.018064"/>
+        </testsuite>
+        <testcase name="testAbsentPromoHasNoDiscount" class="Tests\Unit\PricingRegressionTest" classname="Tests.Unit.PricingRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Unit\PricingRegressionTest.php" line="70" assertions="1" time="0.019898"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Feature" tests="77" assertions="443" errors="0" failures="0" skipped="0" time="1.891815">
+      <testsuite name="Tests\Feature\AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" tests="9" assertions="41" errors="0" failures="0" skipped="0" time="0.272609">
+        <testcase name="testAdminValidationRejectsMissingFieldsBeforeDatabaseAccess" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="10" assertions="4" time="0.055803"/>
+        <testcase name="testAdminValidationRejectsMalformedEmailAndShortPassword" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="15" assertions="1" time="0.026419"/>
+        <testcase name="testSuccessfulAdminLoginCreatesOnlyTheAdminSession" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="20" assertions="5" time="0.037249"/>
+        <testcase name="testWrongAdminPasswordDoesNotAuthenticate" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="30" assertions="4" time="0.023680"/>
+        <testcase name="testAdminLogoutClearsAdminAuthentication" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="39" assertions="3" time="0.023571"/>
+        <testcase name="testGuestCannotOpenAdminDashboard" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="47" assertions="2" time="0.022399"/>
+        <testcase name="testObservedApiValidationUsesHttp200AndFieldErrors" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="52" assertions="3" time="0.022561"/>
+        <testcase name="testApiIncorrectPasswordPreservesErrorContract" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="57" assertions="2" time="0.032195"/>
+        <testcase name="testApiSuccessfulLoginPreservesFieldsAndMisspellings" class="Tests\Feature\AuthRegressionTest" classname="Tests.Feature.AuthRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\AuthRegressionTest.php" line="64" assertions="17" time="0.028732"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\CriticalDefectControlsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\CriticalDefectControlsTest.php" tests="7" assertions="63" errors="0" failures="0" skipped="0" time="0.178833">
+        <testcase name="testNormalHeaderStillRejectsNoTokenOnTheSameProtectedRoute" class="Tests\Feature\CriticalDefectControlsTest" classname="Tests.Feature.CriticalDefectControlsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\CriticalDefectControlsTest.php" line="14" assertions="2" time="0.024837"/>
+        <testcase name="testIndependentControllerAuthStillProtectsMeWithoutLoginType" class="Tests\Feature\CriticalDefectControlsTest" classname="Tests.Feature.CriticalDefectControlsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\CriticalDefectControlsTest.php" line="20" assertions="1" time="0.022508"/>
+        <testcase name="testCallbackFixtureHonorsInvoicePredicatesAndSelectedColumns" class="Tests\Feature\CriticalDefectControlsTest" classname="Tests.Feature.CriticalDefectControlsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\CriticalDefectControlsTest.php" line="25" assertions="17" time="0.025291"/>
+        <testcase name="testMatchingFinancialIdentityReachesInvoiceCreationBoundary" class="Tests\Feature\CriticalDefectControlsTest" classname="Tests.Feature.CriticalDefectControlsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\CriticalDefectControlsTest.php" line="36" assertions="20" time="0.031033"/>
+        <testcase name="testInvalidSignatureCannotFetchOrFulfillUnconvertedQuotation" class="Tests\Feature\CriticalDefectControlsTest" classname="Tests.Feature.CriticalDefectControlsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\CriticalDefectControlsTest.php" line="49" assertions="6" time="0.020839"/>
+        <testcase name="testValidSignatureWithUnknownLocalReferenceCannotWriteAnInvoice" class="Tests\Feature\CriticalDefectControlsTest" classname="Tests.Feature.CriticalDefectControlsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\CriticalDefectControlsTest.php" line="62" assertions="15" time="0.022032"/>
+        <testcase name="testApiMeWithValidTokenPreservesNonSecretIdentityFields" class="Tests\Feature\CriticalDefectControlsTest" classname="Tests.Feature.CriticalDefectControlsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\CriticalDefectControlsTest.php" line="73" assertions="2" time="0.032293"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\ExampleTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\ExampleTest.php" tests="2" assertions="3" errors="0" failures="0" skipped="0" time="0.059229">
+        <testcase name="testExistingAdminLoginPageIsPublic" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\ExampleTest.php" line="15" assertions="2" time="0.025294"/>
+        <testcase name="testRootIsAbsentWithTheIsolatedNonRootLogRoute" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\ExampleTest.php" line="24" assertions="1" time="0.033935"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" tests="9" assertions="28" errors="0" failures="0" skipped="0" time="0.211909">
+        <testcase name="testRealJwtSignatureAndRequiredClaimsRoundTrip" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="19" assertions="8" time="0.020956"/>
+        <testcase name="testInvalidSignatureIsRejectedByActualJwtDecoder" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="30" assertions="1" time="0.021349"/>
+        <testcase name="testExpirationIsEnforcedByActualJwtDecoder" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="38" assertions="1" time="0.020172"/>
+        <testcase name="testNormalHeaderMissingTokenHasLegacy401Shape" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="46" assertions="2" time="0.023769"/>
+        <testcase name="testNormalHeaderMalformedTokenIsRejected" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="52" assertions="1" time="0.029255"/>
+        <testcase name="testExpiredTokenHasExistingMiddlewareErrorShape" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="58" assertions="2" time="0.023419"/>
+        <testcase name="testRefreshProducesNewTokenAndBlacklistsOldOne" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="66" assertions="2" time="0.023542"/>
+        <testcase name="testApiLogoutRevokesSuppliedToken" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="75" assertions="3" time="0.023693"/>
+        <testcase name="testApiRefreshPreservesNestedResponseContract" class="Tests\Feature\JwtRegressionTest" classname="Tests.Feature.JwtRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\JwtRegressionTest.php" line="85" assertions="8" time="0.025754"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" tests="16" assertions="195" errors="0" failures="0" skipped="0" time="0.331910">
+        <testsuite name="Tests\Feature\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping" tests="7" assertions="102" errors="0" failures="0" skipped="0" time="0.143213">
+          <testcase name="testSignedPaymentLinkCallbackStatusMapping with data set #0" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="15" assertions="18" time="0.020380"/>
+          <testcase name="testSignedPaymentLinkCallbackStatusMapping with data set #1" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="15" assertions="14" time="0.019077"/>
+          <testcase name="testSignedPaymentLinkCallbackStatusMapping with data set #2" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="15" assertions="14" time="0.018910"/>
+          <testcase name="testSignedPaymentLinkCallbackStatusMapping with data set #3" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="15" assertions="14" time="0.027304"/>
+          <testcase name="testSignedPaymentLinkCallbackStatusMapping with data set #4" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="15" assertions="14" time="0.019494"/>
+          <testcase name="testSignedPaymentLinkCallbackStatusMapping with data set #5" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="15" assertions="14" time="0.018892"/>
+          <testcase name="testSignedPaymentLinkCallbackStatusMapping with data set #6" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="15" assertions="14" time="0.019156"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites" tests="4" assertions="12" errors="0" failures="0" skipped="0" time="0.077983">
+          <testcase name="testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #0" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="35" assertions="3" time="0.019618"/>
+          <testcase name="testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #1" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="35" assertions="3" time="0.020113"/>
+          <testcase name="testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #2" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="35" assertions="3" time="0.018655"/>
+          <testcase name="testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #3" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="35" assertions="3" time="0.019597"/>
+        </testsuite>
+        <testcase name="testLatePaidQuotationRemainsCancelledAndDoesNotConvert" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="51" assertions="12" time="0.020325"/>
+        <testcase name="testSequentialReplaysDoNotRequestAnotherConversionWhenPersistenceReportsAlreadyConverted" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="64" assertions="30" time="0.029062"/>
+        <testcase name="testUnconvertedPaidQuotationDelegatesToExistingInvoiceCreator" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="80" assertions="19" time="0.019973"/>
+        <testcase name="testGatewayFailureDoesNotWritePaymentState" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="94" assertions="3" time="0.020549"/>
+        <testcase name="testRetryAfterGatewayFailureCanProcessSyntheticPaidResponse" class="Tests\Feature\PaymentRegressionTest" classname="Tests.Feature.PaymentRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PaymentRegressionTest.php" line="104" assertions="17" time="0.020805"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\PdfEmailRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PdfEmailRegressionTest.php" tests="6" assertions="27" errors="0" failures="0" skipped="0" time="0.236399">
+        <testcase name="testCommonPdfFallbackProducesContentAndMultiplePagesFromSyntheticHtml" class="Tests\Feature\PdfEmailRegressionTest" classname="Tests.Feature.PdfEmailRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PdfEmailRegressionTest.php" line="16" assertions="11" time="0.116144"/>
+        <testcase name="testBrowserlessEndpointIsAbsentAndProcessExecutionIsDisabled" class="Tests\Feature\PdfEmailRegressionTest" classname="Tests.Feature.PdfEmailRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PdfEmailRegressionTest.php" line="52" assertions="2" time="0.026777"/>
+        <testcase name="testCustomQuotationTemplateContractIsPreserved" class="Tests\Feature\PdfEmailRegressionTest" classname="Tests.Feature.PdfEmailRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PdfEmailRegressionTest.php" line="59" assertions="6" time="0.021350"/>
+        <testcase name="testOrderEmailJobUsesSyntheticRecipientSubjectAndViewData" class="Tests\Feature\PdfEmailRegressionTest" classname="Tests.Feature.PdfEmailRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PdfEmailRegressionTest.php" line="74" assertions="1" time="0.024225"/>
+        <testcase name="testPlanEmailJobDoesNotLeakRecipientOrDetailsBetweenMessages" class="Tests\Feature\PdfEmailRegressionTest" classname="Tests.Feature.PdfEmailRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PdfEmailRegressionTest.php" line="85" assertions="3" time="0.025897"/>
+        <testcase name="testEmailJobPropagatesSyntheticTransportFailureForWorkerRetry" class="Tests\Feature\PdfEmailRegressionTest" classname="Tests.Feature.PdfEmailRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\PdfEmailRegressionTest.php" line="101" assertions="4" time="0.022006"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\QueueSchedulerRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QueueSchedulerRegressionTest.php" tests="5" assertions="19" errors="0" failures="0" skipped="0" time="0.103964">
+        <testcase name="testEmailAndMediaJobsDispatchWithoutRunningHandles" class="Tests\Feature\QueueSchedulerRegressionTest" classname="Tests.Feature.QueueSchedulerRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QueueSchedulerRegressionTest.php" line="17" assertions="4" time="0.021311"/>
+        <testcase name="testSchedulerRegistersOnlyExistingActiveBusinessCadences" class="Tests\Feature\QueueSchedulerRegressionTest" classname="Tests.Feature.QueueSchedulerRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QueueSchedulerRegressionTest.php" line="33" assertions="3" time="0.018850"/>
+        <testcase name="testQuotationExpiryDelegatesGatewayCancellationAndCompilesScopedUpdate" class="Tests\Feature\QueueSchedulerRegressionTest" classname="Tests.Feature.QueueSchedulerRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QueueSchedulerRegressionTest.php" line="49" assertions="7" time="0.021377"/>
+        <testcase name="testNoEligibleQuotationCausesNoWrite" class="Tests\Feature\QueueSchedulerRegressionTest" classname="Tests.Feature.QueueSchedulerRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QueueSchedulerRegressionTest.php" line="66" assertions="2" time="0.021084"/>
+        <testcase name="testEmptyOrAlreadyProcessedExpiryQueryIsRepeatableAtBoundary" class="Tests\Feature\QueueSchedulerRegressionTest" classname="Tests.Feature.QueueSchedulerRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QueueSchedulerRegressionTest.php" line="76" assertions="3" time="0.021342"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" tests="13" assertions="40" errors="0" failures="0" skipped="0" time="0.270034">
+        <testsuite name="Tests\Feature\QuotationRegressionTest::testExistingInvoiceCreationValidation" tests="6" assertions="14" errors="0" failures="0" skipped="0" time="0.125891">
+          <testcase name="testExistingInvoiceCreationValidation with data set #0" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="14" assertions="3" time="0.021995"/>
+          <testcase name="testExistingInvoiceCreationValidation with data set #1" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="14" assertions="3" time="0.018853"/>
+          <testcase name="testExistingInvoiceCreationValidation with data set #2" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="14" assertions="3" time="0.026336"/>
+          <testcase name="testExistingInvoiceCreationValidation with data set #3" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="14" assertions="3" time="0.020315"/>
+          <testcase name="testExistingInvoiceCreationValidation with data set #4" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="14" assertions="1" time="0.019615"/>
+          <testcase name="testExistingInvoiceCreationValidation with data set #5" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="14" assertions="1" time="0.018777"/>
+        </testsuite>
+        <testcase name="testMissingCustomerAddressListsRequiredFields" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="35" assertions="2" time="0.019840"/>
+        <testcase name="testValidCustomerAddressCanComeFromRequest" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="44" assertions="1" time="0.018916"/>
+        <testsuite name="Tests\Feature\QuotationRegressionTest::testCommonStatusTransitionSqlAndGatewayCancellation" tests="3" assertions="18" errors="0" failures="0" skipped="0" time="0.058048">
+          <testcase name="testCommonStatusTransitionSqlAndGatewayCancellation with data set #0" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="51" assertions="6" time="0.019567"/>
+          <testcase name="testCommonStatusTransitionSqlAndGatewayCancellation with data set #1" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="51" assertions="6" time="0.018817"/>
+          <testcase name="testCommonStatusTransitionSqlAndGatewayCancellation with data set #2" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="51" assertions="6" time="0.019664"/>
+        </testsuite>
+        <testcase name="testMissingStatusUpdateReturnsExistingFailureContract" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="70" assertions="1" time="0.028357"/>
+        <testcase name="testAdminCancellationDelegatesGatewayCancellationAfterSuccessfulUpdate" class="Tests\Feature\QuotationRegressionTest" classname="Tests.Feature.QuotationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\QuotationRegressionTest.php" line="78" assertions="4" time="0.018982"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" tests="10" assertions="27" errors="0" failures="0" skipped="0" time="0.226929">
+        <testsuite name="Tests\Feature\SearchMediaRegressionTest::testElasticSearchControllerContractAndQuery" tests="2" assertions="6" errors="0" failures="0" skipped="0" time="0.042698">
+          <testcase name="testElasticSearchControllerContractAndQuery with data set #0" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="14" assertions="3" time="0.021375"/>
+          <testcase name="testElasticSearchControllerContractAndQuery with data set #1" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="14" assertions="3" time="0.021323"/>
+        </testsuite>
+        <testcase name="testSearchIndexFailureHasExistingErrorContract" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="26" assertions="3" time="0.019232"/>
+        <testcase name="testKeywordVariantsHaveObservedOrder" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="35" assertions="1" time="0.017910"/>
+        <testsuite name="Tests\Feature\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork" tests="4" assertions="8" errors="0" failures="0" skipped="0" time="0.075404">
+          <testcase name="testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #0" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="42" assertions="2" time="0.018696"/>
+          <testcase name="testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #1" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="42" assertions="2" time="0.019221"/>
+          <testcase name="testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #2" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="42" assertions="2" time="0.018755"/>
+          <testcase name="testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #3" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="42" assertions="2" time="0.018732"/>
+        </testsuite>
+        <testcase name="testLocalStorageFixtureRoundTripAndMissingFile" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="54" assertions="5" time="0.035862"/>
+        <testcase name="testInterventionGdResizesSyntheticImageAndRejectsInvalidInput" class="Tests\Feature\SearchMediaRegressionTest" classname="Tests.Feature.SearchMediaRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\SearchMediaRegressionTest.php" line="65" assertions="4" time="0.035823"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Integration" tests="58" assertions="555" errors="0" failures="6" skipped="16" time="34.596379">
+      <testsuite name="Tests\Integration\AuthenticationPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php" tests="2" assertions="30" errors="0" failures="1" skipped="0" time="0.146962">
+        <testcase name="testActualSqlAdminAndApiAuthenticationUseSeparateGuards" class="Tests\Integration\AuthenticationPersistenceIntegrationTest" classname="Tests.Integration.AuthenticationPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php" line="19" assertions="18" time="0.076624"/>
+        <testcase name="testDisabledAdminCannotRetainRealSqlAuthenticatedSession" class="Tests\Integration\AuthenticationPersistenceIntegrationTest" classname="Tests.Integration.AuthenticationPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php" line="29" assertions="12" time="0.070338">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\AuthenticationPersistenceIntegrationTest::testDisabledAdminCannotRetainRealSqlAuthenticatedSession
+LEGACY-AUTH-02: inactive-admin guard retention confirmed with real SQL.
+Failed asserting that true is false.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php:33
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Integration\CarryForwardIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CarryForwardIntegrationTest.php" tests="1" assertions="14" errors="0" failures="0" skipped="0" time="0.046581">
+        <testcase name="testActualBalanceCommandCreditsSyntheticRemainderOnceOnSequentialRuns" class="Tests\Integration\CarryForwardIntegrationTest" classname="Tests.Integration.CarryForwardIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CarryForwardIntegrationTest.php" line="9" assertions="14" time="0.046581"/>
+      </testsuite>
+      <testsuite name="Tests\Integration\CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" tests="5" assertions="78" errors="0" failures="1" skipped="0" time="0.252015">
+        <testcase name="testActualProductImportCoordinatesSqlMongoAndRepeatedImportDoesNotDuplicate" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="35" assertions="16" time="0.076463"/>
+        <testcase name="testActualSqlFailureBeforeMongoWriteLeavesNoDocument" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="48" assertions="14" time="0.042992"/>
+        <testcase name="testMongoFailureLeavesSqlWriteAndRetryCreatesOnlyPartialDocument" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="60" assertions="16" time="0.035759"/>
+        <testcase name="testActualProductSearchCombinesMongoFilterSqlCategoryAndPagination" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="79" assertions="19" time="0.062534"/>
+        <testcase name="testRetryMustRestoreCompleteCrossStoreProductIdentity" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="99" assertions="13" time="0.034267">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\CrossStoreBusinessIntegrationTest::testRetryMustRestoreCompleteCrossStoreProductIdentity
+LEGACY-DATA-01: retry repairs attributes but omits SQL/Mongo identity after partial write.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'product_id' =&gt; 'PH220077'
+-    'product_main_type' =&gt; 'Image'
++    'product_id' =&gt; null
++    'product_main_type' =&gt; null
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php:111
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Integration\MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" tests="6" assertions="21" errors="0" failures="0" skipped="0" time="0.134505">
+        <testcase name="testDocumentCreateRetrieveAndObjectIdMapping" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="9" assertions="4" time="0.024905"/>
+        <testcase name="testDocumentUpdateIsPersisted" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="17" assertions="3" time="0.023005"/>
+        <testcase name="testNestedFilterAndSortUseActualMongoDb" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="25" assertions="4" time="0.022738"/>
+        <testcase name="testTimestampSerializationPreservesCalendarValue" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="33" assertions="4" time="0.021624"/>
+        <testcase name="testMissingDocumentReturnsNull" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="41" assertions="3" time="0.019181"/>
+        <testcase name="testRawAggregationOverSyntheticProducts" class="Tests\Integration\MongoRegressionTest" classname="Tests.Integration.MongoRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php" line="46" assertions="3" time="0.023052"/>
+      </testsuite>
+      <testsuite name="Tests\Integration\MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" tests="9" assertions="106" errors="0" failures="0" skipped="0" time="0.376530">
+        <testcase name="testModelCreationUpdateAndReadBack" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="11" assertions="12" time="0.027813"/>
+        <testcase name="testInvoiceItemRelationshipUsesInvoiceId" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="20" assertions="11" time="0.040809"/>
+        <testcase name="testMySqlStoresExactTwoDecimalMoney" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="29" assertions="12" time="0.046323"/>
+        <testcase name="testFilteringSortingAndPaginationUseActualMySql" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="37" assertions="12" time="0.047539"/>
+        <testcase name="testRollbackRestoresRowsAfterSyntheticFailure" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="48" assertions="12" time="0.045184"/>
+        <testcase name="testLegacyItemForeignKeyMetadataIsExplicit" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="62" assertions="11" time="0.042838"/>
+        <testcase name="testMissingInvoiceIsNull" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="69" assertions="11" time="0.046727"/>
+        <testcase name="testInvoiceStatusUpdatePreservesMoneyAndNumber" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="74" assertions="13" time="0.028080"/>
+        <testcase name="testActualPrimaryKeyUniquenessRejectsDuplicateInvoiceRow" class="Tests\Integration\MySqlRegressionTest" classname="Tests.Integration.MySqlRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MySqlRegressionTest.php" line="84" assertions="12" time="0.051217"/>
+      </testsuite>
+      <testsuite name="Tests\Integration\PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" tests="7" assertions="112" errors="0" failures="4" skipped="0" time="18.163689">
+        <testcase name="testActualPaidConversionAndSequentialReplayDoNotDuplicateMailOrArtifacts" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="38" assertions="23" time="3.286924"/>
+        <testcase name="testInvalidSignatureLeavesRealInvoiceAndNotificationsUnchanged" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="58" assertions="16" time="1.662044"/>
+        <testcase name="testRealExpiredQuotationPaidCallbackDoesNotConvertOrNotifyAgain" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="69" assertions="17" time="1.708256"/>
+        <testsuite name="Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity" tests="3" assertions="42" errors="0" failures="3" skipped="0" time="9.855017">
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="3.277721">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'paid' =&gt; false
+-    'converted' =&gt; false
+-    'mail_count' =&gt; 1
++    'paid' =&gt; true
++    'converted' =&gt; true
++    'mail_count' =&gt; 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+</failure>
+          </testcase>
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="3.286505">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'paid' =&gt; false
+-    'converted' =&gt; false
+-    'mail_count' =&gt; 1
++    'paid' =&gt; true
++    'converted' =&gt; true
++    'mail_count' =&gt; 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+</failure>
+          </testcase>
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="3.290791">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2 ('reference_id', 'QTN-unrelated')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'paid' =&gt; false
+-    'converted' =&gt; false
+-    'mail_count' =&gt; 1
++    'paid' =&gt; true
++    'converted' =&gt; true
++    'mail_count' =&gt; 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+</failure>
+          </testcase>
+        </testsuite>
+        <testcase name="testRealPersistencePreservesPaidStateAgainstPendingResponse" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="97" assertions="14" time="1.651448">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistencePreservesPaidStateAgainstPendingResponse
+LEGACY-PAY-02: real SQL paid-state downgrade; provider backward-state reachability still conditional.
+Failed asserting that 0 is identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:103
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Integration\QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" tests="8" assertions="140" errors="0" failures="0" skipped="0" time="13.921615">
+        <testcase name="testActualCustomQuotationPersistsCustomerCreatorMoneyPdfAndMail" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="29" assertions="27" time="1.687662"/>
+        <testcase name="testMissingCustomerDoesNotWriteQuotationOrCallProvider" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="51" assertions="15" time="0.049364"/>
+        <testcase name="testConversionUsesExistingInvoiceIdentityAndRealAttachmentPipeline" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="61" assertions="19" time="3.322147"/>
+        <testcase name="testEditingReadsPersistedSyntheticItemsAndReplacementCancelsOldLink" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="76" assertions="19" time="3.314990"/>
+        <testcase name="testRealExpiryCancelsOnlyDueQuotationAndRepeatedRunHasNoSecondEffect" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="93" assertions="15" time="1.721892"/>
+        <testcase name="testActualDiscountRecalculatesAndPersistsTwoDecimalSyntheticGstExample" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="108" assertions="16" time="1.678085"/>
+        <testcase name="testStorageBoundaryFailureIsReportedAfterRealQuotationAndMailPersist" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="118" assertions="15" time="2.019803"/>
+        <testcase name="testMissingInvoiceReturnsExplicit422WithoutNotification" class="Tests\Integration\QuotationBusinessIntegrationTest" classname="Tests.Integration.QuotationBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\QuotationBusinessIntegrationTest.php" line="130" assertions="14" time="0.127672"/>
+      </testsuite>
+      <testsuite name="Tests\Integration\SqlConcurrencyQueueIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\SqlConcurrencyQueueIntegrationTest.php" tests="4" assertions="54" errors="0" failures="0" skipped="0" time="1.206848">
+        <testcase name="testSecondRealConnectionCannotUpdateLockedInvoiceBeforeRollback" class="Tests\Integration\SqlConcurrencyQueueIntegrationTest" classname="Tests.Integration.SqlConcurrencyQueueIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\SqlConcurrencyQueueIntegrationTest.php" line="10" assertions="14" time="1.062559"/>
+        <testcase name="testLegacyInvoiceNumberHasNoUniqueConstraintInVerifiedFixture" class="Tests\Integration\SqlConcurrencyQueueIntegrationTest" classname="Tests.Integration.SqlConcurrencyQueueIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\SqlConcurrencyQueueIntegrationTest.php" line="43" assertions="12" time="0.032572"/>
+        <testcase name="testActualDatabaseQueueReservationReleaseRetryAndAcknowledgement" class="Tests\Integration\SqlConcurrencyQueueIntegrationTest" classname="Tests.Integration.SqlConcurrencyQueueIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\SqlConcurrencyQueueIntegrationTest.php" line="53" assertions="15" time="0.059489"/>
+        <testcase name="testFailedJobProviderPersistsSyntheticFailureWithoutWorker" class="Tests\Integration\SqlConcurrencyQueueIntegrationTest" classname="Tests.Integration.SqlConcurrencyQueueIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\SqlConcurrencyQueueIntegrationTest.php" line="69" assertions="13" time="0.052228"/>
+      </testsuite>
+      <testsuite name="Tests\Integration\UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" tests="16" assertions="0" errors="0" failures="0" skipped="16" time="0.347634">
+        <testsuite name="Tests\Integration\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture" tests="16" assertions="0" errors="0" failures="0" skipped="16" time="0.347634">
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;quotation create/edit/replace end-to-end&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.021263">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;invoice numbering/customer selection/ownership&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.020932">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;concurrent callback exactly-once effects&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.020929">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;PayU callback end-to-end&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.019034">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;Atom callback end-to-end&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.029902">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;Razorpay order/plan fulfillment end-to-end&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.021684">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;Chromium and Browserless visual acceptance&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.020281">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;custom quotation/full invoice email attachments&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.020114">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;image upload/watermark end-to-end&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.018998">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;FFmpeg video integration&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.022048">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;download authorization/history/limits&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.020219">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;S3 adapter integration&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.020912">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;Elasticsearch integration/index mappings&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.021363">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;package carry-forward calculation/duplicates&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.029733">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;queue worker retry/failure persistence&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.020259">
+            <skipped/>
+          </testcase>
+          <testcase name="testCriticalFlowRequiresTheNamedAcceptanceFixture with data set &quot;currency conversion and invalid quantity rules&quot;" class="Tests\Integration\UnavailableFlowsTest" classname="Tests.Integration.UnavailableFlowsTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\UnavailableFlowsTest.php" line="10" assertions="0" time="0.019963">
+            <skipped/>
+          </testcase>
+        </testsuite>
+      </testsuite>
+    </testsuite>
+    <testsuite name="KnownFailures" tests="21" assertions="179" errors="0" failures="21" skipped="0" time="0.542269">
+      <testsuite name="Tests\KnownFailures\CriticalDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php" tests="7" assertions="13" errors="0" failures="7" skipped="0" time="0.169043">
+        <testsuite name="Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants" tests="3" assertions="6" errors="0" failures="3" skipped="0" time="0.068051">
+          <testcase name="testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set &quot;missing&quot;" class="Tests\KnownFailures\CriticalDefectVerificationTest" classname="Tests.KnownFailures.CriticalDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php" line="16" assertions="2" time="0.023399">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set "missing" (array())
+LEGACY-AUTH-01: real protected route reaches URL validation without authentication.
+Failed asserting that 400 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:22
+</failure>
+          </testcase>
+          <testcase name="testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set &quot;unknown&quot;" class="Tests\KnownFailures\CriticalDefectVerificationTest" classname="Tests.KnownFailures.CriticalDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php" line="16" assertions="2" time="0.022109">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set "unknown" (array('unknown'))
+LEGACY-AUTH-01: real protected route reaches URL validation without authentication.
+Failed asserting that 400 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:22
+</failure>
+          </testcase>
+          <testcase name="testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set &quot;case variant&quot;" class="Tests\KnownFailures\CriticalDefectVerificationTest" classname="Tests.KnownFailures.CriticalDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php" line="16" assertions="2" time="0.022543">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set "case variant" (array('NORMAL'))
+LEGACY-AUTH-01: real protected route reaches URL validation without authentication.
+Failed asserting that 400 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:22
+</failure>
+          </testcase>
+        </testsuite>
+        <testcase name="testValidSignedTokenForMissingIdentityMustNotReachProtectedController" class="Tests\KnownFailures\CriticalDefectVerificationTest" classname="Tests.KnownFailures.CriticalDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php" line="30" assertions="1" time="0.027514">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\CriticalDefectVerificationTest::testValidSignedTokenForMissingIdentityMustNotReachProtectedController
+LEGACY-AUTH-01: cryptographically valid token is insufficient when its local identity does not exist.
+Failed asserting that 400 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:37
+</failure>
+        </testcase>
+        <testcase name="testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled" class="Tests\KnownFailures\CriticalDefectVerificationTest" classname="Tests.KnownFailures.CriticalDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php" line="40" assertions="2" time="0.021012">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\CriticalDefectVerificationTest::testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled
+LEGACY-AUTH-02: existing disabled account session passes Admin middleware.
+Failed asserting that 200 is identical to 302.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:50
+</failure>
+        </testcase>
+        <testsuite name="Tests\KnownFailures\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields" tests="2" assertions="4" errors="0" failures="2" skipped="0" time="0.052466">
+          <testcase name="testNestedSerializedModelsDoNotExposePasswordFields with data set #0" class="Tests\KnownFailures\CriticalDefectVerificationTest" classname="Tests.KnownFailures.CriticalDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php" line="54" assertions="2" time="0.032771">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #0 ('user')
+LEGACY-AUTH-03: nested Eloquent serialization includes password field.
+Failed asserting that an array does not have the key 'password'.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:65
+</failure>
+          </testcase>
+          <testcase name="testNestedSerializedModelsDoNotExposePasswordFields with data set #1" class="Tests\KnownFailures\CriticalDefectVerificationTest" classname="Tests.KnownFailures.CriticalDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php" line="54" assertions="2" time="0.019695">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #1 ('admin')
+LEGACY-AUTH-03: nested Eloquent serialization includes password field.
+Failed asserting that an array does not have the key 'password'.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\CriticalDefectVerificationTest.php:65
+</failure>
+          </testcase>
+        </testsuite>
+      </testsuite>
+      <testsuite name="Tests\KnownFailures\PaymentDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php" tests="7" assertions="110" errors="0" failures="7" skipped="0" time="0.175650">
+        <testsuite name="Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill" tests="3" assertions="66" errors="0" failures="3" skipped="0" time="0.073000">
+          <testcase name="testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set &quot;amount&quot;" class="Tests\KnownFailures\PaymentDefectVerificationTest" classname="Tests.KnownFailures.PaymentDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php" line="13" assertions="22" time="0.024378">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "amount" ('amount', 1)
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &amp;0 ()
++Array &amp;0 (
++    0 =&gt; 'invoice payment state written'
++    1 =&gt; 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+</failure>
+          </testcase>
+          <testcase name="testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set &quot;currency&quot;" class="Tests\KnownFailures\PaymentDefectVerificationTest" classname="Tests.KnownFailures.PaymentDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php" line="13" assertions="22" time="0.023919">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "currency" ('currency', 'USD')
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &amp;0 ()
++Array &amp;0 (
++    0 =&gt; 'invoice payment state written'
++    1 =&gt; 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+</failure>
+          </testcase>
+          <testcase name="testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set &quot;reference&quot;" class="Tests\KnownFailures\PaymentDefectVerificationTest" classname="Tests.KnownFailures.PaymentDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php" line="13" assertions="22" time="0.024703">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set "reference" ('reference_id', 'QTN-unrelated')
+LEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+-Array &amp;0 ()
++Array &amp;0 (
++    0 =&gt; 'invoice payment state written'
++    1 =&gt; 'invoice fulfillment delegated'
++)
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:29
+</failure>
+          </testcase>
+        </testsuite>
+        <testsuite name="Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice" tests="4" assertions="44" errors="0" failures="4" skipped="0" time="0.102650">
+          <testcase name="testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0" class="Tests\KnownFailures\PaymentDefectVerificationTest" classname="Tests.KnownFailures.PaymentDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php" line="38" assertions="11" time="0.024385">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0 ('created')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'status' =&gt; 1
+-    'payment_status' =&gt; 'Transction Success'
++    'status' =&gt; 0
++    'payment_status' =&gt; 'Pending'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48
+</failure>
+          </testcase>
+          <testcase name="testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1" class="Tests\KnownFailures\PaymentDefectVerificationTest" classname="Tests.KnownFailures.PaymentDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php" line="38" assertions="11" time="0.023774">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1 ('pending')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'status' =&gt; 1
+-    'payment_status' =&gt; 'Transction Success'
++    'status' =&gt; 0
++    'payment_status' =&gt; 'Pending'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48
+</failure>
+          </testcase>
+          <testcase name="testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2" class="Tests\KnownFailures\PaymentDefectVerificationTest" classname="Tests.KnownFailures.PaymentDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php" line="38" assertions="11" time="0.031058">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2 ('expired')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'status' =&gt; 1
+-    'payment_status' =&gt; 'Transction Success'
++    'status' =&gt; 3
++    'payment_status' =&gt; 'Failed'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48
+</failure>
+          </testcase>
+          <testcase name="testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3" class="Tests\KnownFailures\PaymentDefectVerificationTest" classname="Tests.KnownFailures.PaymentDefectVerificationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php" line="38" assertions="11" time="0.023433">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3 ('cancelled')
+LEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'status' =&gt; 1
+-    'payment_status' =&gt; 'Transction Success'
++    'status' =&gt; 3
++    'payment_status' =&gt; 'Failed'
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentDefectVerificationTest.php:48
+</failure>
+          </testcase>
+        </testsuite>
+      </testsuite>
+      <testsuite name="Tests\KnownFailures\PaymentInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php" tests="4" assertions="52" errors="0" failures="4" skipped="0" time="0.092739">
+        <testsuite name="Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity" tests="3" assertions="42" errors="0" failures="3" skipped="0" time="0.068535">
+          <testcase name="testPaidCallbackMustValidateFinancialIdentity with data set &quot;amount&quot;" class="Tests\KnownFailures\PaymentInvariantTest" classname="Tests.KnownFailures.PaymentInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php" line="14" assertions="14" time="0.022818">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "amount" (1, 'INR', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+</failure>
+          </testcase>
+          <testcase name="testPaidCallbackMustValidateFinancialIdentity with data set &quot;currency&quot;" class="Tests\KnownFailures\PaymentInvariantTest" classname="Tests.KnownFailures.PaymentInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php" line="14" assertions="14" time="0.022504">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "currency" (11800, 'USD', 'QTN-7000001')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+</failure>
+          </testcase>
+          <testcase name="testPaidCallbackMustValidateFinancialIdentity with data set &quot;reference&quot;" class="Tests\KnownFailures\PaymentInvariantTest" classname="Tests.KnownFailures.PaymentInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php" line="14" assertions="14" time="0.023213">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set "reference" (11800, 'INR', 'QTN-unrelated')
+LEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.
+Failed asserting that 1 is not identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:20
+</failure>
+          </testcase>
+        </testsuite>
+        <testcase name="testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice" class="Tests\KnownFailures\PaymentInvariantTest" classname="Tests.KnownFailures.PaymentInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php" line="29" assertions="10" time="0.024204">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice
+LEGACY-PAY-02: stale/pending response downgrades paid invoice state.
+Failed asserting that 0 is identical to 1.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\PaymentInvariantTest.php:35
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\KnownFailures\SecurityInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php" tests="3" assertions="4" errors="0" failures="3" skipped="0" time="0.104837">
+        <testcase name="testMissingLoginTypeMustNotBypassJwtProtection" class="Tests\KnownFailures\SecurityInvariantTest" classname="Tests.KnownFailures.SecurityInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php" line="13" assertions="1" time="0.035454">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\SecurityInvariantTest::testMissingLoginTypeMustNotBypassJwtProtection
+LEGACY-AUTH-01: missing Login-Type reaches next without token validation.
+Failed asserting that 200 is identical to 401.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:17
+</failure>
+        </testcase>
+        <testcase name="testDisabledAdminMustNotRetainAdminSession" class="Tests\KnownFailures\SecurityInvariantTest" classname="Tests.KnownFailures.SecurityInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php" line="20" assertions="1" time="0.030529">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\SecurityInvariantTest::testDisabledAdminMustNotRetainAdminSession
+LEGACY-AUTH-02: disabled-admin branch logs out the default guard instead of admins.
+Failed asserting that true is false.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:24
+</failure>
+        </testcase>
+        <testcase name="testAuthenticatedMeResponseMustNotExposePasswordHash" class="Tests\KnownFailures\SecurityInvariantTest" classname="Tests.KnownFailures.SecurityInvariantTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php" line="27" assertions="2" time="0.038854">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\KnownFailures\SecurityInvariantTest::testAuthenticatedMeResponseMustNotExposePasswordHash
+LEGACY-AUTH-03: User hidden fields are commented; /api/me serializes password hashes.
+Failed asserting that an array does not have the key 'password'.
+
+C:\Projects\imagefootage\imagefootage_BE\tests\KnownFailures\SecurityInvariantTest.php:35
+</failure>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,25 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+...............................................................  63 / 233 ( 27%)
+............................................................... 126 / 233 ( 54%)
+.............................F.....F...............
+Fatal error: Allowed memory size of 134217728 bytes exhausted (tried to allocate 8192 bytes) in C:\Projects\imagefootage\imagefootage_BE\vendor\dompdf\dompdf\lib\Cpdf.php on line 5752
+
+Fatal error: Uncaught Illuminate\Contracts\Container\BindingResolutionException: Target [Illuminate\Contracts\Debug\ExceptionHandler] is not instantiable. in C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php:960
+Stack trace:
+#0 C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php(794): Illuminate\Container\Container->notInstantiable('Illuminate\\Cont...')
+#1 C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php(667): Illuminate\Container\Container->build('Illuminate\\Cont...')
+#2 C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php(615): Illuminate\Container\Container->resolve('Illuminate\\Cont...', Array)
+#3 C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(767): Illuminate\Container\Container->make('Illuminate\\Cont...', Array)
+#4 C:\Projects\imagefootage\i in C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php on line 960
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 8192 bytes) in C:\Projects\imagefootage\imagefootage_BE\vendor\dompdf\dompdf\lib\Cpdf.php on line 5752
+PHP Fatal error:  Uncaught Illuminate\Contracts\Container\BindingResolutionException: Target [Illuminate\Contracts\Debug\ExceptionHandler] is not instantiable. in C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php:960
+Stack trace:
+#0 C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php(794): Illuminate\Container\Container->notInstantiable('Illuminate\\Cont...')
+#1 C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php(667): Illuminate\Container\Container->build('Illuminate\\Cont...')
+#2 C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php(615): Illuminate\Container\Container->resolve('Illuminate\\Cont...', Array)
+#3 C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(767): Illuminate\Container\Container->make('Illuminate\\Cont...', Array)
+#4 C:\Projects\imagefootage\i in C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Container\Container.php on line 960

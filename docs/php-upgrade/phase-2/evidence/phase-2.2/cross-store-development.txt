@@ -1,0 +1,28 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+....F                                                               5 / 5 (100%)
+
+Time: 602 ms, Memory: 44.00 MB
+
+There was 1 failure:
+
+1) Tests\Integration\CrossStoreBusinessIntegrationTest::testRetryMustRestoreCompleteCrossStoreProductIdentity
+LEGACY-DATA-01: retry repairs attributes but omits SQL/Mongo identity after partial write.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 (
+-    'product_id' => 'PH220077'
+-    'product_main_type' => 'Image'
++    'product_id' => null
++    'product_main_type' => null
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php:111
+
+FAILURES!
+Tests: 5, Assertions: 78, Failures: 1.

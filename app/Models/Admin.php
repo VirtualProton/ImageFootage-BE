@@ -12,6 +12,7 @@ class Admin  extends Authenticatable
   use Notifiable;
   protected $table = 'imagefootage_admins';
   protected $guard = 'admins';
+  protected $hidden = ['password', 'remember_token'];
   public function role()
   {
     return $this->hasOne(Roles::class, 'id', 'role_id');

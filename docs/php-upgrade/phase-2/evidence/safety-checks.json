@@ -1,0 +1,50 @@
+[
+  {
+    "name": "direct-phpunit-refused",
+    "command": "php vendor/phpunit/phpunit/phpunit --filter IsolationTest",
+    "exit": 255,
+    "expected": "nonzero",
+    "passed": true,
+    "output": "\nFatal error: Uncaught RuntimeException: Use php tests/run.php; APP_ENV must be testing. in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php:37\nStack trace:\n#0 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\bootstrap.php(3): Tests\\Support\\Isolation::bootstrap()\n#1 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(57): include_once('C:\\\\Projects\\\\ima...')\n#2 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(45): PHPUnit\\Util\\FileLoader::load('C:\\\\Projects\\\\ima...')\n#3 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(1058): PHPUnit\\Util\\FileLoader::checkAndLoad('C:\\\\Projects\\\\ima...')\n#4 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(863): PHPUnit\\TextUI\\Command->handleBootstrap('C:\\\\Projects\\\\ima...')\n#5 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(173): PHPUnit\\TextUI\\Command->handleArguments(Array)\n#6 C:\\Proje in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php on line 37\nPHP Fatal error:  Uncaught RuntimeException: Use php tests/run.php; APP_ENV must be testing. in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php:37\nStack trace:\n#0 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\bootstrap.php(3): Tests\\Support\\Isolation::bootstrap()\n#1 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(57): include_once('C:\\\\Projects\\\\ima...')\n#2 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(45): PHPUnit\\Util\\FileLoader::load('C:\\\\Projects\\\\ima...')\n#3 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(1058): PHPUnit\\Util\\FileLoader::checkAndLoad('C:\\\\Projects\\\\ima...')\n#4 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(863): PHPUnit\\TextUI\\Command->handleBootstrap('C:\\\\Projects\\\\ima...')\n#5 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(173): PHPUnit\\TextUI\\Command->handleArguments(Array)\n#6 C:\\Proje in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php on line 37\n"
+  },
+  {
+    "name": "unsafe-host-refused",
+    "command": "php tests/run.php --filter IsolationTest",
+    "exit": 255,
+    "expected": "nonzero",
+    "passed": true,
+    "output": "\nFatal error: Uncaught RuntimeException: Unsafe mysql test configuration refused (values withheld). in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php:29\nStack trace:\n#0 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php(56): Tests\\Support\\Isolation::databaseSettings('mysql', Array)\n#1 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\bootstrap.php(3): Tests\\Support\\Isolation::bootstrap()\n#2 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(57): include_once('C:\\\\Projects\\\\ima...')\n#3 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(45): PHPUnit\\Util\\FileLoader::load('C:\\\\Projects\\\\ima...')\n#4 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(1058): PHPUnit\\Util\\FileLoader::checkAndLoad('C:\\\\Projects\\\\ima...')\n#5 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(863): PHPUnit\\TextUI\\Command->handleBootstrap('C:\\\\Projects\\\\ima...')\n#6 C:\\Pr in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php on line 29\nPHP Fatal error:  Uncaught RuntimeException: Unsafe mysql test configuration refused (values withheld). in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php:29\nStack trace:\n#0 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php(56): Tests\\Support\\Isolation::databaseSettings('mysql', Array)\n#1 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\bootstrap.php(3): Tests\\Support\\Isolation::bootstrap()\n#2 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(57): include_once('C:\\\\Projects\\\\ima...')\n#3 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(45): PHPUnit\\Util\\FileLoader::load('C:\\\\Projects\\\\ima...')\n#4 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(1058): PHPUnit\\Util\\FileLoader::checkAndLoad('C:\\\\Projects\\\\ima...')\n#5 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(863): PHPUnit\\TextUI\\Command->handleBootstrap('C:\\\\Projects\\\\ima...')\n#6 C:\\Pr in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php on line 29\n"
+  },
+  {
+    "name": "enabled-without-password-refused",
+    "command": "php tests/run.php --filter IsolationTest",
+    "exit": 255,
+    "expected": "nonzero",
+    "passed": true,
+    "output": "\nFatal error: Uncaught RuntimeException: Unsafe mysql test configuration refused (values withheld). in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php:29\nStack trace:\n#0 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php(56): Tests\\Support\\Isolation::databaseSettings('mysql', Array)\n#1 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\bootstrap.php(3): Tests\\Support\\Isolation::bootstrap()\n#2 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(57): include_once('C:\\\\Projects\\\\ima...')\n#3 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(45): PHPUnit\\Util\\FileLoader::load('C:\\\\Projects\\\\ima...')\n#4 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(1058): PHPUnit\\Util\\FileLoader::checkAndLoad('C:\\\\Projects\\\\ima...')\n#5 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(863): PHPUnit\\TextUI\\Command->handleBootstrap('C:\\\\Projects\\\\ima...')\n#6 C:\\Pr in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php on line 29\nPHP Fatal error:  Uncaught RuntimeException: Unsafe mysql test configuration refused (values withheld). in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php:29\nStack trace:\n#0 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php(56): Tests\\Support\\Isolation::databaseSettings('mysql', Array)\n#1 C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\bootstrap.php(3): Tests\\Support\\Isolation::bootstrap()\n#2 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(57): include_once('C:\\\\Projects\\\\ima...')\n#3 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\Util\\FileLoader.php(45): PHPUnit\\Util\\FileLoader::load('C:\\\\Projects\\\\ima...')\n#4 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(1058): PHPUnit\\Util\\FileLoader::checkAndLoad('C:\\\\Projects\\\\ima...')\n#5 C:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(863): PHPUnit\\TextUI\\Command->handleBootstrap('C:\\\\Projects\\\\ima...')\n#6 C:\\Pr in C:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Support\\Isolation.php on line 29\n"
+  },
+  {
+    "name": "bootstrap-override-refused",
+    "command": "php tests/run.php --bootstrap=vendor/autoload.php",
+    "exit": 2,
+    "expected": "nonzero",
+    "passed": true,
+    "output": "Refusing test bootstrap/configuration overrides.\n"
+  },
+  {
+    "name": "inherited-production-like-settings-discarded",
+    "command": "php tests/run.php --filter testApplicationUsesOnlyPrivateTestStorageAndDiscardTransports",
+    "exit": 0,
+    "expected": "zero",
+    "passed": true,
+    "output": "PHPUnit 7.5.20 by Sebastian Bergmann and contributors.\n\n.                                                                   1 / 1 (100%)\n\nTime: 322 ms, Memory: 38.00 MB\n\nOK (1 test, 9 assertions)\n"
+  },
+  {
+    "name": "attached-config-override-refused",
+    "command": "php tests/run.php -cphpunit.xml",
+    "exit": 2,
+    "expected": "nonzero",
+    "passed": true,
+    "output": "Refusing test bootstrap/configuration overrides.\n"
+  }
+]

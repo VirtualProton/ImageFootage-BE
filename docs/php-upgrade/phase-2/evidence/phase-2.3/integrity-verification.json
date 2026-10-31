@@ -1,0 +1,23 @@
+{
+  "phase": "2.3",
+  "protected_files_unchanged": 431,
+  "authorized_source_changes": [
+    "app/Http/Controllers/Admin/AdminController.php",
+    "app/Http/Controllers/PaymentController.php",
+    "app/Http/Middleware/Admin.php",
+    "app/Http/Middleware/JwtMiddleware.php",
+    "app/Models/Admin.php",
+    "app/Models/Product.php",
+    "app/Models/User.php"
+  ],
+  "unexpected_protected_changes": [],
+  "php_files_linted": 57,
+  "php_lint_errors": [],
+  "json_xml_parse": "PASS",
+  "broken_relative_document_links": [],
+  "private_credential_matches": [],
+  "concurrent_scenarios_each_run": 3,
+  "full_suite_baseline_pass_regressions": [],
+  "previous_phase_history_preserved": true,
+  "checks": "git diff --check passes; final suite and concurrency counts independently compared; owned runtimes empty and stopped"
+}

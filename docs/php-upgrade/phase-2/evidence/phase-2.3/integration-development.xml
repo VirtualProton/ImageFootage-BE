@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="32" assertions="309" errors="1" failures="2" skipped="0" time="18.952045">
+    <testsuite name="Feature" tests="17" assertions="75" errors="0" failures="0" skipped="0" time="0.663038">
+      <testsuite name="Tests\Feature\RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" tests="17" assertions="75" errors="0" failures="0" skipped="0" time="0.663038">
+        <testsuite name="Tests\Feature\RemediationRegressionTest::testLocalJwtIdentityWorksWithSupportedHeaderVariants" tests="5" assertions="10" errors="0" failures="0" skipped="0" time="0.380790">
+          <testcase name="testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #0" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="18" assertions="2" time="0.283373"/>
+          <testcase name="testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #1" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="18" assertions="2" time="0.028046"/>
+          <testcase name="testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #2" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="18" assertions="2" time="0.024030"/>
+          <testcase name="testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #3" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="18" assertions="2" time="0.023307"/>
+          <testcase name="testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #4" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="18" assertions="2" time="0.022034"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\RemediationRegressionTest::testRawProviderOrMissingTokensCannotBypassLocalIdentity" tests="4" assertions="8" errors="0" failures="0" skipped="0" time="0.082370">
+          <testcase name="testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #0" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="30" assertions="2" time="0.020823"/>
+          <testcase name="testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #1" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="30" assertions="2" time="0.023219"/>
+          <testcase name="testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #2" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="30" assertions="2" time="0.019209"/>
+          <testcase name="testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #3" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="30" assertions="2" time="0.019119"/>
+        </testsuite>
+        <testcase name="testActiveAdminMiddlewarePreservesApiIdentityAndAllowsHandler" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="39" assertions="3" time="0.025099"/>
+        <testsuite name="Tests\Feature\RemediationRegressionTest::testDirectAndCollectionSerializationHideSecretsAndPreserveIdentity" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="0.037470">
+          <testcase name="testDirectAndCollectionSerializationHideSecretsAndPreserveIdentity with data set #0" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="52" assertions="2" time="0.018119"/>
+          <testcase name="testDirectAndCollectionSerializationHideSecretsAndPreserveIdentity with data set #1" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="52" assertions="2" time="0.019351"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\RemediationRegressionTest::testFetchedAndStoredLinkIdentityMismatchHasNoEffects" tests="5" assertions="50" errors="0" failures="0" skipped="0" time="0.137309">
+          <testcase name="testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #0" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="64" assertions="7" time="0.045295"/>
+          <testcase name="testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #1" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="64" assertions="12" time="0.027493"/>
+          <testcase name="testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #2" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="64" assertions="12" time="0.022381"/>
+          <testcase name="testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #3" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="64" assertions="12" time="0.021681"/>
+          <testcase name="testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #4" class="Tests\Feature\RemediationRegressionTest" classname="Tests.Feature.RemediationRegressionTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Feature\RemediationRegressionTest.php" line="64" assertions="7" time="0.020459"/>
+        </testsuite>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Integration" tests="15" assertions="234" errors="1" failures="2" skipped="0" time="18.289007">
+      <testsuite name="Tests\Integration\AuthenticationPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php" tests="3" assertions="44" errors="1" failures="0" skipped="0" time="0.265626">
+        <testcase name="testActualSqlAdminAndApiAuthenticationUseSeparateGuards" class="Tests\Integration\AuthenticationPersistenceIntegrationTest" classname="Tests.Integration.AuthenticationPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php" line="19" assertions="18" time="0.149140"/>
+        <testcase name="testDisabledAdminCannotRetainRealSqlAuthenticatedSession" class="Tests\Integration\AuthenticationPersistenceIntegrationTest" classname="Tests.Integration.AuthenticationPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php" line="29" assertions="12" time="0.057518"/>
+        <testcase name="testPreviouslyIssuedSessionIsDeniedAfterRealSqlDeactivationAndApiGuardSurvives" class="Tests\Integration\AuthenticationPersistenceIntegrationTest" classname="Tests.Integration.AuthenticationPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php" line="35" assertions="14" time="0.058968">
+          <error type="BadMethodCallException">Tests\Integration\AuthenticationPersistenceIntegrationTest::testPreviouslyIssuedSessionIsDeniedAfterRealSqlDeactivationAndApiGuardSurvives
+BadMethodCallException: Method Illuminate\Auth\SessionGuard::forgetUser does not exist.
+
+C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Support\Traits\Macroable.php:104
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\AuthenticationPersistenceIntegrationTest.php:46
+</error>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Integration\CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" tests="5" assertions="78" errors="0" failures="0" skipped="0" time="0.374928">
+        <testcase name="testActualProductImportCoordinatesSqlMongoAndRepeatedImportDoesNotDuplicate" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="35" assertions="16" time="0.155540"/>
+        <testcase name="testActualSqlFailureBeforeMongoWriteLeavesNoDocument" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="48" assertions="14" time="0.055277"/>
+        <testcase name="testMongoFailureLeavesSqlWriteAndRetryCreatesOnlyPartialDocument" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="60" assertions="16" time="0.052726"/>
+        <testcase name="testActualProductSearchCombinesMongoFilterSqlCategoryAndPagination" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="79" assertions="19" time="0.044794"/>
+        <testcase name="testRetryMustRestoreCompleteCrossStoreProductIdentity" class="Tests\Integration\CrossStoreBusinessIntegrationTest" classname="Tests.Integration.CrossStoreBusinessIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\CrossStoreBusinessIntegrationTest.php" line="99" assertions="13" time="0.066591"/>
+      </testsuite>
+      <testsuite name="Tests\Integration\PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" tests="7" assertions="112" errors="0" failures="2" skipped="0" time="17.648453">
+        <testcase name="testActualPaidConversionAndSequentialReplayDoNotDuplicateMailOrArtifacts" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="38" assertions="23" time="4.304941"/>
+        <testcase name="testInvalidSignatureLeavesRealInvoiceAndNotificationsUnchanged" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="58" assertions="16" time="1.676289"/>
+        <testcase name="testRealExpiredQuotationPaidCallbackDoesNotConvertOrNotifyAgain" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="69" assertions="17" time="1.671616"/>
+        <testsuite name="Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity" tests="3" assertions="42" errors="0" failures="2" skipped="0" time="8.295659">
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="3.286798">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'paid' =&gt; false
+-    'converted' =&gt; false
+-    'mail_count' =&gt; 1
++    'paid' =&gt; true
++    'converted' =&gt; true
++    'mail_count' =&gt; 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+</failure>
+          </testcase>
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="3.291030">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Integration\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')
+LEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 (
+-    'paid' =&gt; false
+-    'converted' =&gt; false
+-    'mail_count' =&gt; 1
++    'paid' =&gt; true
++    'converted' =&gt; true
++    'mail_count' =&gt; 2
+ )
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php:92
+</failure>
+          </testcase>
+          <testcase name="testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="83" assertions="14" time="1.717831"/>
+        </testsuite>
+        <testcase name="testRealPersistencePreservesPaidStateAgainstPendingResponse" class="Tests\Integration\PaymentPersistenceIntegrationTest" classname="Tests.Integration.PaymentPersistenceIntegrationTest" file="C:\Projects\imagefootage\imagefootage_BE\tests\Integration\PaymentPersistenceIntegrationTest.php" line="97" assertions="14" time="1.699948"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

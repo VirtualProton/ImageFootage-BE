@@ -1,0 +1,2099 @@
+[
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/AtomSignatureTest.php",
+    "scenario": "Tests\\Unit\\AtomSignatureTest::testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/AtomSignatureTest.php",
+    "scenario": "Tests\\Unit\\AtomSignatureTest::testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/ExampleTest.php",
+    "scenario": "Tests\\Unit\\ExampleTest::testBasicTest",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedQuotationDateDisplay with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/InvoiceDatesRegressionTest.php",
+    "scenario": "Tests\\Unit\\InvoiceDatesRegressionTest::testObservedPackageExpiryUsesExtendedValueFirst with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #6",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testDatabaseGuardRefusesUnsafeConfiguration with data set #7",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/IsolationTest.php",
+    "scenario": "Tests\\Unit\\IsolationTest::testApplicationUsesOnlyPrivateTestStorageAndDiscardTransports",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testNonPositiveLinkAmountsNeverCallGateway with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testNonPositiveLinkAmountsNeverCallGateway with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testNonPositiveLinkAmountsNeverCallGateway with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PaymentLinkRegressionTest.php",
+    "scenario": "Tests\\Unit\\PaymentLinkRegressionTest::testLinkExpiryBoundaries with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testUrlToModuleMapping with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testUrlToModuleMapping with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testUrlToModuleMapping with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testUrlToModuleMapping with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testUrlToModuleMapping with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testUrlToModuleMapping with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testUrlToModuleMapping with data set #6",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testUrlToModuleMapping with data set #7",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testRequestActionClassification with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testRequestActionClassification with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testRequestActionClassification with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testRequestActionClassification with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testRequestActionClassification with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testRequestActionClassification with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testRequestActionClassification with data set #6",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testRequestActionClassification with data set #7",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testGuestHasNoPermissions",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testSuperAdminPassesProtectedMiddleware",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PermissionRegressionTest.php",
+    "scenario": "Tests\\Unit\\PermissionRegressionTest::testSubadminCanViewButCannotEditFromIndependentCachedPermissionFixture",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testObservedSubtotalSelection with data set \"items take precedence\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testObservedSubtotalSelection with data set \"subscription\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testObservedSubtotalSelection with data set \"total minus tax\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testObservedSubtotalSelection with data set \"zero default\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testObservedSubtotalSelection with data set \"clamp inferred negative\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testObservedSubtotalSelection with data set \"observed quantity ignored\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testDiscountClampsAndRounds with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testDiscountClampsAndRounds with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testDiscountClampsAndRounds with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testDiscountClampsAndRounds with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testDiscountClampsAndRounds with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testDiscountClampsAndRounds with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testDiscountClampsAndRounds with data set #6",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testDiscountClampsAndRounds with data set #7",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #6",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testRecalculationAgainstExplicitSyntheticGstExamples with data set #7",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Unit/PricingRegressionTest.php",
+    "scenario": "Tests\\Unit\\PricingRegressionTest::testAbsentPromoHasNoDiscount",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testAdminValidationRejectsMissingFieldsBeforeDatabaseAccess",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testAdminValidationRejectsMalformedEmailAndShortPassword",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testSuccessfulAdminLoginCreatesOnlyTheAdminSession",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testWrongAdminPasswordDoesNotAuthenticate",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testAdminLogoutClearsAdminAuthentication",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testGuestCannotOpenAdminDashboard",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testObservedApiValidationUsesHttp200AndFieldErrors",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testApiIncorrectPasswordPreservesErrorContract",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/AuthRegressionTest.php",
+    "scenario": "Tests\\Feature\\AuthRegressionTest::testApiSuccessfulLoginPreservesFieldsAndMisspellings",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testNormalHeaderStillRejectsNoTokenOnTheSameProtectedRoute",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testIndependentControllerAuthStillProtectsMeWithoutLoginType",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testCallbackFixtureHonorsInvoicePredicatesAndSelectedColumns",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testMatchingFinancialIdentityReachesInvoiceCreationBoundary",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testInvalidSignatureCannotFetchOrFulfillUnconvertedQuotation",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testValidSignatureWithUnknownLocalReferenceCannotWriteAnInvoice",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/CriticalDefectControlsTest.php",
+    "scenario": "Tests\\Feature\\CriticalDefectControlsTest::testApiMeWithValidTokenPreservesNonSecretIdentityFields",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/ExampleTest.php",
+    "scenario": "Tests\\Feature\\ExampleTest::testExistingAdminLoginPageIsPublic",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/ExampleTest.php",
+    "scenario": "Tests\\Feature\\ExampleTest::testRootIsAbsentWithTheIsolatedNonRootLogRoute",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testRealJwtSignatureAndRequiredClaimsRoundTrip",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testInvalidSignatureIsRejectedByActualJwtDecoder",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testExpirationIsEnforcedByActualJwtDecoder",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testNormalHeaderMissingTokenHasLegacy401Shape",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testNormalHeaderMalformedTokenIsRejected",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testExpiredTokenHasExistingMiddlewareErrorShape",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testRefreshProducesNewTokenAndBlacklistsOldOne",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testApiLogoutRevokesSuppliedToken",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/JwtRegressionTest.php",
+    "scenario": "Tests\\Feature\\JwtRegressionTest::testApiRefreshPreservesNestedResponseContract",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testSignedPaymentLinkCallbackStatusMapping with data set #6",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testLatePaidQuotationRemainsCancelledAndDoesNotConvert",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testSequentialReplaysDoNotRequestAnotherConversionWhenPersistenceReportsAlreadyConverted",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testUnconvertedPaidQuotationDelegatesToExistingInvoiceCreator",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testGatewayFailureDoesNotWritePaymentState",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PaymentRegressionTest.php",
+    "scenario": "Tests\\Feature\\PaymentRegressionTest::testRetryAfterGatewayFailureCanProcessSyntheticPaidResponse",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PdfEmailRegressionTest.php",
+    "scenario": "Tests\\Feature\\PdfEmailRegressionTest::testCommonPdfFallbackProducesContentAndMultiplePagesFromSyntheticHtml",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PdfEmailRegressionTest.php",
+    "scenario": "Tests\\Feature\\PdfEmailRegressionTest::testBrowserlessEndpointIsAbsentAndProcessExecutionIsDisabled",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PdfEmailRegressionTest.php",
+    "scenario": "Tests\\Feature\\PdfEmailRegressionTest::testCustomQuotationTemplateContractIsPreserved",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PdfEmailRegressionTest.php",
+    "scenario": "Tests\\Feature\\PdfEmailRegressionTest::testOrderEmailJobUsesSyntheticRecipientSubjectAndViewData",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PdfEmailRegressionTest.php",
+    "scenario": "Tests\\Feature\\PdfEmailRegressionTest::testPlanEmailJobDoesNotLeakRecipientOrDetailsBetweenMessages",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/PdfEmailRegressionTest.php",
+    "scenario": "Tests\\Feature\\PdfEmailRegressionTest::testEmailJobPropagatesSyntheticTransportFailureForWorkerRetry",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QueueSchedulerRegressionTest.php",
+    "scenario": "Tests\\Feature\\QueueSchedulerRegressionTest::testEmailAndMediaJobsDispatchWithoutRunningHandles",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QueueSchedulerRegressionTest.php",
+    "scenario": "Tests\\Feature\\QueueSchedulerRegressionTest::testSchedulerRegistersOnlyExistingActiveBusinessCadences",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QueueSchedulerRegressionTest.php",
+    "scenario": "Tests\\Feature\\QueueSchedulerRegressionTest::testQuotationExpiryDelegatesGatewayCancellationAndCompilesScopedUpdate",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QueueSchedulerRegressionTest.php",
+    "scenario": "Tests\\Feature\\QueueSchedulerRegressionTest::testNoEligibleQuotationCausesNoWrite",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QueueSchedulerRegressionTest.php",
+    "scenario": "Tests\\Feature\\QueueSchedulerRegressionTest::testEmptyOrAlreadyProcessedExpiryQueryIsRepeatableAtBoundary",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #4",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testExistingInvoiceCreationValidation with data set #5",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testMissingCustomerAddressListsRequiredFields",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testValidCustomerAddressCanComeFromRequest",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testCommonStatusTransitionSqlAndGatewayCancellation with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testCommonStatusTransitionSqlAndGatewayCancellation with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testCommonStatusTransitionSqlAndGatewayCancellation with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testMissingStatusUpdateReturnsExistingFailureContract",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/QuotationRegressionTest.php",
+    "scenario": "Tests\\Feature\\QuotationRegressionTest::testAdminCancellationDelegatesGatewayCancellationAfterSuccessfulUpdate",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testElasticSearchControllerContractAndQuery with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testElasticSearchControllerContractAndQuery with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testSearchIndexFailureHasExistingErrorContract",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testKeywordVariantsHaveObservedOrder",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testLocalStorageFixtureRoundTripAndMissingFile",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Feature/SearchMediaRegressionTest.php",
+    "scenario": "Tests\\Feature\\SearchMediaRegressionTest::testInterventionGdResizesSyntheticImageAndRejectsInvalidInput",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "POST /admin/authenticate and /api/login -> real guard/Eloquent provider",
+    "test_file": "tests/Integration/AuthenticationPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest::testActualSqlAdminAndApiAuthenticationUseSeparateGuards",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "POST /admin/authenticate and /api/login -> real guard/Eloquent provider",
+    "test_file": "tests/Integration/AuthenticationPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest::testDisabledAdminCannotRetainRealSqlAuthenticatedSession",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest::testDisabledAdminCannotRetainRealSqlAuthenticatedSession\nLEGACY-AUTH-02: inactive-admin guard retention confirmed with real SQL.\nFailed asserting that true is false.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\AuthenticationPersistenceIntegrationTest.php:33"
+  },
+  {
+    "business_path": "package:to-credit-balance -> CreateEntryForCarryForwardBalance -> UserPackage",
+    "test_file": "tests/Integration/CarryForwardIntegrationTest.php",
+    "scenario": "Tests\\Integration\\CarryForwardIntegrationTest::testActualBalanceCommandCreditsSyntheticRemainderOnceOnSequentialRuns",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue",
+    "test_file": "tests/Integration/CrossStoreBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\CrossStoreBusinessIntegrationTest::testActualProductImportCoordinatesSqlMongoAndRepeatedImportDoesNotDuplicate",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue",
+    "test_file": "tests/Integration/CrossStoreBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\CrossStoreBusinessIntegrationTest::testActualSqlFailureBeforeMongoWriteLeavesNoDocument",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue",
+    "test_file": "tests/Integration/CrossStoreBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\CrossStoreBusinessIntegrationTest::testMongoFailureLeavesSqlWriteAndRetryCreatesOnlyPartialDocument",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue",
+    "test_file": "tests/Integration/CrossStoreBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\CrossStoreBusinessIntegrationTest::testActualProductSearchCombinesMongoFilterSqlCategoryAndPagination",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Product savePantherMediaImage/getProductsData -> SQL + ImageFilterValue",
+    "test_file": "tests/Integration/CrossStoreBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\CrossStoreBusinessIntegrationTest::testRetryMustRestoreCompleteCrossStoreProductIdentity",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\Integration\\CrossStoreBusinessIntegrationTest::testRetryMustRestoreCompleteCrossStoreProductIdentity\nLEGACY-DATA-01: retry repairs attributes but omits SQL/Mongo identity after partial write.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'product_id' => 'PH220077'\n-    'product_main_type' => 'Image'\n+    'product_id' => null\n+    'product_main_type' => null\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\CrossStoreBusinessIntegrationTest.php:111"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MongoRegressionTest.php",
+    "scenario": "Tests\\Integration\\MongoRegressionTest::testDocumentCreateRetrieveAndObjectIdMapping",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MongoRegressionTest.php",
+    "scenario": "Tests\\Integration\\MongoRegressionTest::testDocumentUpdateIsPersisted",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MongoRegressionTest.php",
+    "scenario": "Tests\\Integration\\MongoRegressionTest::testNestedFilterAndSortUseActualMongoDb",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MongoRegressionTest.php",
+    "scenario": "Tests\\Integration\\MongoRegressionTest::testTimestampSerializationPreservesCalendarValue",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MongoRegressionTest.php",
+    "scenario": "Tests\\Integration\\MongoRegressionTest::testMissingDocumentReturnsNull",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MongoRegressionTest.php",
+    "scenario": "Tests\\Integration\\MongoRegressionTest::testRawAggregationOverSyntheticProducts",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testModelCreationUpdateAndReadBack",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testInvoiceItemRelationshipUsesInvoiceId",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testMySqlStoresExactTwoDecimalMoney",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testFilteringSortingAndPaginationUseActualMySql",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testRollbackRestoresRowsAfterSyntheticFailure",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testLegacyItemForeignKeyMetadataIsExplicit",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testMissingInvoiceIsNull",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testInvoiceStatusUpdatePreservesMoneyAndNumber",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/MySqlRegressionTest.php",
+    "scenario": "Tests\\Integration\\MySqlRegressionTest::testActualPrimaryKeyUniquenessRejectsDuplicateInvoiceRow",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail",
+    "test_file": "tests/Integration/PaymentPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testActualPaidConversionAndSequentialReplayDoNotDuplicateMailOrArtifacts",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail",
+    "test_file": "tests/Integration/PaymentPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testInvalidSignatureLeavesRealInvoiceAndNotificationsUnchanged",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail",
+    "test_file": "tests/Integration/PaymentPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealExpiredQuotationPaidCallbackDoesNotConvertOrNotifyAgain",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail",
+    "test_file": "tests/Integration/PaymentPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)\nLEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'paid' => false\n-    'converted' => false\n-    'mail_count' => 1\n+    'paid' => true\n+    'converted' => true\n+    'mail_count' => 2\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\PaymentPersistenceIntegrationTest.php:92"
+  },
+  {
+    "business_path": "GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail",
+    "test_file": "tests/Integration/PaymentPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')\nLEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'paid' => false\n-    'converted' => false\n-    'mail_count' => 1\n+    'paid' => true\n+    'converted' => true\n+    'mail_count' => 2\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\PaymentPersistenceIntegrationTest.php:92"
+  },
+  {
+    "business_path": "GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail",
+    "test_file": "tests/Integration/PaymentPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2 ('reference_id', 'QTN-unrelated')\nLEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'paid' => false\n-    'converted' => false\n-    'mail_count' => 1\n+    'paid' => true\n+    'converted' => true\n+    'mail_count' => 2\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\PaymentPersistenceIntegrationTest.php:92"
+  },
+  {
+    "business_path": "GET /api/razorpayInvoiceResponse -> PaymentController -> real Common/PDF/mail",
+    "test_file": "tests/Integration/PaymentPersistenceIntegrationTest.php",
+    "scenario": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistencePreservesPaidStateAgainstPendingResponse",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistencePreservesPaidStateAgainstPendingResponse\nLEGACY-PAY-02: real SQL paid-state downgrade; provider backward-state reachability still conditional.\nFailed asserting that 0 is identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\PaymentPersistenceIntegrationTest.php:103"
+  },
+  {
+    "business_path": "Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive",
+    "test_file": "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\QuotationBusinessIntegrationTest::testActualCustomQuotationPersistsCustomerCreatorMoneyPdfAndMail",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive",
+    "test_file": "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\QuotationBusinessIntegrationTest::testMissingCustomerDoesNotWriteQuotationOrCallProvider",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive",
+    "test_file": "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\QuotationBusinessIntegrationTest::testConversionUsesExistingInvoiceIdentityAndRealAttachmentPipeline",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive",
+    "test_file": "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\QuotationBusinessIntegrationTest::testEditingReadsPersistedSyntheticItemsAndReplacementCancelsOldLink",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive",
+    "test_file": "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\QuotationBusinessIntegrationTest::testRealExpiryCancelsOnlyDueQuotationAndRepeatedRunHasNoSecondEffect",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive",
+    "test_file": "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\QuotationBusinessIntegrationTest::testActualDiscountRecalculatesAndPersistsTwoDecimalSyntheticGstExample",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive",
+    "test_file": "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\QuotationBusinessIntegrationTest::testStorageBoundaryFailureIsReportedAfterRealQuotationAndMailPersist",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Admin/InvoiceController -> Common save_proforma/getQuotationData/create_invoice; QuotationDeactive",
+    "test_file": "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "scenario": "Tests\\Integration\\QuotationBusinessIntegrationTest::testMissingInvoiceReturnsExplicit422WithoutNotification",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "two PDO connections/row locks; DatabaseQueue; DatabaseFailedJobProvider",
+    "test_file": "tests/Integration/SqlConcurrencyQueueIntegrationTest.php",
+    "scenario": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest::testSecondRealConnectionCannotUpdateLockedInvoiceBeforeRollback",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "two PDO connections/row locks; DatabaseQueue; DatabaseFailedJobProvider",
+    "test_file": "tests/Integration/SqlConcurrencyQueueIntegrationTest.php",
+    "scenario": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest::testLegacyInvoiceNumberHasNoUniqueConstraintInVerifiedFixture",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "two PDO connections/row locks; DatabaseQueue; DatabaseFailedJobProvider",
+    "test_file": "tests/Integration/SqlConcurrencyQueueIntegrationTest.php",
+    "scenario": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest::testActualDatabaseQueueReservationReleaseRetryAndAcknowledgement",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "two PDO connections/row locks; DatabaseQueue; DatabaseFailedJobProvider",
+    "test_file": "tests/Integration/SqlConcurrencyQueueIntegrationTest.php",
+    "scenario": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest::testFailedJobProviderPersistsSyntheticFailureWithoutWorker",
+    "layer": "real database integration",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"quotation create/edit/replace end-to-end\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: SQL-backed CP creation/edit retrieval/replacement now execute; full HTTP save/edit authorization matrix and owner-approved quantity/tax/branding outputs remain pending."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"invoice numbering/customer selection/ownership\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: schema-matched SQL records and business acceptance of numbering/ownership rules. No cross-user protection claim from guard mocks."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"concurrent callback exactly-once effects\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: two isolated DB connections/processes and persistence fixtures to count invoices, payments, notifications and fulfillment under concurrent callbacks."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"PayU callback end-to-end\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: vendor-approved synthetic hash/order/merchant fixtures and isolated SQL state. Wrapper configuration is not assumed safe or supported."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Atom callback end-to-end\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: active-provider confirmation and isolated order/package fixtures; signature primitive tests do not prove fulfillment."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Razorpay order/plan fulfillment end-to-end\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: order/package SQL fixtures and intended amount/reference/retry rules for legacy razor_response and razor_plan_response."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Chromium and Browserless visual acceptance\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: a separately sandboxed network-denied renderer and approved synthetic screenshots/fonts; process execution intentionally disabled in this runner."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"custom quotation/full invoice email attachments\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: SQL-backed CP/invoice PDFs, recipients/subjects/attachments now execute through private Swift sink; approved visual references and complete inline HTML/CC/BCC/renderer-failure matrix remain pending."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"image upload/watermark end-to-end\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: approved synthetic upload/controller fixtures and watermark/orientation expectations; library resize checks alone are insufficient."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"FFmpeg video integration\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: an isolated process sandbox and reviewed tiny synthetic video/thumbnail expectations; host FFmpeg exists but process execution is disabled here."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"download authorization/history/limits\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: isolated package/license/history data and business rules for cross-user and exhausted-plan access."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"S3 adapter integration\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: isolated S3 emulator/bucket credentials with deny-production policy; no cloud storage calls are permitted."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Elasticsearch integration/index mappings\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: dedicated fixture cluster/index with compatible version and synthetic mappings; controller mocks are a separate layer."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"package carry-forward calculation/duplicates\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: actual synthetic MySQL remainder/sequential duplicate command now executes; owner-approved year/month/timezone rules and concurrent credit behavior still pending."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"queue worker retry/failure persistence\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: real DB queue reservation/release/retry/fixture execution/failed-job storage now execute; production job retry orchestration, worker-process sandbox and concurrent notification idempotency still pending."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/Integration/UnavailableFlowsTest.php",
+    "scenario": "Tests\\Integration\\UnavailableFlowsTest::testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"currency conversion and invalid quantity rules\"",
+    "layer": "coverage gate",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "BLOCKED",
+    "detail": "BLOCKED: business-approved conversion/rate source and quantity semantics; no assumption that legacy item price already includes quantity is correct."
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"missing\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"missing\" (array())\nLEGACY-AUTH-01: real protected route reaches URL validation without authentication.\nFailed asserting that 400 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:22"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"unknown\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"unknown\" (array('unknown'))\nLEGACY-AUTH-01: real protected route reaches URL validation without authentication.\nFailed asserting that 400 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:22"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"case variant\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"case variant\" (array('NORMAL'))\nLEGACY-AUTH-01: real protected route reaches URL validation without authentication.\nFailed asserting that 400 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:22"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testValidSignedTokenForMissingIdentityMustNotReachProtectedController",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testValidSignedTokenForMissingIdentityMustNotReachProtectedController\nLEGACY-AUTH-01: cryptographically valid token is insufficient when its local identity does not exist.\nFailed asserting that 400 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:37"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled\nLEGACY-AUTH-02: existing disabled account session passes Admin middleware.\nFailed asserting that 200 is identical to 302.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:50"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #0 ('user')\nLEGACY-AUTH-03: nested Eloquent serialization includes password field.\nFailed asserting that an array does not have the key 'password'.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:65"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #1 ('admin')\nLEGACY-AUTH-03: nested Eloquent serialization includes password field.\nFailed asserting that an array does not have the key 'password'.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:65"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\" ('amount', 1)\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\" ('currency', 'USD')\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"reference\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"reference\" ('reference_id', 'QTN-unrelated')\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0 ('created')\nLEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'status' => 1\n-    'payment_status' => 'Transction Success'\n+    'status' => 0\n+    'payment_status' => 'Pending'\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:48"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1 ('pending')\nLEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'status' => 1\n-    'payment_status' => 'Transction Success'\n+    'status' => 0\n+    'payment_status' => 'Pending'\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:48"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2 ('expired')\nLEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'status' => 1\n-    'payment_status' => 'Transction Success'\n+    'status' => 3\n+    'payment_status' => 'Failed'\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:48"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3 ('cancelled')\nLEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'status' => 1\n-    'payment_status' => 'Transction Success'\n+    'status' => 3\n+    'payment_status' => 'Failed'\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:48"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentInvariantTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"amount\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"amount\" (1, 'INR', 'QTN-7000001')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentInvariantTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"currency\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"currency\" (11800, 'USD', 'QTN-7000001')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentInvariantTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"reference\"",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"reference\" (11800, 'INR', 'QTN-unrelated')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/PaymentInvariantTest.php",
+    "scenario": "Tests\\KnownFailures\\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice\nLEGACY-PAY-02: stale/pending response downgrades paid invoice state.\nFailed asserting that 0 is identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:35"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/SecurityInvariantTest.php",
+    "scenario": "Tests\\KnownFailures\\SecurityInvariantTest::testMissingLoginTypeMustNotBypassJwtProtection",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\SecurityInvariantTest::testMissingLoginTypeMustNotBypassJwtProtection\nLEGACY-AUTH-01: missing Login-Type reaches next without token validation.\nFailed asserting that 200 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\SecurityInvariantTest.php:17"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/SecurityInvariantTest.php",
+    "scenario": "Tests\\KnownFailures\\SecurityInvariantTest::testDisabledAdminMustNotRetainAdminSession",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\SecurityInvariantTest::testDisabledAdminMustNotRetainAdminSession\nLEGACY-AUTH-02: disabled-admin branch logs out the default guard instead of admins.\nFailed asserting that true is false.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\SecurityInvariantTest.php:24"
+  },
+  {
+    "business_path": "Existing Phase 2.1 route/model mapping retained",
+    "test_file": "tests/KnownFailures/SecurityInvariantTest.php",
+    "scenario": "Tests\\KnownFailures\\SecurityInvariantTest::testAuthenticatedMeResponseMustNotExposePasswordHash",
+    "layer": "existing contract/invariant",
+    "expected": "See named test assertions and data provider; failure is not approved behavior",
+    "status": "FAIL",
+    "detail": "Tests\\KnownFailures\\SecurityInvariantTest::testAuthenticatedMeResponseMustNotExposePasswordHash\nLEGACY-AUTH-03: User hidden fields are commented; /api/me serializes password hashes.\nFailed asserting that an array does not have the key 'password'.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\SecurityInvariantTest.php:35"
+  }
+]

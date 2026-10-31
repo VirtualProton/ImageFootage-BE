@@ -1,0 +1,17 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+.F                                                                  2 / 2 (100%)
+
+Time: 3.5 seconds, Memory: 38.00 MB
+
+There was 1 failure:
+
+1) Tests\Feature\ExampleTest::testBasicTest
+Expected status code 200 but received 404.
+Failed asserting that false is true.
+
+C:\Projects\imagefootage\imagefootage_BE\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestResponse.php:151
+C:\Users\prith\AppData\Local\Temp\imagefootage-phase1-_rdamw2d\safe-baseline\tests\Feature\ExampleTest.php:19
+
+FAILURES!
+Tests: 2, Assertions: 2, Failures: 1.

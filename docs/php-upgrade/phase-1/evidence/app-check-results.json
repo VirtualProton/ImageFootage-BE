@@ -1,0 +1,20 @@
+[
+  {
+    "name": "artisan-version",
+    "exit": 0,
+    "status": null,
+    "output": "Laravel Framework 5.8.38\n"
+  },
+  {
+    "name": "route-list",
+    "exit": 0,
+    "status": null,
+    "output": "See routes.md"
+  },
+  {
+    "name": "phpunit",
+    "exit": 1,
+    "status": null,
+    "output": "PHPUnit 7.5.20 by Sebastian Bergmann and contributors.\n\n.F                                                                  2 / 2 (100%)\n\nTime: 3.5 seconds, Memory: 38.00 MB\n\nThere was 1 failure:\n\n1) Tests\\Feature\\ExampleTest::testBasicTest\nExpected status code 200 but received 404.\nFailed asserting that false is true.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\TestResponse.php:151\nC:\\Users\\prith\\AppData\\Local\\Temp\\imagefootage-phase1-_rdamw2d\\safe-baseline\\tests\\Feature\\ExampleTest.php:19\n\nFAILURES!\nTests: 2, Assertions: 2, Failures: 1.\n"
+  }
+]

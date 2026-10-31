@@ -1,0 +1,1900 @@
+{
+  "date": "2026-10-29",
+  "scope": "Phase 2.1 verification/preparation only; business fixes unapproved/unimplemented",
+  "command": "php tests/run.php --verbose --log-junit docs/php-upgrade/phase-2/evidence/phase-2.1/verification-run.xml",
+  "observed_exit": 1,
+  "reported_runtime": "5.24 seconds, Memory: 102.00 MB",
+  "php": "7.4.33",
+  "laravel": "5.8.38",
+  "phpunit": "7.5.20",
+  "tests": 207,
+  "assertions": 746,
+  "counts": {
+    "PASS": 154,
+    "FAIL": 21,
+    "BLOCKED": 32,
+    "SKIPPED": 0
+  },
+  "errors": 0,
+  "baseline": {
+    "tests": 186,
+    "PASS": 147,
+    "FAIL": 7,
+    "BLOCKED": 32,
+    "assertions": 560
+  },
+  "baseline_passing_regressions": [],
+  "baseline_missing_scenarios": [],
+  "original_failed_invariants_remain_failed": true,
+  "new_cases": 21,
+  "new_counts": {
+    "PASS": 7,
+    "FAIL": 14,
+    "BLOCKED": 0
+  },
+  "cases": [
+    {
+      "class": "Tests\\Unit\\AtomSignatureTest",
+      "name": "testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #0",
+      "file": "tests/Unit/AtomSignatureTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\AtomSignatureTest",
+      "name": "testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #1",
+      "file": "tests/Unit/AtomSignatureTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\ExampleTest",
+      "name": "testBasicTest",
+      "file": "tests/Unit/ExampleTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedQuotationDateDisplay with data set #0",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedQuotationDateDisplay with data set #1",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedQuotationDateDisplay with data set #2",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedQuotationDateDisplay with data set #3",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedQuotationDateDisplay with data set #4",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedQuotationDateDisplay with data set #5",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #0",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "29",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #1",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "29",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #2",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "29",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+      "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #3",
+      "file": "tests/Unit/InvoiceDatesRegressionTest.php",
+      "line": "29",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #0",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #1",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #2",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #3",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #4",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #5",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #6",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #7",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\IsolationTest",
+      "name": "testApplicationUsesOnlyPrivateTestStorageAndDiscardTransports",
+      "file": "tests/Unit/IsolationTest.php",
+      "line": "26",
+      "status": "PASS",
+      "assertions": 9,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #0",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "12",
+      "status": "PASS",
+      "assertions": 7,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #1",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "12",
+      "status": "PASS",
+      "assertions": 7,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #2",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "12",
+      "status": "PASS",
+      "assertions": 7,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #3",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "12",
+      "status": "PASS",
+      "assertions": 7,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #0",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "41",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #1",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "41",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #2",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "41",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testLinkExpiryBoundaries with data set #0",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "50",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testLinkExpiryBoundaries with data set #1",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "50",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testLinkExpiryBoundaries with data set #2",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "50",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testLinkExpiryBoundaries with data set #3",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "50",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testLinkExpiryBoundaries with data set #4",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "50",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+      "name": "testLinkExpiryBoundaries with data set #5",
+      "file": "tests/Unit/PaymentLinkRegressionTest.php",
+      "line": "50",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testUrlToModuleMapping with data set #0",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testUrlToModuleMapping with data set #1",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testUrlToModuleMapping with data set #2",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testUrlToModuleMapping with data set #3",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testUrlToModuleMapping with data set #4",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testUrlToModuleMapping with data set #5",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testUrlToModuleMapping with data set #6",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testUrlToModuleMapping with data set #7",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testRequestActionClassification with data set #0",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "28",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testRequestActionClassification with data set #1",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "28",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testRequestActionClassification with data set #2",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "28",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testRequestActionClassification with data set #3",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "28",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testRequestActionClassification with data set #4",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "28",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testRequestActionClassification with data set #5",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "28",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testRequestActionClassification with data set #6",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "28",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testRequestActionClassification with data set #7",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "28",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testGuestHasNoPermissions",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "41",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testSuperAdminPassesProtectedMiddleware",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "46",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PermissionRegressionTest",
+      "name": "testSubadminCanViewButCannotEditFromIndependentCachedPermissionFixture",
+      "file": "tests/Unit/PermissionRegressionTest.php",
+      "line": "55",
+      "status": "PASS",
+      "assertions": 5,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testObservedSubtotalSelection with data set \"items take precedence\"",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testObservedSubtotalSelection with data set \"subscription\"",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testObservedSubtotalSelection with data set \"total minus tax\"",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testObservedSubtotalSelection with data set \"zero default\"",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testObservedSubtotalSelection with data set \"clamp inferred negative\"",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testObservedSubtotalSelection with data set \"observed quantity ignored\"",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "11",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testDiscountClampsAndRounds with data set #0",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testDiscountClampsAndRounds with data set #1",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testDiscountClampsAndRounds with data set #2",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testDiscountClampsAndRounds with data set #3",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testDiscountClampsAndRounds with data set #4",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testDiscountClampsAndRounds with data set #5",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testDiscountClampsAndRounds with data set #6",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testDiscountClampsAndRounds with data set #7",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #0",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "48",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #1",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "48",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #2",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "48",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #3",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "48",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #4",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "48",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #5",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "48",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #6",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "48",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #7",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "48",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Unit\\PricingRegressionTest",
+      "name": "testAbsentPromoHasNoDiscount",
+      "file": "tests/Unit/PricingRegressionTest.php",
+      "line": "70",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testAdminValidationRejectsMissingFieldsBeforeDatabaseAccess",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "10",
+      "status": "PASS",
+      "assertions": 4,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testAdminValidationRejectsMalformedEmailAndShortPassword",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testSuccessfulAdminLoginCreatesOnlyTheAdminSession",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "20",
+      "status": "PASS",
+      "assertions": 5,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testWrongAdminPasswordDoesNotAuthenticate",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 4,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testAdminLogoutClearsAdminAuthentication",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "39",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testGuestCannotOpenAdminDashboard",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "47",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testObservedApiValidationUsesHttp200AndFieldErrors",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "52",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testApiIncorrectPasswordPreservesErrorContract",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "57",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\AuthRegressionTest",
+      "name": "testApiSuccessfulLoginPreservesFieldsAndMisspellings",
+      "file": "tests/Feature/AuthRegressionTest.php",
+      "line": "64",
+      "status": "PASS",
+      "assertions": 17,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\CriticalDefectControlsTest",
+      "name": "testNormalHeaderStillRejectsNoTokenOnTheSameProtectedRoute",
+      "file": "tests/Feature/CriticalDefectControlsTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\CriticalDefectControlsTest",
+      "name": "testIndependentControllerAuthStillProtectsMeWithoutLoginType",
+      "file": "tests/Feature/CriticalDefectControlsTest.php",
+      "line": "20",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\CriticalDefectControlsTest",
+      "name": "testCallbackFixtureHonorsInvoicePredicatesAndSelectedColumns",
+      "file": "tests/Feature/CriticalDefectControlsTest.php",
+      "line": "25",
+      "status": "PASS",
+      "assertions": 17,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\CriticalDefectControlsTest",
+      "name": "testMatchingFinancialIdentityReachesInvoiceCreationBoundary",
+      "file": "tests/Feature/CriticalDefectControlsTest.php",
+      "line": "36",
+      "status": "PASS",
+      "assertions": 20,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\CriticalDefectControlsTest",
+      "name": "testInvalidSignatureCannotFetchOrFulfillUnconvertedQuotation",
+      "file": "tests/Feature/CriticalDefectControlsTest.php",
+      "line": "49",
+      "status": "PASS",
+      "assertions": 6,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\CriticalDefectControlsTest",
+      "name": "testValidSignatureWithUnknownLocalReferenceCannotWriteAnInvoice",
+      "file": "tests/Feature/CriticalDefectControlsTest.php",
+      "line": "62",
+      "status": "PASS",
+      "assertions": 15,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\CriticalDefectControlsTest",
+      "name": "testApiMeWithValidTokenPreservesNonSecretIdentityFields",
+      "file": "tests/Feature/CriticalDefectControlsTest.php",
+      "line": "73",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\ExampleTest",
+      "name": "testExistingAdminLoginPageIsPublic",
+      "file": "tests/Feature/ExampleTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\ExampleTest",
+      "name": "testRootIsAbsentWithTheIsolatedNonRootLogRoute",
+      "file": "tests/Feature/ExampleTest.php",
+      "line": "24",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testRealJwtSignatureAndRequiredClaimsRoundTrip",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "19",
+      "status": "PASS",
+      "assertions": 8,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testInvalidSignatureIsRejectedByActualJwtDecoder",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "30",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testExpirationIsEnforcedByActualJwtDecoder",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "38",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testNormalHeaderMissingTokenHasLegacy401Shape",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "46",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testNormalHeaderMalformedTokenIsRejected",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "52",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testExpiredTokenHasExistingMiddlewareErrorShape",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "58",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testRefreshProducesNewTokenAndBlacklistsOldOne",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "66",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testApiLogoutRevokesSuppliedToken",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "75",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\JwtRegressionTest",
+      "name": "testApiRefreshPreservesNestedResponseContract",
+      "file": "tests/Feature/JwtRegressionTest.php",
+      "line": "85",
+      "status": "PASS",
+      "assertions": 8,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testSignedPaymentLinkCallbackStatusMapping with data set #0",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 18,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testSignedPaymentLinkCallbackStatusMapping with data set #1",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 14,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testSignedPaymentLinkCallbackStatusMapping with data set #2",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 14,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testSignedPaymentLinkCallbackStatusMapping with data set #3",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 14,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testSignedPaymentLinkCallbackStatusMapping with data set #4",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 14,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testSignedPaymentLinkCallbackStatusMapping with data set #5",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 14,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testSignedPaymentLinkCallbackStatusMapping with data set #6",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "15",
+      "status": "PASS",
+      "assertions": 14,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #0",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "35",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #1",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "35",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #2",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "35",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #3",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "35",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testLatePaidQuotationRemainsCancelledAndDoesNotConvert",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "51",
+      "status": "PASS",
+      "assertions": 12,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testSequentialReplaysDoNotRequestAnotherConversionWhenPersistenceReportsAlreadyConverted",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "64",
+      "status": "PASS",
+      "assertions": 30,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testUnconvertedPaidQuotationDelegatesToExistingInvoiceCreator",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "80",
+      "status": "PASS",
+      "assertions": 19,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testGatewayFailureDoesNotWritePaymentState",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "94",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PaymentRegressionTest",
+      "name": "testRetryAfterGatewayFailureCanProcessSyntheticPaidResponse",
+      "file": "tests/Feature/PaymentRegressionTest.php",
+      "line": "104",
+      "status": "PASS",
+      "assertions": 17,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PdfEmailRegressionTest",
+      "name": "testCommonPdfFallbackProducesContentAndMultiplePagesFromSyntheticHtml",
+      "file": "tests/Feature/PdfEmailRegressionTest.php",
+      "line": "16",
+      "status": "PASS",
+      "assertions": 11,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PdfEmailRegressionTest",
+      "name": "testBrowserlessEndpointIsAbsentAndProcessExecutionIsDisabled",
+      "file": "tests/Feature/PdfEmailRegressionTest.php",
+      "line": "52",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PdfEmailRegressionTest",
+      "name": "testCustomQuotationTemplateContractIsPreserved",
+      "file": "tests/Feature/PdfEmailRegressionTest.php",
+      "line": "59",
+      "status": "PASS",
+      "assertions": 6,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PdfEmailRegressionTest",
+      "name": "testOrderEmailJobUsesSyntheticRecipientSubjectAndViewData",
+      "file": "tests/Feature/PdfEmailRegressionTest.php",
+      "line": "74",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PdfEmailRegressionTest",
+      "name": "testPlanEmailJobDoesNotLeakRecipientOrDetailsBetweenMessages",
+      "file": "tests/Feature/PdfEmailRegressionTest.php",
+      "line": "85",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\PdfEmailRegressionTest",
+      "name": "testEmailJobPropagatesSyntheticTransportFailureForWorkerRetry",
+      "file": "tests/Feature/PdfEmailRegressionTest.php",
+      "line": "101",
+      "status": "PASS",
+      "assertions": 4,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+      "name": "testEmailAndMediaJobsDispatchWithoutRunningHandles",
+      "file": "tests/Feature/QueueSchedulerRegressionTest.php",
+      "line": "17",
+      "status": "PASS",
+      "assertions": 4,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+      "name": "testSchedulerRegistersOnlyExistingActiveBusinessCadences",
+      "file": "tests/Feature/QueueSchedulerRegressionTest.php",
+      "line": "33",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+      "name": "testQuotationExpiryDelegatesGatewayCancellationAndCompilesScopedUpdate",
+      "file": "tests/Feature/QueueSchedulerRegressionTest.php",
+      "line": "49",
+      "status": "PASS",
+      "assertions": 7,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+      "name": "testNoEligibleQuotationCausesNoWrite",
+      "file": "tests/Feature/QueueSchedulerRegressionTest.php",
+      "line": "66",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+      "name": "testEmptyOrAlreadyProcessedExpiryQueryIsRepeatableAtBoundary",
+      "file": "tests/Feature/QueueSchedulerRegressionTest.php",
+      "line": "76",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testExistingInvoiceCreationValidation with data set #0",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testExistingInvoiceCreationValidation with data set #1",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testExistingInvoiceCreationValidation with data set #2",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testExistingInvoiceCreationValidation with data set #3",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testExistingInvoiceCreationValidation with data set #4",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testExistingInvoiceCreationValidation with data set #5",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testMissingCustomerAddressListsRequiredFields",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "35",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testValidCustomerAddressCanComeFromRequest",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "44",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #0",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "51",
+      "status": "PASS",
+      "assertions": 6,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #1",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "51",
+      "status": "PASS",
+      "assertions": 6,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #2",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "51",
+      "status": "PASS",
+      "assertions": 6,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testMissingStatusUpdateReturnsExistingFailureContract",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "70",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\QuotationRegressionTest",
+      "name": "testAdminCancellationDelegatesGatewayCancellationAfterSuccessfulUpdate",
+      "file": "tests/Feature/QuotationRegressionTest.php",
+      "line": "78",
+      "status": "PASS",
+      "assertions": 4,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testElasticSearchControllerContractAndQuery with data set #0",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testElasticSearchControllerContractAndQuery with data set #1",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "14",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testSearchIndexFailureHasExistingErrorContract",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "26",
+      "status": "PASS",
+      "assertions": 3,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testKeywordVariantsHaveObservedOrder",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "35",
+      "status": "PASS",
+      "assertions": 1,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #0",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "42",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #1",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "42",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #2",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "42",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #3",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "42",
+      "status": "PASS",
+      "assertions": 2,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testLocalStorageFixtureRoundTripAndMissingFile",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "54",
+      "status": "PASS",
+      "assertions": 5,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Feature\\SearchMediaRegressionTest",
+      "name": "testInterventionGdResizesSyntheticImageAndRejectsInvalidInput",
+      "file": "tests/Feature/SearchMediaRegressionTest.php",
+      "line": "65",
+      "status": "PASS",
+      "assertions": 4,
+      "message": ""
+    },
+    {
+      "class": "Tests\\Integration\\MongoRegressionTest",
+      "name": "testDocumentCreateRetrieveAndObjectIdMapping",
+      "file": "tests/Integration/MongoRegressionTest.php",
+      "line": "9",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MongoRegressionTest",
+      "name": "testDocumentUpdateIsPersisted",
+      "file": "tests/Integration/MongoRegressionTest.php",
+      "line": "17",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MongoRegressionTest",
+      "name": "testNestedFilterAndSortUseActualMongoDb",
+      "file": "tests/Integration/MongoRegressionTest.php",
+      "line": "25",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MongoRegressionTest",
+      "name": "testTimestampSerializationPreservesCalendarValue",
+      "file": "tests/Integration/MongoRegressionTest.php",
+      "line": "33",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MongoRegressionTest",
+      "name": "testMissingDocumentReturnsNull",
+      "file": "tests/Integration/MongoRegressionTest.php",
+      "line": "41",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MongoRegressionTest",
+      "name": "testRawAggregationOverSyntheticProducts",
+      "file": "tests/Integration/MongoRegressionTest.php",
+      "line": "46",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MongoDB fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MySqlRegressionTest",
+      "name": "testModelCreationUpdateAndReadBack",
+      "file": "tests/Integration/MySqlRegressionTest.php",
+      "line": "11",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MySqlRegressionTest",
+      "name": "testInvoiceItemRelationshipUsesInvoiceId",
+      "file": "tests/Integration/MySqlRegressionTest.php",
+      "line": "20",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MySqlRegressionTest",
+      "name": "testMySqlStoresExactTwoDecimalMoney",
+      "file": "tests/Integration/MySqlRegressionTest.php",
+      "line": "29",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MySqlRegressionTest",
+      "name": "testFilteringSortingAndPaginationUseActualMySql",
+      "file": "tests/Integration/MySqlRegressionTest.php",
+      "line": "37",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MySqlRegressionTest",
+      "name": "testRollbackRestoresRowsAfterSyntheticFailure",
+      "file": "tests/Integration/MySqlRegressionTest.php",
+      "line": "48",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MySqlRegressionTest",
+      "name": "testLegacyItemForeignKeyMetadataIsExplicit",
+      "file": "tests/Integration/MySqlRegressionTest.php",
+      "line": "62",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MySqlRegressionTest",
+      "name": "testMissingInvoiceIsNull",
+      "file": "tests/Integration/MySqlRegressionTest.php",
+      "line": "69",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\MySqlRegressionTest",
+      "name": "testInvoiceStatusUpdatePreservesMoneyAndNumber",
+      "file": "tests/Integration/MySqlRegressionTest.php",
+      "line": "74",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated MySQL fixture not enabled; see phase-2/02_TEST_ENVIRONMENT.md."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"cross-store orchestrated write/partial failure\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: Product SQL/Mongo business fixture and independently isolated databases; no shared atomic transaction can be assumed."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"quotation create/edit/replace end-to-end\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: empty schema-matched MySQL, customer/creator/item relations and approved synthetic quotation lifecycle expectations. Gateway/renderer boundaries must be faked first."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"invoice numbering/customer selection/ownership\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: schema-matched SQL records and business acceptance of numbering/ownership rules. No cross-user protection claim from guard mocks."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"concurrent callback exactly-once effects\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: two isolated DB connections/processes and persistence fixtures to count invoices, payments, notifications and fulfillment under concurrent callbacks."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"PayU callback end-to-end\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: vendor-approved synthetic hash/order/merchant fixtures and isolated SQL state. Wrapper configuration is not assumed safe or supported."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Atom callback end-to-end\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: active-provider confirmation and isolated order/package fixtures; signature primitive tests do not prove fulfillment."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Razorpay order/plan fulfillment end-to-end\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: order/package SQL fixtures and intended amount/reference/retry rules for legacy razor_response and razor_plan_response."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Chromium and Browserless visual acceptance\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: a separately sandboxed network-denied renderer and approved synthetic screenshots/fonts; process execution intentionally disabled in this runner."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"custom quotation/full invoice email attachments\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: full synthetic SQL relationships and accepted rendered CP/invoice/email reference outputs; no customer PDFs used."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"image upload/watermark end-to-end\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: approved synthetic upload/controller fixtures and watermark/orientation expectations; library resize checks alone are insufficient."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"FFmpeg video integration\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: an isolated process sandbox and reviewed tiny synthetic video/thumbnail expectations; host FFmpeg exists but process execution is disabled here."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"download authorization/history/limits\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: isolated package/license/history data and business rules for cross-user and exhausted-plan access."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"S3 adapter integration\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: isolated S3 emulator/bucket credentials with deny-production policy; no cloud storage calls are permitted."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"MySQL/Mongo product filter combinations\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: schema-matched synthetic product/category/filter fixtures for SearchController and FiltersController."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Elasticsearch integration/index mappings\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: dedicated fixture cluster/index with compatible version and synthetic mappings; controller mocks are a separate layer."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"package carry-forward calculation/duplicates\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: isolated UserPackage/download fixtures and approved balance/year-boundary policy; do not invoke live scheduled command."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"queue worker retry/failure persistence\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: isolated queue backend and worker process sandbox; dispatch/mail mock tests do not prove worker retries or exactly-once delivery."
+    },
+    {
+      "class": "Tests\\Integration\\UnavailableFlowsTest",
+      "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"currency conversion and invalid quantity rules\"",
+      "file": "tests/Integration/UnavailableFlowsTest.php",
+      "line": "10",
+      "status": "BLOCKED",
+      "assertions": 0,
+      "message": "BLOCKED: business-approved conversion/rate source and quantity semantics; no assumption that legacy item price already includes quantity is correct."
+    },
+    {
+      "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"missing\"",
+      "file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+      "line": "16",
+      "status": "FAIL",
+      "assertions": 2,
+      "message": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"missing\" (array())\nLEGACY-AUTH-01: real protected route reaches URL validation without authentication.\nFailed asserting that 400 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:22"
+    },
+    {
+      "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"unknown\"",
+      "file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+      "line": "16",
+      "status": "FAIL",
+      "assertions": 2,
+      "message": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"unknown\" (array('unknown'))\nLEGACY-AUTH-01: real protected route reaches URL validation without authentication.\nFailed asserting that 400 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:22"
+    },
+    {
+      "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"case variant\"",
+      "file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+      "line": "16",
+      "status": "FAIL",
+      "assertions": 2,
+      "message": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"case variant\" (array('NORMAL'))\nLEGACY-AUTH-01: real protected route reaches URL validation without authentication.\nFailed asserting that 400 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:22"
+    },
+    {
+      "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "name": "testValidSignedTokenForMissingIdentityMustNotReachProtectedController",
+      "file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+      "line": "30",
+      "status": "FAIL",
+      "assertions": 1,
+      "message": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testValidSignedTokenForMissingIdentityMustNotReachProtectedController\nLEGACY-AUTH-01: cryptographically valid token is insufficient when its local identity does not exist.\nFailed asserting that 400 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:37"
+    },
+    {
+      "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "name": "testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled",
+      "file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+      "line": "40",
+      "status": "FAIL",
+      "assertions": 2,
+      "message": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled\nLEGACY-AUTH-02: existing disabled account session passes Admin middleware.\nFailed asserting that 200 is identical to 302.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:50"
+    },
+    {
+      "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "name": "testNestedSerializedModelsDoNotExposePasswordFields with data set #0",
+      "file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+      "line": "54",
+      "status": "FAIL",
+      "assertions": 2,
+      "message": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #0 ('user')\nLEGACY-AUTH-03: nested Eloquent serialization includes password field.\nFailed asserting that an array does not have the key 'password'.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:65"
+    },
+    {
+      "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "name": "testNestedSerializedModelsDoNotExposePasswordFields with data set #1",
+      "file": "tests/KnownFailures/CriticalDefectVerificationTest.php",
+      "line": "54",
+      "status": "FAIL",
+      "assertions": 2,
+      "message": "Tests\\KnownFailures\\CriticalDefectVerificationTest::testNestedSerializedModelsDoNotExposePasswordFields with data set #1 ('admin')\nLEGACY-AUTH-03: nested Eloquent serialization includes password field.\nFailed asserting that an array does not have the key 'password'.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\CriticalDefectVerificationTest.php:65"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\"",
+      "file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+      "line": "13",
+      "status": "FAIL",
+      "assertions": 22,
+      "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\" ('amount', 1)\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\"",
+      "file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+      "line": "13",
+      "status": "FAIL",
+      "assertions": 22,
+      "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\" ('currency', 'USD')\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"reference\"",
+      "file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+      "line": "13",
+      "status": "FAIL",
+      "assertions": 22,
+      "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"reference\" ('reference_id', 'QTN-unrelated')\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0",
+      "file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+      "line": "38",
+      "status": "FAIL",
+      "assertions": 11,
+      "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0 ('created')\nLEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'status' => 1\n-    'payment_status' => 'Transction Success'\n+    'status' => 0\n+    'payment_status' => 'Pending'\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:48"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1",
+      "file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+      "line": "38",
+      "status": "FAIL",
+      "assertions": 11,
+      "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1 ('pending')\nLEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'status' => 1\n-    'payment_status' => 'Transction Success'\n+    'status' => 0\n+    'payment_status' => 'Pending'\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:48"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2",
+      "file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+      "line": "38",
+      "status": "FAIL",
+      "assertions": 11,
+      "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2 ('expired')\nLEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'status' => 1\n-    'payment_status' => 'Transction Success'\n+    'status' => 3\n+    'payment_status' => 'Failed'\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:48"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3",
+      "file": "tests/KnownFailures/PaymentDefectVerificationTest.php",
+      "line": "38",
+      "status": "FAIL",
+      "assertions": 11,
+      "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3 ('cancelled')\nLEGACY-PAY-02: signed/fetched status agree, but completed local payment is downgraded. Provider reachability is separately unverified.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'status' => 1\n-    'payment_status' => 'Transction Success'\n+    'status' => 3\n+    'payment_status' => 'Failed'\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:48"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+      "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"amount\"",
+      "file": "tests/KnownFailures/PaymentInvariantTest.php",
+      "line": "14",
+      "status": "FAIL",
+      "assertions": 14,
+      "message": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"amount\" (1, 'INR', 'QTN-7000001')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+      "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"currency\"",
+      "file": "tests/KnownFailures/PaymentInvariantTest.php",
+      "line": "14",
+      "status": "FAIL",
+      "assertions": 14,
+      "message": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"currency\" (11800, 'USD', 'QTN-7000001')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+      "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"reference\"",
+      "file": "tests/KnownFailures/PaymentInvariantTest.php",
+      "line": "14",
+      "status": "FAIL",
+      "assertions": 14,
+      "message": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"reference\" (11800, 'INR', 'QTN-unrelated')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20"
+    },
+    {
+      "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+      "name": "testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice",
+      "file": "tests/KnownFailures/PaymentInvariantTest.php",
+      "line": "29",
+      "status": "FAIL",
+      "assertions": 10,
+      "message": "Tests\\KnownFailures\\PaymentInvariantTest::testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice\nLEGACY-PAY-02: stale/pending response downgrades paid invoice state.\nFailed asserting that 0 is identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:35"
+    },
+    {
+      "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+      "name": "testMissingLoginTypeMustNotBypassJwtProtection",
+      "file": "tests/KnownFailures/SecurityInvariantTest.php",
+      "line": "13",
+      "status": "FAIL",
+      "assertions": 1,
+      "message": "Tests\\KnownFailures\\SecurityInvariantTest::testMissingLoginTypeMustNotBypassJwtProtection\nLEGACY-AUTH-01: missing Login-Type reaches next without token validation.\nFailed asserting that 200 is identical to 401.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\SecurityInvariantTest.php:17"
+    },
+    {
+      "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+      "name": "testDisabledAdminMustNotRetainAdminSession",
+      "file": "tests/KnownFailures/SecurityInvariantTest.php",
+      "line": "20",
+      "status": "FAIL",
+      "assertions": 1,
+      "message": "Tests\\KnownFailures\\SecurityInvariantTest::testDisabledAdminMustNotRetainAdminSession\nLEGACY-AUTH-02: disabled-admin branch logs out the default guard instead of admins.\nFailed asserting that true is false.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\SecurityInvariantTest.php:24"
+    },
+    {
+      "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+      "name": "testAuthenticatedMeResponseMustNotExposePasswordHash",
+      "file": "tests/KnownFailures/SecurityInvariantTest.php",
+      "line": "27",
+      "status": "FAIL",
+      "assertions": 2,
+      "message": "Tests\\KnownFailures\\SecurityInvariantTest::testAuthenticatedMeResponseMustNotExposePasswordHash\nLEGACY-AUTH-03: User hidden fields are commented; /api/me serializes password hashes.\nFailed asserting that an array does not have the key 'password'.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\SecurityInvariantTest.php:35"
+    }
+  ]
+}

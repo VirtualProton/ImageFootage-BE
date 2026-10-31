@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-29",
+  "protected_file_count": 437,
+  "protected_files_changed": [],
+  "starting_files_changed": [
+    "tests/run.php",
+    "tests/Integration/MySqlRegressionTest.php",
+    "tests/Integration/UnavailableFlowsTest.php",
+    "tests/Support/MongoTestCase.php",
+    "progress.md"
+  ],
+  "new_test_paths": [
+    "tests/run-real.php",
+    "tests/Integration/AuthenticationPersistenceIntegrationTest.php",
+    "tests/Integration/CarryForwardIntegrationTest.php",
+    "tests/Integration/CrossStoreBusinessIntegrationTest.php",
+    "tests/Integration/PaymentPersistenceIntegrationTest.php",
+    "tests/Integration/QuotationBusinessIntegrationTest.php",
+    "tests/Integration/SqlConcurrencyQueueIntegrationTest.php",
+    "tests/Support/BusinessFixtures.php",
+    "tests/Support/FixtureQueuedJob.php",
+    "tests/Support/prepare-real-databases.php",
+    "tests/Support/UploadSink.php"
+  ],
+  "test_php_lint": {
+    "files_checked": 47,
+    "errors": []
+  },
+  "phpunit_xml_valid": true,
+  "evidence_json_errors": [],
+  "missing_relative_links": [],
+  "versions_upgraded": false,
+  "production_business_fixes": false,
+  "phase3_started": false,
+  "fixture_cleanup": true
+}

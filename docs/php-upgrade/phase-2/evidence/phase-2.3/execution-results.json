@@ -1,0 +1,3684 @@
+{
+  "phase": "2.3",
+  "date": "2026-10-29",
+  "php": "7.4.33",
+  "laravel": "5.8.38",
+  "phpunit": "7.5.20",
+  "baseline": {
+    "tests": 233,
+    "PASS": 190,
+    "FAIL": 27,
+    "BLOCKED": 16,
+    "assertions": 1301
+  },
+  "repeatable_names_statuses": true,
+  "missing_baseline_cases": [],
+  "baseline_pass_regressions": [],
+  "resolved_baseline_failures": [
+    [
+      "Tests\\Integration\\AuthenticationPersistenceIntegrationTest",
+      "testDisabledAdminCannotRetainRealSqlAuthenticatedSession"
+    ],
+    [
+      "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+      "testRetryMustRestoreCompleteCrossStoreProductIdentity"
+    ],
+    [
+      "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+      "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2"
+    ],
+    [
+      "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+      "testRealPersistencePreservesPaidStateAgainstPendingResponse"
+    ],
+    [
+      "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"missing\""
+    ],
+    [
+      "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"unknown\""
+    ],
+    [
+      "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"case variant\""
+    ],
+    [
+      "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "testValidSignedTokenForMissingIdentityMustNotReachProtectedController"
+    ],
+    [
+      "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled"
+    ],
+    [
+      "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "testNestedSerializedModelsDoNotExposePasswordFields with data set #0"
+    ],
+    [
+      "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+      "testNestedSerializedModelsDoNotExposePasswordFields with data set #1"
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"reference\""
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0"
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1"
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2"
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3"
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentInvariantTest",
+      "testPaidCallbackMustValidateFinancialIdentity with data set \"reference\""
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentInvariantTest",
+      "testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice"
+    ],
+    [
+      "Tests\\KnownFailures\\SecurityInvariantTest",
+      "testMissingLoginTypeMustNotBypassJwtProtection"
+    ],
+    [
+      "Tests\\KnownFailures\\SecurityInvariantTest",
+      "testDisabledAdminMustNotRetainAdminSession"
+    ],
+    [
+      "Tests\\KnownFailures\\SecurityInvariantTest",
+      "testAuthenticatedMeResponseMustNotExposePasswordHash"
+    ]
+  ],
+  "resolved_baseline_failure_count": 21,
+  "new_case_count": 18,
+  "remaining_failures": [
+    [
+      "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+      "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0"
+    ],
+    [
+      "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+      "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1"
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\""
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+      "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\""
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentInvariantTest",
+      "testPaidCallbackMustValidateFinancialIdentity with data set \"amount\""
+    ],
+    [
+      "Tests\\KnownFailures\\PaymentInvariantTest",
+      "testPaidCallbackMustValidateFinancialIdentity with data set \"currency\""
+    ]
+  ],
+  "real_integration_counts": {
+    "PASS": 41,
+    "FAIL": 2,
+    "ERROR": 0,
+    "BLOCKED": 16
+  },
+  "concurrency_scenarios_counted_separately": true,
+  "runs": [
+    {
+      "run": 1,
+      "tests": 251,
+      "assertions": 1419,
+      "seconds": 37.406569,
+      "exit_code": 1,
+      "counts": {
+        "PASS": 229,
+        "FAIL": 6,
+        "ERROR": 0,
+        "BLOCKED": 16
+      },
+      "cases": [
+        {
+          "class": "Tests\\Unit\\AtomSignatureTest",
+          "name": "testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\AtomSignatureTest",
+          "name": "testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\ExampleTest",
+          "name": "testBasicTest",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #6",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #7",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testApplicationUsesOnlyPrivateTestStorageAndDiscardTransports",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #0",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #1",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #2",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #3",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #6",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #7",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #6",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #7",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testGuestHasNoPermissions",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testSuperAdminPassesProtectedMiddleware",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testSubadminCanViewButCannotEditFromIndependentCachedPermissionFixture",
+          "assertions": 5,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"items take precedence\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"subscription\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"total minus tax\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"zero default\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"clamp inferred negative\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"observed quantity ignored\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #6",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #7",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #3",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #4",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #5",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #6",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #7",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testAbsentPromoHasNoDiscount",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testAdminValidationRejectsMissingFieldsBeforeDatabaseAccess",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testAdminValidationRejectsMalformedEmailAndShortPassword",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testSuccessfulAdminLoginCreatesOnlyTheAdminSession",
+          "assertions": 5,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testWrongAdminPasswordDoesNotAuthenticate",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testAdminLogoutClearsAdminAuthentication",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testGuestCannotOpenAdminDashboard",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testObservedApiValidationUsesHttp200AndFieldErrors",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testApiIncorrectPasswordPreservesErrorContract",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testApiSuccessfulLoginPreservesFieldsAndMisspellings",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testNormalHeaderStillRejectsNoTokenOnTheSameProtectedRoute",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testIndependentControllerAuthStillProtectsMeWithoutLoginType",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testCallbackFixtureHonorsInvoicePredicatesAndSelectedColumns",
+          "assertions": 21,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testMatchingFinancialIdentityReachesInvoiceCreationBoundary",
+          "assertions": 25,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testInvalidSignatureCannotFetchOrFulfillUnconvertedQuotation",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testValidSignatureWithUnknownLocalReferenceCannotWriteAnInvoice",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testApiMeWithValidTokenPreservesNonSecretIdentityFields",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\ExampleTest",
+          "name": "testExistingAdminLoginPageIsPublic",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\ExampleTest",
+          "name": "testRootIsAbsentWithTheIsolatedNonRootLogRoute",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testRealJwtSignatureAndRequiredClaimsRoundTrip",
+          "assertions": 8,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testInvalidSignatureIsRejectedByActualJwtDecoder",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testExpirationIsEnforcedByActualJwtDecoder",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testNormalHeaderMissingTokenHasLegacy401Shape",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testNormalHeaderMalformedTokenIsRejected",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testExpiredTokenHasExistingMiddlewareErrorShape",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testRefreshProducesNewTokenAndBlacklistsOldOne",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testApiLogoutRevokesSuppliedToken",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testApiRefreshPreservesNestedResponseContract",
+          "assertions": 8,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #0",
+          "assertions": 22,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #1",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #2",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #3",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #4",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #5",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #6",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #0",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #1",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #2",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #3",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testLatePaidQuotationRemainsCancelledAndDoesNotConvert",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSequentialReplaysDoNotRequestAnotherConversionWhenPersistenceReportsAlreadyConverted",
+          "assertions": 27,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testUnconvertedPaidQuotationDelegatesToExistingInvoiceCreator",
+          "assertions": 24,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testGatewayFailureDoesNotWritePaymentState",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testRetryAfterGatewayFailureCanProcessSyntheticPaidResponse",
+          "assertions": 21,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testCommonPdfFallbackProducesContentAndMultiplePagesFromSyntheticHtml",
+          "assertions": 11,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testBrowserlessEndpointIsAbsentAndProcessExecutionIsDisabled",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testCustomQuotationTemplateContractIsPreserved",
+          "assertions": 6,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testOrderEmailJobUsesSyntheticRecipientSubjectAndViewData",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testPlanEmailJobDoesNotLeakRecipientOrDetailsBetweenMessages",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testEmailJobPropagatesSyntheticTransportFailureForWorkerRetry",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testEmailAndMediaJobsDispatchWithoutRunningHandles",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testSchedulerRegistersOnlyExistingActiveBusinessCadences",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testQuotationExpiryDelegatesGatewayCancellationAndCompilesScopedUpdate",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testNoEligibleQuotationCausesNoWrite",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testEmptyOrAlreadyProcessedExpiryQueryIsRepeatableAtBoundary",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #0",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #1",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #2",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #3",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testMissingCustomerAddressListsRequiredFields",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testValidCustomerAddressCanComeFromRequest",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #0",
+          "assertions": 6,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #1",
+          "assertions": 6,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #2",
+          "assertions": 6,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testMissingStatusUpdateReturnsExistingFailureContract",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testAdminCancellationDelegatesGatewayCancellationAfterSuccessfulUpdate",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #3",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #4",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #3",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testActiveAdminMiddlewarePreservesApiIdentityAndAllowsHandler",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testDirectAndCollectionSerializationHideSecretsAndPreserveIdentity with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testDirectAndCollectionSerializationHideSecretsAndPreserveIdentity with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #0",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #1",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #2",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #3",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #4",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testElasticSearchControllerContractAndQuery with data set #0",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testElasticSearchControllerContractAndQuery with data set #1",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testSearchIndexFailureHasExistingErrorContract",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testKeywordVariantsHaveObservedOrder",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #3",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testLocalStorageFixtureRoundTripAndMissingFile",
+          "assertions": 5,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testInterventionGdResizesSyntheticImageAndRejectsInvalidInput",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest",
+          "name": "testActualSqlAdminAndApiAuthenticationUseSeparateGuards",
+          "assertions": 18,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest",
+          "name": "testDisabledAdminCannotRetainRealSqlAuthenticatedSession",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest",
+          "name": "testPreviouslyIssuedSessionIsDeniedAfterRealSqlDeactivationAndApiGuardSurvives",
+          "assertions": 19,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CarryForwardIntegrationTest",
+          "name": "testActualBalanceCommandCreditsSyntheticRemainderOnceOnSequentialRuns",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testActualProductImportCoordinatesSqlMongoAndRepeatedImportDoesNotDuplicate",
+          "assertions": 16,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testActualSqlFailureBeforeMongoWriteLeavesNoDocument",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testMongoFailureLeavesSqlWriteAndRetryCreatesOnlyPartialDocument",
+          "assertions": 16,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testActualProductSearchCombinesMongoFilterSqlCategoryAndPagination",
+          "assertions": 19,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testRetryMustRestoreCompleteCrossStoreProductIdentity",
+          "assertions": 13,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testDocumentCreateRetrieveAndObjectIdMapping",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testDocumentUpdateIsPersisted",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testNestedFilterAndSortUseActualMongoDb",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testTimestampSerializationPreservesCalendarValue",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testMissingDocumentReturnsNull",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testRawAggregationOverSyntheticProducts",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testModelCreationUpdateAndReadBack",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testInvoiceItemRelationshipUsesInvoiceId",
+          "assertions": 11,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testMySqlStoresExactTwoDecimalMoney",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testFilteringSortingAndPaginationUseActualMySql",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testRollbackRestoresRowsAfterSyntheticFailure",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testLegacyItemForeignKeyMetadataIsExplicit",
+          "assertions": 11,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testMissingInvoiceIsNull",
+          "assertions": 11,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testInvoiceStatusUpdatePreservesMoneyAndNumber",
+          "assertions": 13,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testActualPrimaryKeyUniquenessRejectsDuplicateInvoiceRow",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testActualPaidConversionAndSequentialReplayDoNotDuplicateMailOrArtifacts",
+          "assertions": 23,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testInvalidSignatureLeavesRealInvoiceAndNotificationsUnchanged",
+          "assertions": 16,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealExpiredQuotationPaidCallbackDoesNotConvertOrNotifyAgain",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0",
+          "assertions": 14,
+          "status": "FAIL",
+          "message": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)\nLEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'paid' => false\n-    'converted' => false\n-    'mail_count' => 1\n+    'paid' => true\n+    'converted' => true\n+    'mail_count' => 2\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\PaymentPersistenceIntegrationTest.php:92\n"
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1",
+          "assertions": 14,
+          "status": "FAIL",
+          "message": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')\nLEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'paid' => false\n-    'converted' => false\n-    'mail_count' => 1\n+    'paid' => true\n+    'converted' => true\n+    'mail_count' => 2\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\PaymentPersistenceIntegrationTest.php:92\n"
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealPersistencePreservesPaidStateAgainstPendingResponse",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testActualCustomQuotationPersistsCustomerCreatorMoneyPdfAndMail",
+          "assertions": 27,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testMissingCustomerDoesNotWriteQuotationOrCallProvider",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testConversionUsesExistingInvoiceIdentityAndRealAttachmentPipeline",
+          "assertions": 19,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testEditingReadsPersistedSyntheticItemsAndReplacementCancelsOldLink",
+          "assertions": 19,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testRealExpiryCancelsOnlyDueQuotationAndRepeatedRunHasNoSecondEffect",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testActualDiscountRecalculatesAndPersistsTwoDecimalSyntheticGstExample",
+          "assertions": 16,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testStorageBoundaryFailureIsReportedAfterRealQuotationAndMailPersist",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testMissingInvoiceReturnsExplicit422WithoutNotification",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest",
+          "name": "testSecondRealConnectionCannotUpdateLockedInvoiceBeforeRollback",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest",
+          "name": "testLegacyInvoiceNumberHasNoUniqueConstraintInVerifiedFixture",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest",
+          "name": "testActualDatabaseQueueReservationReleaseRetryAndAcknowledgement",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest",
+          "name": "testFailedJobProviderPersistsSyntheticFailureWithoutWorker",
+          "assertions": 13,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"quotation create/edit/replace end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"invoice numbering/customer selection/ownership\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"concurrent callback exactly-once effects\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"PayU callback end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Atom callback end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Razorpay order/plan fulfillment end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Chromium and Browserless visual acceptance\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"custom quotation/full invoice email attachments\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"image upload/watermark end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"FFmpeg video integration\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"download authorization/history/limits\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"S3 adapter integration\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Elasticsearch integration/index mappings\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"package carry-forward calculation/duplicates\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"queue worker retry/failure persistence\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"currency conversion and invalid quantity rules\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"missing\"",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"unknown\"",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"case variant\"",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testValidSignedTokenForMissingIdentityMustNotReachProtectedController",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testNestedSerializedModelsDoNotExposePasswordFields with data set #0",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testNestedSerializedModelsDoNotExposePasswordFields with data set #1",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\"",
+          "assertions": 27,
+          "status": "FAIL",
+          "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\" ('amount', 1)\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29\n"
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\"",
+          "assertions": 27,
+          "status": "FAIL",
+          "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\" ('currency', 'USD')\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29\n"
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"reference\"",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+          "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"amount\"",
+          "assertions": 18,
+          "status": "FAIL",
+          "message": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"amount\" (1, 'INR', 'QTN-7000001')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20\n"
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+          "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"currency\"",
+          "assertions": 18,
+          "status": "FAIL",
+          "message": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"currency\" (11800, 'USD', 'QTN-7000001')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20\n"
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+          "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"reference\"",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+          "name": "testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice",
+          "assertions": 8,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+          "name": "testMissingLoginTypeMustNotBypassJwtProtection",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+          "name": "testDisabledAdminMustNotRetainAdminSession",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+          "name": "testAuthenticatedMeResponseMustNotExposePasswordHash",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "tests": 251,
+      "assertions": 1419,
+      "seconds": 37.789333,
+      "exit_code": 1,
+      "counts": {
+        "PASS": 229,
+        "FAIL": 6,
+        "ERROR": 0,
+        "BLOCKED": 16
+      },
+      "cases": [
+        {
+          "class": "Tests\\Unit\\AtomSignatureTest",
+          "name": "testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\AtomSignatureTest",
+          "name": "testAtomUsesSyntheticSha512SignatureAndRejectsTampering with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\ExampleTest",
+          "name": "testBasicTest",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedQuotationDateDisplay with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\InvoiceDatesRegressionTest",
+          "name": "testObservedPackageExpiryUsesExtendedValueFirst with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #6",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testDatabaseGuardRefusesUnsafeConfiguration with data set #7",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\IsolationTest",
+          "name": "testApplicationUsesOnlyPrivateTestStorageAndDiscardTransports",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #0",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #1",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #2",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testPaymentLinkPaiseCurrencyAndNotificationPayload with data set #3",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testNonPositiveLinkAmountsNeverCallGateway with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PaymentLinkRegressionTest",
+          "name": "testLinkExpiryBoundaries with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #6",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testUrlToModuleMapping with data set #7",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #6",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testRequestActionClassification with data set #7",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testGuestHasNoPermissions",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testSuperAdminPassesProtectedMiddleware",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PermissionRegressionTest",
+          "name": "testSubadminCanViewButCannotEditFromIndependentCachedPermissionFixture",
+          "assertions": 5,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"items take precedence\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"subscription\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"total minus tax\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"zero default\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"clamp inferred negative\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testObservedSubtotalSelection with data set \"observed quantity ignored\"",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #0",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #1",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #2",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #3",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #6",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testDiscountClampsAndRounds with data set #7",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #3",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #4",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #5",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #6",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testRecalculationAgainstExplicitSyntheticGstExamples with data set #7",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Unit\\PricingRegressionTest",
+          "name": "testAbsentPromoHasNoDiscount",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testAdminValidationRejectsMissingFieldsBeforeDatabaseAccess",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testAdminValidationRejectsMalformedEmailAndShortPassword",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testSuccessfulAdminLoginCreatesOnlyTheAdminSession",
+          "assertions": 5,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testWrongAdminPasswordDoesNotAuthenticate",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testAdminLogoutClearsAdminAuthentication",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testGuestCannotOpenAdminDashboard",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testObservedApiValidationUsesHttp200AndFieldErrors",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testApiIncorrectPasswordPreservesErrorContract",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\AuthRegressionTest",
+          "name": "testApiSuccessfulLoginPreservesFieldsAndMisspellings",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testNormalHeaderStillRejectsNoTokenOnTheSameProtectedRoute",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testIndependentControllerAuthStillProtectsMeWithoutLoginType",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testCallbackFixtureHonorsInvoicePredicatesAndSelectedColumns",
+          "assertions": 21,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testMatchingFinancialIdentityReachesInvoiceCreationBoundary",
+          "assertions": 25,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testInvalidSignatureCannotFetchOrFulfillUnconvertedQuotation",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testValidSignatureWithUnknownLocalReferenceCannotWriteAnInvoice",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\CriticalDefectControlsTest",
+          "name": "testApiMeWithValidTokenPreservesNonSecretIdentityFields",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\ExampleTest",
+          "name": "testExistingAdminLoginPageIsPublic",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\ExampleTest",
+          "name": "testRootIsAbsentWithTheIsolatedNonRootLogRoute",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testRealJwtSignatureAndRequiredClaimsRoundTrip",
+          "assertions": 8,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testInvalidSignatureIsRejectedByActualJwtDecoder",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testExpirationIsEnforcedByActualJwtDecoder",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testNormalHeaderMissingTokenHasLegacy401Shape",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testNormalHeaderMalformedTokenIsRejected",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testExpiredTokenHasExistingMiddlewareErrorShape",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testRefreshProducesNewTokenAndBlacklistsOldOne",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testApiLogoutRevokesSuppliedToken",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\JwtRegressionTest",
+          "name": "testApiRefreshPreservesNestedResponseContract",
+          "assertions": 8,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #0",
+          "assertions": 22,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #1",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #2",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #3",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #4",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #5",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSignedPaymentLinkCallbackStatusMapping with data set #6",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #0",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #1",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #2",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testInvalidOrMissingSignatureNeverFetchesOrWrites with data set #3",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testLatePaidQuotationRemainsCancelledAndDoesNotConvert",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testSequentialReplaysDoNotRequestAnotherConversionWhenPersistenceReportsAlreadyConverted",
+          "assertions": 27,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testUnconvertedPaidQuotationDelegatesToExistingInvoiceCreator",
+          "assertions": 24,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testGatewayFailureDoesNotWritePaymentState",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PaymentRegressionTest",
+          "name": "testRetryAfterGatewayFailureCanProcessSyntheticPaidResponse",
+          "assertions": 21,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testCommonPdfFallbackProducesContentAndMultiplePagesFromSyntheticHtml",
+          "assertions": 11,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testBrowserlessEndpointIsAbsentAndProcessExecutionIsDisabled",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testCustomQuotationTemplateContractIsPreserved",
+          "assertions": 6,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testOrderEmailJobUsesSyntheticRecipientSubjectAndViewData",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testPlanEmailJobDoesNotLeakRecipientOrDetailsBetweenMessages",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\PdfEmailRegressionTest",
+          "name": "testEmailJobPropagatesSyntheticTransportFailureForWorkerRetry",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testEmailAndMediaJobsDispatchWithoutRunningHandles",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testSchedulerRegistersOnlyExistingActiveBusinessCadences",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testQuotationExpiryDelegatesGatewayCancellationAndCompilesScopedUpdate",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testNoEligibleQuotationCausesNoWrite",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QueueSchedulerRegressionTest",
+          "name": "testEmptyOrAlreadyProcessedExpiryQueryIsRepeatableAtBoundary",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #0",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #1",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #2",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #3",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #4",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testExistingInvoiceCreationValidation with data set #5",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testMissingCustomerAddressListsRequiredFields",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testValidCustomerAddressCanComeFromRequest",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #0",
+          "assertions": 6,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #1",
+          "assertions": 6,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testCommonStatusTransitionSqlAndGatewayCancellation with data set #2",
+          "assertions": 6,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testMissingStatusUpdateReturnsExistingFailureContract",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\QuotationRegressionTest",
+          "name": "testAdminCancellationDelegatesGatewayCancellationAfterSuccessfulUpdate",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #3",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testLocalJwtIdentityWorksWithSupportedHeaderVariants with data set #4",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testRawProviderOrMissingTokensCannotBypassLocalIdentity with data set #3",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testActiveAdminMiddlewarePreservesApiIdentityAndAllowsHandler",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testDirectAndCollectionSerializationHideSecretsAndPreserveIdentity with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testDirectAndCollectionSerializationHideSecretsAndPreserveIdentity with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #0",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #1",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #2",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #3",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\RemediationRegressionTest",
+          "name": "testFetchedAndStoredLinkIdentityMismatchHasNoEffects with data set #4",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testElasticSearchControllerContractAndQuery with data set #0",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testElasticSearchControllerContractAndQuery with data set #1",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testSearchIndexFailureHasExistingErrorContract",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testKeywordVariantsHaveObservedOrder",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #0",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #1",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #2",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testDownloadProxyRejectsMissingAndNonHttpUrlsWithoutNetwork with data set #3",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testLocalStorageFixtureRoundTripAndMissingFile",
+          "assertions": 5,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Feature\\SearchMediaRegressionTest",
+          "name": "testInterventionGdResizesSyntheticImageAndRejectsInvalidInput",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest",
+          "name": "testActualSqlAdminAndApiAuthenticationUseSeparateGuards",
+          "assertions": 18,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest",
+          "name": "testDisabledAdminCannotRetainRealSqlAuthenticatedSession",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\AuthenticationPersistenceIntegrationTest",
+          "name": "testPreviouslyIssuedSessionIsDeniedAfterRealSqlDeactivationAndApiGuardSurvives",
+          "assertions": 19,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CarryForwardIntegrationTest",
+          "name": "testActualBalanceCommandCreditsSyntheticRemainderOnceOnSequentialRuns",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testActualProductImportCoordinatesSqlMongoAndRepeatedImportDoesNotDuplicate",
+          "assertions": 16,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testActualSqlFailureBeforeMongoWriteLeavesNoDocument",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testMongoFailureLeavesSqlWriteAndRetryCreatesOnlyPartialDocument",
+          "assertions": 16,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testActualProductSearchCombinesMongoFilterSqlCategoryAndPagination",
+          "assertions": 19,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\CrossStoreBusinessIntegrationTest",
+          "name": "testRetryMustRestoreCompleteCrossStoreProductIdentity",
+          "assertions": 13,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testDocumentCreateRetrieveAndObjectIdMapping",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testDocumentUpdateIsPersisted",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testNestedFilterAndSortUseActualMongoDb",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testTimestampSerializationPreservesCalendarValue",
+          "assertions": 4,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testMissingDocumentReturnsNull",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MongoRegressionTest",
+          "name": "testRawAggregationOverSyntheticProducts",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testModelCreationUpdateAndReadBack",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testInvoiceItemRelationshipUsesInvoiceId",
+          "assertions": 11,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testMySqlStoresExactTwoDecimalMoney",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testFilteringSortingAndPaginationUseActualMySql",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testRollbackRestoresRowsAfterSyntheticFailure",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testLegacyItemForeignKeyMetadataIsExplicit",
+          "assertions": 11,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testMissingInvoiceIsNull",
+          "assertions": 11,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testInvoiceStatusUpdatePreservesMoneyAndNumber",
+          "assertions": 13,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\MySqlRegressionTest",
+          "name": "testActualPrimaryKeyUniquenessRejectsDuplicateInvoiceRow",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testActualPaidConversionAndSequentialReplayDoNotDuplicateMailOrArtifacts",
+          "assertions": 23,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testInvalidSignatureLeavesRealInvoiceAndNotificationsUnchanged",
+          "assertions": 16,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealExpiredQuotationPaidCallbackDoesNotConvertOrNotifyAgain",
+          "assertions": 17,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0",
+          "assertions": 14,
+          "status": "FAIL",
+          "message": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #0 ('amount', 1)\nLEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'paid' => false\n-    'converted' => false\n-    'mail_count' => 1\n+    'paid' => true\n+    'converted' => true\n+    'mail_count' => 2\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\PaymentPersistenceIntegrationTest.php:92\n"
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1",
+          "assertions": 14,
+          "status": "FAIL",
+          "message": "Tests\\Integration\\PaymentPersistenceIntegrationTest::testRealPersistenceRejectsMismatchedFinancialIdentity with data set #1 ('currency', 'USD')\nLEGACY-PAY-01: real SQL/fulfillment confirms the existing mismatch finding.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n Array &0 (\n-    'paid' => false\n-    'converted' => false\n-    'mail_count' => 1\n+    'paid' => true\n+    'converted' => true\n+    'mail_count' => 2\n )\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\Integration\\PaymentPersistenceIntegrationTest.php:92\n"
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealPersistenceRejectsMismatchedFinancialIdentity with data set #2",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\PaymentPersistenceIntegrationTest",
+          "name": "testRealPersistencePreservesPaidStateAgainstPendingResponse",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testActualCustomQuotationPersistsCustomerCreatorMoneyPdfAndMail",
+          "assertions": 27,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testMissingCustomerDoesNotWriteQuotationOrCallProvider",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testConversionUsesExistingInvoiceIdentityAndRealAttachmentPipeline",
+          "assertions": 19,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testEditingReadsPersistedSyntheticItemsAndReplacementCancelsOldLink",
+          "assertions": 19,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testRealExpiryCancelsOnlyDueQuotationAndRepeatedRunHasNoSecondEffect",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testActualDiscountRecalculatesAndPersistsTwoDecimalSyntheticGstExample",
+          "assertions": 16,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testStorageBoundaryFailureIsReportedAfterRealQuotationAndMailPersist",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\QuotationBusinessIntegrationTest",
+          "name": "testMissingInvoiceReturnsExplicit422WithoutNotification",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest",
+          "name": "testSecondRealConnectionCannotUpdateLockedInvoiceBeforeRollback",
+          "assertions": 14,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest",
+          "name": "testLegacyInvoiceNumberHasNoUniqueConstraintInVerifiedFixture",
+          "assertions": 12,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest",
+          "name": "testActualDatabaseQueueReservationReleaseRetryAndAcknowledgement",
+          "assertions": 15,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\SqlConcurrencyQueueIntegrationTest",
+          "name": "testFailedJobProviderPersistsSyntheticFailureWithoutWorker",
+          "assertions": 13,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"quotation create/edit/replace end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"invoice numbering/customer selection/ownership\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"concurrent callback exactly-once effects\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"PayU callback end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Atom callback end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Razorpay order/plan fulfillment end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Chromium and Browserless visual acceptance\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"custom quotation/full invoice email attachments\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"image upload/watermark end-to-end\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"FFmpeg video integration\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"download authorization/history/limits\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"S3 adapter integration\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"Elasticsearch integration/index mappings\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"package carry-forward calculation/duplicates\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"queue worker retry/failure persistence\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\Integration\\UnavailableFlowsTest",
+          "name": "testCriticalFlowRequiresTheNamedAcceptanceFixture with data set \"currency conversion and invalid quantity rules\"",
+          "assertions": 0,
+          "status": "BLOCKED",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"missing\"",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"unknown\"",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testActualProtectedRouteRejectsUnauthenticatedHeaderVariants with data set \"case variant\"",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testValidSignedTokenForMissingIdentityMustNotReachProtectedController",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testExistingAdminSessionIsRejectedWhenRetrievedAccountIsDisabled",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testNestedSerializedModelsDoNotExposePasswordFields with data set #0",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\CriticalDefectVerificationTest",
+          "name": "testNestedSerializedModelsDoNotExposePasswordFields with data set #1",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\"",
+          "assertions": 27,
+          "status": "FAIL",
+          "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"amount\" ('amount', 1)\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29\n"
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\"",
+          "assertions": 27,
+          "status": "FAIL",
+          "message": "Tests\\KnownFailures\\PaymentDefectVerificationTest::testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"currency\" ('currency', 'USD')\nLEGACY-PAY-01: real routed callback accepts mismatched fetched transaction identity.\nFailed asserting that two arrays are identical.\n--- Expected\n+++ Actual\n@@ @@\n-Array &0 ()\n+Array &0 (\n+    0 => 'invoice payment state written'\n+    1 => 'invoice fulfillment delegated'\n+)\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentDefectVerificationTest.php:29\n"
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testMatchingLinkIdButMismatchedFinancialIdentityCannotFulfill with data set \"reference\"",
+          "assertions": 7,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #0",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #1",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #2",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentDefectVerificationTest",
+          "name": "testConsistentlySignedNonPaidResponseCannotOverwriteCompletedInvoice with data set #3",
+          "assertions": 9,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+          "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"amount\"",
+          "assertions": 18,
+          "status": "FAIL",
+          "message": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"amount\" (1, 'INR', 'QTN-7000001')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20\n"
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+          "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"currency\"",
+          "assertions": 18,
+          "status": "FAIL",
+          "message": "Tests\\KnownFailures\\PaymentInvariantTest::testPaidCallbackMustValidateFinancialIdentity with data set \"currency\" (11800, 'USD', 'QTN-7000001')\nLEGACY-PAY-01: paid provider response accepted without comparing amount/currency/reference.\nFailed asserting that 1 is not identical to 1.\n\nC:\\Projects\\imagefootage\\imagefootage_BE\\tests\\KnownFailures\\PaymentInvariantTest.php:20\n"
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+          "name": "testPaidCallbackMustValidateFinancialIdentity with data set \"reference\"",
+          "assertions": 3,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\PaymentInvariantTest",
+          "name": "testOutOfOrderPendingCallbackMustNotDowngradePaidInvoice",
+          "assertions": 8,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+          "name": "testMissingLoginTypeMustNotBypassJwtProtection",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+          "name": "testDisabledAdminMustNotRetainAdminSession",
+          "assertions": 1,
+          "status": "PASS",
+          "message": ""
+        },
+        {
+          "class": "Tests\\KnownFailures\\SecurityInvariantTest",
+          "name": "testAuthenticatedMeResponseMustNotExposePasswordHash",
+          "assertions": 2,
+          "status": "PASS",
+          "message": ""
+        }
+      ]
+    }
+  ]
+}

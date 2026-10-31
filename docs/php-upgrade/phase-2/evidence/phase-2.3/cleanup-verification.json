@@ -1,0 +1,29 @@
+{
+  "mysql_version": "8.0.44",
+  "mysql_datadir_matches_owned_temp": true,
+  "mysql_table_row_counts_after_two_runs": {
+    "cities": 0,
+    "countries": 0,
+    "email_templates": 0,
+    "failed_jobs": 0,
+    "imagefootage_admins": 0,
+    "imagefootage_api": 0,
+    "imagefootage_performa_invoice_items": 0,
+    "imagefootage_performa_invoices": 0,
+    "imagefootage_products": 0,
+    "imagefootage_user_package": 0,
+    "imagefootage_users": 0,
+    "jobs": 0,
+    "promo_codes": 0,
+    "states": 0
+  },
+  "mongo_dbpath_matches_owned_temp": true,
+  "mongo_bind": "127.0.0.1",
+  "mongo_auth_enabled": "enabled",
+  "mongo_fixture_document_count": 0,
+  "all_fixture_rows_empty": true,
+  "existing_mysql_service_touched": false,
+  "mysql_shutdown_requested": true,
+  "mongo_shutdown_requested": true,
+  "listeners_after_shutdown": []
+}

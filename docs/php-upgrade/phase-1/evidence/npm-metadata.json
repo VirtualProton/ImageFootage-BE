@@ -1,0 +1,120 @@
+{
+  "angular": {
+    "latest": "1.8.3",
+    "engines": null,
+    "deprecated": "For the actively supported Angular, see https://www.npmjs.com/package/@angular/core. AngularJS support has officially ended. For extended AngularJS support options, see https://goo.gle/angularjs-path-forward.",
+    "locked": "1.7.9",
+    "installed": null,
+    "source": "https://registry.npmjs.org/angular/latest",
+    "constraint": "^1.7.9"
+  },
+  "axios": {
+    "latest": "1.21.0",
+    "engines": null,
+    "deprecated": null,
+    "locked": "0.18.1",
+    "installed": "0.18.1",
+    "source": "https://registry.npmjs.org/axios/latest",
+    "constraint": "^0.18"
+  },
+  "bootstrap": {
+    "latest": "5.3.8",
+    "engines": null,
+    "deprecated": null,
+    "locked": "4.6.2",
+    "installed": "4.6.2",
+    "source": "https://registry.npmjs.org/bootstrap/latest",
+    "constraint": "^4.1.0"
+  },
+  "cross-env": {
+    "latest": "10.1.0",
+    "engines": {
+      "node": ">=20"
+    },
+    "deprecated": null,
+    "locked": "5.2.1",
+    "installed": "5.2.1",
+    "source": "https://registry.npmjs.org/cross-env/latest",
+    "constraint": "^5.1"
+  },
+  "jquery": {
+    "latest": "4.0.0",
+    "engines": null,
+    "deprecated": null,
+    "locked": "3.7.0",
+    "installed": "3.7.0",
+    "source": "https://registry.npmjs.org/jquery/latest",
+    "constraint": "^3.2"
+  },
+  "laravel-mix": {
+    "latest": "6.0.49",
+    "engines": {
+      "node": ">=12.14.0"
+    },
+    "deprecated": null,
+    "locked": "4.1.4",
+    "installed": "4.1.4",
+    "source": "https://registry.npmjs.org/laravel-mix/latest",
+    "constraint": "^4.0.7"
+  },
+  "lodash": {
+    "latest": "4.18.1",
+    "engines": null,
+    "deprecated": null,
+    "locked": "4.17.21",
+    "installed": "4.17.21",
+    "source": "https://registry.npmjs.org/lodash/latest",
+    "constraint": "^4.17.5"
+  },
+  "popper.js": {
+    "latest": "1.16.1",
+    "engines": null,
+    "deprecated": "You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1",
+    "locked": "1.16.1",
+    "installed": "1.16.1",
+    "source": "https://registry.npmjs.org/popper.js/latest",
+    "constraint": "^1.12"
+  },
+  "resolve-url-loader": {
+    "latest": "5.0.0",
+    "engines": {
+      "node": ">=12"
+    },
+    "deprecated": null,
+    "locked": "2.3.2",
+    "installed": "2.3.2",
+    "source": "https://registry.npmjs.org/resolve-url-loader/latest",
+    "constraint": "^2.3.1"
+  },
+  "sass": {
+    "latest": "1.107.0",
+    "engines": {
+      "node": ">=20.19.0"
+    },
+    "deprecated": null,
+    "locked": "1.64.0",
+    "installed": "1.64.0",
+    "source": "https://registry.npmjs.org/sass/latest",
+    "constraint": "^1.15.2"
+  },
+  "sass-loader": {
+    "latest": "17.1.0",
+    "engines": {
+      "node": ">= 22.11.0"
+    },
+    "deprecated": null,
+    "locked": "7.3.1",
+    "installed": "7.3.1",
+    "source": "https://registry.npmjs.org/sass-loader/latest",
+    "constraint": "^7.1.0"
+  },
+  "vue": {
+    "latest": "3.5.44",
+    "engines": null,
+    "deprecated": null,
+    "locked": "2.7.16",
+    "installed": "2.7.14",
+    "source": "https://registry.npmjs.org/vue/latest",
+    "constraint": "^2.7.16"
+  }
+}

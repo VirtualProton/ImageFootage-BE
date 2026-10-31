@@ -1,0 +1,23 @@
+PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 7.4.33
+Configuration: C:\Projects\imagefootage\imagefootage_BE\phpunit.xml
+
+...F..........                                                    14 / 14 (100%)
+
+Time: 2.29 seconds, Memory: 48.00 MB
+
+There was 1 failure:
+
+1) Tests\Integration\MongoRegressionTest::testTimestampSerializationPreservesCalendarValue
+Failed asserting that two strings are identical.
+--- Expected
++++ Actual
+@@ @@
+-'2026-10-29 12:00:00'
++'2026-10-29 08:01:38'
+
+C:\Projects\imagefootage\imagefootage_BE\tests\Integration\MongoRegressionTest.php:37
+
+FAILURES!
+Tests: 14, Assertions: 114, Failures: 1.

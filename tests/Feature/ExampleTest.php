@@ -12,10 +12,17 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testExistingAdminLoginPageIsPublic()
     {
-        $response = $this->get('/');
+        // routes/web.php has /admin/login; there is no unconditional root route.
+        $response = $this->get('/admin/login');
 
         $response->assertStatus(200);
+        $response->assertSee('password');
+    }
+
+    public function testRootIsAbsentWithTheIsolatedNonRootLogRoute()
+    {
+        $this->get('/')->assertStatus(404);
     }
 }

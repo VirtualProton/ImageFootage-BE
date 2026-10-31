@@ -19,8 +19,13 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::guard('admins')->check()){
+        $guard = Auth::guard('admins');
+        $user = $guard->user();
+        if ($user && $user->admin_status === 'A') {
             return $next($request);
+        }
+        if ($user) {
+            $guard->logout();
         }
         return redirect('/admin/login');
    }

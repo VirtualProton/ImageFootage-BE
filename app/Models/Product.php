@@ -732,6 +732,10 @@ class Product extends Model
                         $imageFilterValue = ImageFilterValue::updateOrCreate(
                             ['api_product_id' => $apiProductId],
                             [
+                                // SQL can survive a failed MongoDB write. A retry must restore
+                                // identity as well as filters when the document is absent/incomplete.
+                                'product_id' => $data2[0]->product_id,
+                                'product_main_type' => 'Image',
                                 'attributes' => $productData,
                                 'options'    =>$optionData
                             ]
