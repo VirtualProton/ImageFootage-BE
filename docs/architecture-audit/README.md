@@ -31,6 +31,10 @@ This audit documents the implementation present in this repository as inspected 
 
 `dependencies.csv`, `routes.csv`, `modules.csv`, `database-entities.csv`, `external-integrations.csv`, `scheduled-jobs.csv`, and `environment-variables.csv` accompany the narrative documents.
 
+## Phase 2
+
+The deeper static execution audit is in [phase-2/README.md](phase-2/README.md). It adds route-to-handler tracing, controller/model/database matrices, API-contract evidence, payment/download/authentication execution flows, external-call mapping, failure analysis, detailed diagrams, and a generated OpenAPI 3.1 document.
+
 ## Evidence convention
 
 **Verified** means directly observed in source, configuration, migrations, or a successfully executed local command. **Inferred** means supported by implementation but not directly confirmed at runtime. **Unknown** means the repository does not establish the fact.
