@@ -1,0 +1,6 @@
+Command/class,Schedule,Status,Evidence,Side effects
+quotation:deactive / QuotationDeactive,Hourly,Active,app/Console/Kernel.php,Quotation/invoice state
+package:to-credit-balance / CreateEntryForCarryForwardBalance,Daily,Active,app/Console/Kernel.php,User package/balance records
+hour:update / HourlyUpdate,Hourly,Commented out,app/Console/Kernel.php,Email/update behavior if enabled
+currency:update / CurrencyUpdate,Hourly,Commented out,app/Console/Kernel.php,Currency records if enabled
+regenerate:image / RegeneratePantherMediaImageUrl,Daily,Commented out,app/Console/Kernel.php,Product media URLs if enabled

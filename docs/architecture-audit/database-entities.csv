@@ -1,0 +1,176 @@
+Entity/table,Evidence,Model mapping,Notes
+admin_sites,database/migrations,,Schema observable from migration source; live state not verified
+admins,database/migrations,,Schema observable from migration source; live state not verified
+banners,database/migrations,,Schema observable from migration source; live state not verified
+categories,database/migrations,,Schema observable from migration source; live state not verified
+categories_products,database/migrations,,Schema observable from migration source; live state not verified
+cities,database/migrations,,Schema observable from migration source; live state not verified
+client_description,database/migrations,,Schema observable from migration source; live state not verified
+company_infos,database/migrations,,Schema observable from migration source; live state not verified
+contents,database/migrations,,Schema observable from migration source; live state not verified
+countries,database/migrations,,Schema observable from migration source; live state not verified
+coupons,database/migrations,,Schema observable from migration source; live state not verified
+crm_products,database/migrations,,Schema observable from migration source; live state not verified
+currency_convertes,database/migrations,,Schema observable from migration source; live state not verified
+discount_messages,database/migrations,,Schema observable from migration source; live state not verified
+email_templates,database/migrations,,Schema observable from migration source; live state not verified
+failed_jobs,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_accounts,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_admins,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_adminusers_old,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_api,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_comments,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_contributor,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_crm_products,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_departments,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_description,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_editorials,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_filters,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_filters_options,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_keywords,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_modules,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_modules_old20082020,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_order_items,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_orders,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_packages,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_performa_invoice_items,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_performa_invoices,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_prices,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_age_wises,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_colors,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_ethinicities,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_genders,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_image_resolutions,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_image_sizes,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_image_types,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_locations,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_orientations,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_peoples,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_product_sort_types,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_productcategory,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_productfilters,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_productimages,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_products,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_productsubcategory,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_promotion,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_roles,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_roles_modules_mapping,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_shared_wishlists_logs,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_staticpages,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_user_package,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_user_types,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_usercart,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_usercontactus,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_userinfo,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_users,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_users_products_download,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_users_wishlist,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_verifications,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_wishlist,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_wishlist_products,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_wishlists,database/migrations,,Schema observable from migration source; live state not verified
+imgf_adminusers,database/migrations,,Schema observable from migration source; live state not verified
+industry_types,database/migrations,,Schema observable from migration source; live state not verified
+jobs,database/migrations,,Schema observable from migration source; live state not verified
+licence_type,database/migrations,,Schema observable from migration source; live state not verified
+lightboxes,database/migrations,,Schema observable from migration source; live state not verified
+manage_banners,database/migrations,,Schema observable from migration source; live state not verified
+newsletter_subscribers,database/migrations,,Schema observable from migration source; live state not verified
+newsletters,database/migrations,,Schema observable from migration source; live state not verified
+ngos,database/migrations,,Schema observable from migration source; live state not verified
+order_invoices,database/migrations,,Schema observable from migration source; live state not verified
+order_items,database/migrations,,Schema observable from migration source; live state not verified
+orders,database/migrations,,Schema observable from migration source; live state not verified
+password_resets,database/migrations,,Schema observable from migration source; live state not verified
+payments,database/migrations,,Schema observable from migration source; live state not verified
+performa_invoice_items,database/migrations,,Schema observable from migration source; live state not verified
+performa_invoices,database/migrations,,Schema observable from migration source; live state not verified
+plan_subscriptions,database/migrations,,Schema observable from migration source; live state not verified
+plans,database/migrations,,Schema observable from migration source; live state not verified
+potential_users,database/migrations,,Schema observable from migration source; live state not verified
+product_attribute_relations,database/migrations,,Schema observable from migration source; live state not verified
+product_attribute_values,database/migrations,,Schema observable from migration source; live state not verified
+products,database/migrations,,Schema observable from migration source; live state not verified
+promo_codes,database/migrations,,Schema observable from migration source; live state not verified
+ratings,database/migrations,,Schema observable from migration source; live state not verified
+reason_of_rejections,database/migrations,,Schema observable from migration source; live state not verified
+rm_fileds,database/migrations,,Schema observable from migration source; live state not verified
+rm_heading_fields,database/migrations,,Schema observable from migration source; live state not verified
+rm_values,database/migrations,,Schema observable from migration source; live state not verified
+search_histories,database/migrations,,Schema observable from migration source; live state not verified
+settings,database/migrations,,Schema observable from migration source; live state not verified
+shopping_carts,database/migrations,,Schema observable from migration source; live state not verified
+states,database/migrations,,Schema observable from migration source; live state not verified
+taxes,database/migrations,,Schema observable from migration source; live state not verified
+tredings_words,database/migrations,,Schema observable from migration source; live state not verified
+trending_words,database/migrations,,Schema observable from migration source; live state not verified
+user_paid_payments,database/migrations,,Schema observable from migration source; live state not verified
+user_payment_infos,database/migrations,,Schema observable from migration source; live state not verified
+usercomments,database/migrations,,Schema observable from migration source; live state not verified
+users,database/migrations,,Schema observable from migration source; live state not verified
+wish_lists,database/migrations,,Schema observable from migration source; live state not verified
+wishlist_folder,database/migrations,,Schema observable from migration source; live state not verified
+wishlist_folder_itmes,database/migrations,,Schema observable from migration source; live state not verified
+zip_codes,database/migrations,,Schema observable from migration source; live state not verified
+imagefootage_accounts,app/Models/Account.php,Account,Eloquent model
+imagefootage_admins,app/Models/Admin.php,Admin,Eloquent model
+imagefootage_adminusers,app/Models/AdminUsers.php,AdminUsers,Eloquent model
+imagefootage_api,app/Models/Api.php,Api,Eloquent model
+imagefootage_api,app/Models/ApiQuota.php,ApiQuota,Eloquent model
+cities,app/Models/City.php,City,Eloquent model
+imagefootage_comments,app/Models/Comment.php,Comment,Eloquent model
+imagefootage_contributor,app/Models/Contributor.php,Contributor,Eloquent model
+countries,app/Models/Country.php,Country,Eloquent model
+currency_convertes,app/Models/Currency.php,Currency,Eloquent model
+imagefootage_departments,app/Models/Department.php,Department,Eloquent model
+imagefootage_description,app/Models/Description.php,Description,Eloquent model
+discount_messages,app/Models/DiscountMessage.php,DiscountMessage,Eloquent model
+imagefootage_editorials,app/Models/Editorial.php,Editorial,Eloquent model
+imagefootage_filters,app/Models/ImageFootageFilter.php,ImageFootageFilter,Eloquent model
+imagefootage_filters_options,app/Models/ImageFootageFilterOption.php,ImageFootageFilterOption,Eloquent model
+imagefootage_shared_wishlists_logs,app/Models/ImagefootageSharedWishlistsLog.php,ImagefootageSharedWishlistsLog,Eloquent model
+imagefootage_wishlists,app/Models/ImageFootageWishlist.php,ImageFootageWishlist,Eloquent model
+imagefootage_product_image_resolutions,app/Models/ImageResolution.php,ImageResolution,Eloquent model
+imagefootage_product_sort_types,app/Models/ImageSortTypes.php,ImageSortTypes,Eloquent model
+imagefootage_performa_invoices,app/Models/Invoice.php,Invoice,Eloquent model
+imagefootage_performa_invoice_items,app/Models/InvoiceItem.php,InvoiceItem,Eloquent model
+imagefootage_keywords,app/Models/Keywords.php,Keywords,Eloquent model
+licence_type,app/Models/LicenceType.php,LicenceType,Eloquent model
+imagefootage_modules,app/Models/Modules.php,Modules,Eloquent model
+imagefootage_order_items,app/Models/OrderItem.php,OrderItem,Eloquent model
+imagefootage_orders,app/Models/Orders.php,Orders,Eloquent model
+imagefootage_packages,app/Models/Package.php,Package,Eloquent model
+imagefootage_prices,app/Models/Price.php,Price,Eloquent model
+imagefootage_products,app/Models/Product.php,Product,Eloquent model
+imagefootage_product_age_wises,app/Models/ProductAgeWises.php,ProductAgeWises,Eloquent model
+imagefootage_productcategory,app/Models/ProductCategory.php,ProductCategory,Eloquent model
+imagefootage_product_colors,app/Models/ProductColors.php,ProductColors,Eloquent model
+imagefootage_product_ethinicities,app/Models/ProductEthinicities.php,ProductEthinicities,Eloquent model
+imagefootage_productfilters,app/Models/ProductFilters.php,ProductFilters,Eloquent model
+imagefootage_product_genders,app/Models/ProductGenders.php,ProductGenders,Eloquent model
+imagefootage_productimages,app/Models/ProductImages.php,ProductImages,Eloquent model
+imagefootage_product_image_sizes,app/Models/ProductImageSizes.php,ProductImageSizes,Eloquent model
+imagefootage_product_image_types,app/Models/ProductImageTypes.php,ProductImageTypes,Eloquent model
+imagefootage_product_locations,app/Models/ProductLocations.php,ProductLocations,Eloquent model
+imagefootage_product_orientations,app/Models/ProductOrientations.php,ProductOrientations,Eloquent model
+imagefootage_product_peoples,app/Models/ProductPeoples.php,ProductPeoples,Eloquent model
+imagefootage_users_products_download,app/Models/ProductsDownload.php,ProductsDownload,Eloquent model
+imagefootage_productsubcategory,app/Models/ProductSubCategory.php,ProductSubCategory,Eloquent model
+promo_codes,app/Models/PromoCode.php,PromoCode,Eloquent model
+imagefootage_promotion,app/Models/Promotion.php,Promotion,Eloquent model
+imagefootage_roles,app/Models/Roles.php,Roles,Eloquent model
+imagefootage_roles_modules_mapping,app/Models/RolesModulesMapping.php,RolesModulesMapping,Eloquent model
+settings,app/Models/Setting.php,Setting,Eloquent model
+states,app/Models/State.php,State,Eloquent model
+imagefootage_staticpages,app/Models/StaticPages.php,StaticPages,Eloquent model
+trending_words,app/Models/TrendingWord.php,TrendingWord,Eloquent model
+imagefootage_users,app/Models/User.php,User,Eloquent model
+imagefootage_usercart,app/Models/Usercart.php,Usercart,Eloquent model
+imagefootage_usercontactus,app/Models/Usercontactus.php,Usercontactus,Eloquent model
+imagefootage_userinfo,app/Models/UserInfo.php,UserInfo,Eloquent model
+imagefootage_user_package,app/Models/UserPackage.php,UserPackage,Eloquent model
+imagefootage_users_products_download,app/Models/UserProductDownload.php,UserProductDownload,Eloquent model
+imagefootage_wishlist,app/Models/UserWishlist.php,UserWishlist,Eloquent model
+imagefootage_verifications,app/Models/Verification.php,Verification,Eloquent model
+wishlist_folder,app/Models/Wishlist.php,Wishlist,Eloquent model
+wishlist_folder_itmes,app/Models/WishlistItem.php,WishlistItem,Eloquent model

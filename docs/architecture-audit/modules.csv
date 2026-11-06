@@ -1,0 +1,8 @@
+Module,Purpose,Controllers,Models/Entities,Services/Integrations,Routes
+Authentication,"Registration, login, JWT, OTP, password reset",AuthController; Auth/*Controller; UserController,User; Verification; password_resets,JWT; Google; Facebook; mail; SMS,/api/signup; /api/login; /api/v2/*; web auth
+Catalog,Products and metadata,ProductController; ProductApiController; Admin/ProductController,Product; ProductImages; categories; filters,Panther Media; Pond5,/api/product/*; /api/products_api; admin product routes
+Search,Product/provider search and filters,SearchController; ElasticSearchController; FiltersController,Product; TrendingWord; filter models,Elasticsearch; Panther; Pond5,/api/search; /api/relatedsearch; /api/search/{query}
+Commerce,"Cart, orders, invoices, packages, promotions",PaymentController; InvoiceController; PackageApiController; PromoCodeController,Orders; OrderItem; Invoice; InvoiceItem; Package; UserPackage; PromoCode,Razorpay; PayU; Atom; Dompdf; mail,/api/payment*; /api/orderDetails; admin invoice routes
+Media,"Samples, downloads, provider media",MediaController; CronController,Product; ProductImages; ProductsDownload,FFmpeg; Intervention Image; AWS; providers,/api/*download*; provider upload routes
+Administration,Admin CRUD and permissioned UI,Admin/*Controller,Admin; Roles; Modules; mappings,session auth; Blade permissions,/admin/*
+Operations,"Jobs, scheduler, provider ingestion",CronController; Console Commands; Jobs,Product; packages; invoices,Queue; Panther; Pond5; mail,scheduled commands and maintenance routes

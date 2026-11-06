@@ -1,0 +1,11 @@
+Provider,Purpose,Library/class,Base URL or endpoint evidence,Environment variables,Database/side effects,Confidence
+Panther Media,Image/media search and imports,app/Http/PantherMedia/*,config/thirdparty.php,PANTHERMEDIA_*,Product/media records,Verified
+Pond5,"Footage, image, music search/import",app/Http/Pond5/*,config/thirdparty.php,POND5_*,Product/media records,Verified
+Razorpay,Payment gateway,razorpay/razorpay; PaymentController,Gateway SDK/config,KEYRAZORID; KEYRAZORSECRET,Orders/invoices/payment status,Verified
+PayU Money,Payment gateway,riazxrazor/payumoney; PaymentController,PayU config/routes,PAYU_* / configured keys,Orders/invoices/payment status,Verified
+AtomPay,Payment gateway,app/Http/AtomPay/*; PaymentController,config/payments.php,ATOM*,Orders/invoices/payment status,Verified
+Elasticsearch,Search/indexing,elasticsearch/elasticsearch; provider,ELASTICSEARCH_HOSTS,ELASTICSEARCH_HOSTS,Search index/word writes,Verified
+Msg91,SMS/OTP,Msg91SmsProvider,control.msg91.com/api and api.msg91.com,MSG91_*,OTP/verification flows,Verified
+Google/Facebook,Social token validation,Google_Client/Guzzle,config/constants.php,GOOGLE_*; FACEBOOK_*,User auth state,Verified
+AWS,Storage/SDK support,aws/aws-sdk-php-laravel,config/filesystems.php/config/aws.php,AWS_*,Storage side effects depend on disk,Inferred
+Mail,Email delivery,Laravel Mail/Mailable classes,config/mail.php,MAIL_*,Email side effects,Verified
