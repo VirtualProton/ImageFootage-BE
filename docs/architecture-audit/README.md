@@ -35,6 +35,8 @@ This audit documents the implementation present in this repository as inspected 
 
 The deeper static execution audit is in [phase-2/README.md](phase-2/README.md). It adds route-to-handler tracing, controller/model/database matrices, API-contract evidence, payment/download/authentication execution flows, external-call mapping, failure analysis, detailed diagrams, and a generated OpenAPI 3.1 document.
 
+Phase 3 verification is in [phase-3/README.md](phase-3/README.md). It records source-backed security, authorization, payment-integrity, cart/order, download/media, database-consistency, external-integration, admin, API-contract, and safe-test verification results.
+
 ## Evidence convention
 
 **Verified** means directly observed in source, configuration, migrations, or a successfully executed local command. **Inferred** means supported by implementation but not directly confirmed at runtime. **Unknown** means the repository does not establish the fact.

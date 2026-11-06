@@ -78,3 +78,34 @@
 ### Phase 2 audit status
 
 **PARTIAL for runtime contract completeness; complete for the repository-level static inventory.** Remaining gaps are limited to runtime/deployment/provider behavior and handlers whose contracts are not established by source.
+
+## Phase 3 security/business-rule verification — 2026-11-06
+
+### Completed stages
+
+- Re-read Phase 1 and Phase 2 documents, inventories, and progress; verified current branch/commit baseline.
+- Reconciled all 13 previously unresolved route entries and 5 closures, including Laravel auth traits, resource routes, package log viewer, and inline preview/debug closures.
+- Verified authentication, ownership, admin permission, payment, cart/order, download/media, database consistency, and external integration paths from source.
+- Executed the existing PHPUnit suite safely in the local testing configuration.
+
+### Verified results
+
+- 426 routes remain registered; OpenAPI reconciliation is 403 path templates and 666 operations, with collapsed duplicates preserved through `x-route-entries`.
+- PHPUnit: 1 passed, 1 failed; the feature smoke test received 404 for `/` while expecting 200.
+- Source-backed high-severity review findings include payment callback side effects without visible idempotency/transaction guards, weak `downloadProxy` destination/TLS/resource controls, and request-derived cart/download identity in protected methods.
+
+### Documentation created
+
+- `docs/architecture-audit/phase-3/README.md`
+- `01-route-verification.md` through `12-verification-diagrams.md`
+- `security-findings.csv`
+- `openapi-verified.yaml` (preserved Phase 2 `openapi.yaml` remains unchanged)
+
+### Remaining work/unknowns
+
+- Live DB constraints/isolation, concurrent callbacks/downloads, provider dashboards/webhooks, production route reachability, and external API behavior remain unverified.
+- No live payment, refund, production, internal-network, or destructive test was performed.
+
+### Phase 3 status
+
+**PARTIAL:** repository/source verification and safe local test execution are complete; runtime and deployment-dependent assertions remain blocked by scope.
