@@ -1,5 +1,9 @@
 # Database architecture
 
+## Full schema reference
+
+The complete migration-derived table/column/key/index catalogue is in [04-database-schema.md](04-database-schema.md) and [database-schema.csv](database-schema.csv). It covers 113 migration-observed table names and 1,734 schema rows from the current 165 migration files. This file remains the architecture overview; the schema document is the table-by-table design reference.
+
 ## Configured technologies
 
 `config/database.php` defines MySQL as the default, plus SQLite, PostgreSQL, SQL Server, MongoDB, and Redis configuration. The local `.env-sample` selects MySQL. `ImageFilterValue` explicitly uses the `mongodb` connection; the remaining inspected models are standard Eloquent models unless otherwise configured.
@@ -18,4 +22,4 @@ The repository contains 165 migrations. They create or alter a legacy mixture of
 
 Models explicitly declare table names throughout `app/Models`. Relationships are implemented in models such as `Product`, `User`, `Package`, `Orders`, `Invoice`, `Wishlist`, and `Modules`. There are legacy duplicate naming families (`orders` versus `imagefootage_orders`, `products` versus `imagefootage_products`) in migrations; the active model mapping is the source of truth for each model.
 
-Transactions, raw queries, casts, accessors, mutators, soft deletes, and indexes are documented in `database-entities.csv` where statically detectable. No live schema introspection was performed.
+Transactions, raw queries, casts, accessors, mutators, soft deletes, and indexes are documented in the schema and model inventories where statically detectable. No live schema introspection was performed.

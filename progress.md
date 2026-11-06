@@ -109,3 +109,10 @@
 ### Phase 3 status
 
 **PARTIAL:** repository/source verification and safe local test execution are complete; runtime and deployment-dependent assertions remain blocked by scope.
+
+## Full database design expansion — 2026-11-06
+
+- Generated a migration-derived full schema catalogue from all 165 migration files.
+- Documented 113 migration-observed table names and 1,734 schema rows covering columns, types, nullability, defaults, primary/unique/index markers, foreign-key references where explicit, comments, migration operations, and evidence lines.
+- Added model mappings and linked the full design from the main database architecture and relationship documents.
+- Live applied migrations, actual indexes/constraints, row counts, and production schema remain unknown because no live database was accessed.

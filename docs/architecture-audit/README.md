@@ -9,6 +9,7 @@ This audit documents the implementation present in this repository as inspected 
 - [02 Libraries and dependencies](02-libraries-and-dependencies.md)
 - [03 API and route inventory](03-api-and-route-inventory.md)
 - [04 Database architecture](04-database-architecture.md)
+- [04 Full database schema](04-database-schema.md)
 - [04 Database relationships](04-database-relationships.md)
 - [05 Module architecture](05-module-architecture.md)
 - [06 Business logic and workflows](06-business-logic-and-workflows.md)
@@ -29,7 +30,7 @@ This audit documents the implementation present in this repository as inspected 
 
 ## Machine-readable inventories
 
-`dependencies.csv`, `routes.csv`, `modules.csv`, `database-entities.csv`, `external-integrations.csv`, `scheduled-jobs.csv`, and `environment-variables.csv` accompany the narrative documents.
+`dependencies.csv`, `routes.csv`, `modules.csv`, `database-entities.csv`, `database-schema.csv`, `external-integrations.csv`, `scheduled-jobs.csv`, and `environment-variables.csv` accompany the narrative documents.
 
 ## Phase 2
 

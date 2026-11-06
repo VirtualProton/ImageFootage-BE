@@ -1,5 +1,7 @@
 # Database relationships
 
+For the complete table and column catalogue, see [04-database-schema.md](04-database-schema.md). The relationship diagrams below are limited to model/migration relationships explicitly observable in source; they are not a live database reverse-engineering result.
+
 The following relationship map is limited to relationships observable in model methods and migration foreign-key/index declarations. It is not a live ERD.
 
 ```mermaid
